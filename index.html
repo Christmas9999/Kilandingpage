@@ -305,6 +305,14 @@
             animation: dot-pulse 1.5s infinite alternate;
         }
 
+        /* Wetter Widget Stil */
+        .weather-widget {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+
         /* Animationen */
         @keyframes rotate {
             from { transform: rotate(0deg); }
@@ -379,6 +387,11 @@
         <div class="online-status">
             <div class="online-dot"></div>
             Online
+        </div>
+
+        <!-- Wetter Widget -->
+        <div class="weather-widget">
+            <iframe width='300' height='100' name='CW1' style='border:1px solid;border-radius:17px;border-color:#e5e8e8;' src='https://api.wetteronline.de/wetterwidget?gid=x0757&modeid=CW1&seourl=timmendorfer-strand&locationname=Timmendorfer Strand&lang=de'></iframe>
         </div>
 
         <elevenlabs-convai agent-id="agent_01jz428zryea58mbj66rbv8hg7"></elevenlabs-convai>
