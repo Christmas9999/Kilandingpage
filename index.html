@@ -211,6 +211,13 @@
             }
         }
 
+        /* Styling for the ElevenLabs Convai widget */
+        elevenlabs-convai {
+            position: fixed; /* Fixed position so it stays on screen */
+            bottom: 20px;    /* Adjust as needed for placement */
+            right: 20px;     /* Adjust as needed for placement */
+            z-index: 1000;   /* Ensure it's above other elements */
+        }
     </style>
 </head>
 <body>
@@ -224,5 +231,9 @@
             <div class="jarvis-text">J.A.R.V.I.S.</div>
         </div>
     </div>
+
+    <elevenlabs-convai agent-id="agent_01jz428zryea58mbj66rbv8hg7"></elevenlabs-convai>
+    <script src="https://unpkg.com/@elevenlabs/convai-widget-embed" async type="text/javascript"></script>
+
 </body>
 </html>
