@@ -7,6 +7,7 @@
     <style>
         body {
             display: flex;
+            flex-direction: column; /* Vertikale Anordnung für Kreis und Statusleiste */
             justify-content: center;
             align-items: center;
             min-height: 100vh;
@@ -23,6 +24,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
+            margin-bottom: 20px; /* Ca. 2 cm Abstand zur Statusleiste (bleibt für die Flex-Anordnung) */
         }
 
         .circle-outer, .circle-middle, .circle-inner, .circle-core {
@@ -59,14 +61,13 @@
             width: 80%;
             height: 80%;
             border-color: rgba(255, 255, 255, 0.2);
-            /* Die Rotation für diesen Kreis beibehalten */
             animation: rotate 20s linear infinite;
-            display: flex; /* Für die Zentrierung der neuen dynamischen Elemente */
+            display: flex;
             justify-content: center;
             align-items: center;
         }
 
-        /* Dynamische Segmente, jetzt im mittleren Kreis */
+        /* Dynamische Segmente im mittleren Kreis */
         .circle-middle::before, .circle-middle::after {
             content: '';
             position: absolute;
@@ -74,33 +75,29 @@
             border-radius: 50%;
             box-sizing: border-box;
             opacity: 0.7;
-            /* Um die Rotation des Eltern-Elements (circle-middle) auszugleichen,
-               wenden wir die Gegenrotation an, damit die Segmente sich relativ bewegen */
             animation: segment-rotate 5s linear infinite;
         }
 
         .circle-middle::before {
-            width: 90%; /* Größe der Segmente im mittleren Kreis anpassen */
+            width: 90%;
             height: 90%;
             border-top-color: transparent;
             border-bottom-color: transparent;
         }
 
         .circle-middle::after {
-            width: 80%; /* Größe der Segmente im mittleren Kreis anpassen */
+            width: 80%;
             height: 80%;
             border-left-color: transparent;
             border-right-color: transparent;
-            animation: segment-rotate-reverse 5s linear infinite; /* Entgegengesetzte Rotation */
+            animation: segment-rotate-reverse 5s linear infinite;
         }
 
         .circle-inner {
             width: 60%;
             height: 60%;
             border-color: rgba(255, 255, 255, 0.3);
-            /* Diesen Kreis beibehalten, aber statisch oder mit weniger Rotation */
-            animation: none; /* Keine Animation, wenn er statisch sein soll */
-            /* Wenn er sich noch leicht drehen soll: animation: rotate 10s linear reverse infinite; */
+            animation: none;
         }
 
         .circle-core {
@@ -114,7 +111,6 @@
             text-shadow: 0 0 10px #00e0ff;
             background: radial-gradient(circle, rgba(0,224,255,0.2) 0%, rgba(0,0,0,0) 70%);
             animation: pulse 2s infinite alternate;
-            /* Keine zusätzlichen dynamischen Segmente mehr hier */
         }
 
         .jarvis-text {
@@ -156,7 +152,6 @@
             }
         }
 
-        /* Animation für die Segmente im mittleren Kreis */
         @keyframes segment-rotate {
             from {
                 transform: rotate(0deg);
@@ -221,12 +216,82 @@
             }
         }
 
+        /* Styling für die Statusleiste */
+        .status-bar {
+            width: 80%; /* Breite der Statusleiste, relativ zum Hauptcontainer */
+            max-width: 500px; /* Maximale Breite */
+            height: 30px; /* Höhe der Leiste */
+            background-color: rgba(255, 255, 255, 0.05); /* Sehr dunkler, transparenter Hintergrund */
+            border: 1px solid rgba(0, 224, 255, 0.3); /* Rahmenfarbe passend zum Interface */
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between; /* Zahlen gleichmäßig verteilen */
+            padding: 0 10px;
+            box-shadow: 0 0 10px rgba(0, 224, 255, 0.5);
+            overflow: hidden; /* Sicherstellen, dass keine Überläufe sichtbar sind */
+            position: absolute; /* Absolute Positionierung im Body */
+            bottom: 10px; /* HIER IST DER NEUE ABSTAND VON UNTEN (10px) */
+            left: 50%;
+            transform: translateX(-50%); /* Zentrierung */
+        }
+
+        .status-bar span {
+            color: #00e0ff; /* Standardfarbe der binären Zahlen */
+            font-family: 'Consolas', 'Courier New', monospace; /* Monospace-Schriftart für Zahlen */
+            font-size: 1.2em;
+            text-shadow: 0 0 5px #00e0ff;
+            opacity: 0.8;
+            transition: color 0.1s ease-out; /* Weicher Übergang beim Farbwechsel */
+        }
+
+        /* Klasse für orange leuchtende Zahlen */
+        .status-bar span.orange {
+            color: #FFA500; /* Orange Farbe */
+            text-shadow: 0 0 8px #FFA500, 0 0 15px rgba(255, 165, 0, 0.5); /* Intensiveres Glühen */
+        }
+
+
         /* Styling für das ElevenLabs Convai Widget */
         elevenlabs-convai {
             position: fixed; /* Feste Position, damit es auf dem Bildschirm bleibt */
             bottom: 20px;    /* Position nach Bedarf anpassen */
             right: 20px;     /* Position nach Bedarf anpassen */
             z-index: 1000;   /* Sicherstellen, dass es über anderen Elementen liegt */
+        }
+
+        /* Online-Statusanzeige */
+        .online-status {
+            position: fixed;
+            top: 20px;
+            right: 120px; /* HIER WIRD DER ABSTAND VON RECHTS AUF 120px ERHÖHT */
+            display: flex;
+            align-items: center;
+            color: #00e0ff;
+            font-size: 1.1em;
+            text-shadow: 0 0 8px #00e0ff;
+            z-index: 1001; /* Sicherstellen, dass es über allem anderen liegt */
+        }
+
+        .online-dot {
+            width: 12px;
+            height: 12px;
+            background-color: #00e0ff;
+            border-radius: 50%;
+            margin-right: 8px;
+            box-shadow: 0 0 8px #00e0ff, 0 0 15px rgba(0, 224, 255, 0.5);
+            animation: dot-pulse 1.5s infinite alternate;
+        }
+
+        @keyframes dot-pulse {
+            from {
+                transform: scale(1);
+                opacity: 1;
+            }
+            to {
+                transform: scale(1.1);
+                opacity: 0.7;
+            }
         }
     </style>
 </head>
@@ -243,8 +308,77 @@
         </div>
     </div>
 
+    <div class="status-bar" id="statusBar">
+        </div>
+
+    <div class="online-status">
+        <div class="online-dot"></div>
+        Online
+    </div>
+
     <elevenlabs-convai agent-id="agent_01jz428zryea58mbj66rbv8hg7"></elevenlabs-convai>
     <script src="https://unpkg.com/@elevenlabs/convai-widget-embed" async type="text/javascript"></script>
 
+    <script>
+        const statusBar = document.getElementById('statusBar');
+        const numBits = 50; // Anzahl der binären Ziffern in der Leiste
+        const maxOrangeBits = 3; // Maximale Anzahl gleichzeitig oranger Zahlen
+
+        // Initialisiere die Statusleiste mit Zufallszahlen
+        function initializeStatusBar() {
+            statusBar.innerHTML = ''; // Vorherigen Inhalt leeren
+            for (let i = 0; i < numBits; i++) {
+                const span = document.createElement('span');
+                span.textContent = Math.round(Math.random()); // 0 oder 1
+                statusBar.appendChild(span);
+            }
+        }
+
+        // Aktualisiere eine zufällige Zahl in der Leiste und füge Orange hinzu
+        function updateRandomBit() {
+            const spans = statusBar.querySelectorAll('span');
+            if (spans.length === 0) return;
+
+            // Zuerst alle orangefarbenen Klassen entfernen, um sie neu zu verteilen
+            spans.forEach(span => {
+                span.classList.remove('orange');
+            });
+
+            // Wähle eine zufällige Zahl zum Wechseln des Wertes
+            const randomIndexToChange = Math.floor(Math.random() * spans.length);
+            const spanToChange = spans[randomIndexToChange];
+            spanToChange.textContent = spanToChange.textContent === '0' ? '1' : '0';
+
+            // Kurz weiß aufleuchten lassen
+            spanToChange.style.color = '#fff';
+            setTimeout(() => {
+                spanToChange.style.color = ''; // CSS-Farbe wiederherstellen
+            }, 100);
+
+
+            // Zufällig einige Zahlen orange färben
+            let orangeCount = 0;
+            const orangeIndices = new Set(); // Verwenden Sie ein Set, um doppelte Indizes zu vermeiden
+
+            while (orangeCount < maxOrangeBits) {
+                const randomIndexForOrange = Math.floor(Math.random() * spans.length);
+
+                // Stellen Sie sicher, dass der Index nicht doppelt ist und nicht der Index des gerade geänderten Bits
+                if (!orangeIndices.has(randomIndexForOrange) && randomIndexForOrange !== randomIndexToChange) {
+                    orangeIndices.add(randomIndexForOrange);
+                    orangeCount++;
+                }
+            }
+
+            // Füge die orange Klasse zu den ausgewählten Spans hinzu
+            orangeIndices.forEach(index => {
+                spans[index].classList.add('orange');
+            });
+        }
+
+        // Starte die Initialisierung und die kontinuierliche Aktualisierung
+        initializeStatusBar();
+        setInterval(updateRandomBit, 150); // Alle 150ms eine zufällige Zahl ändern
+    </script>
 </body>
 </html>
