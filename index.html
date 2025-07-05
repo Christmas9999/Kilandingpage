@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="de">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,13 +13,13 @@
             background-color: #000;
             margin: 0;
             overflow: hidden;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* A modern, clean font */
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Eine moderne, klare Schriftart */
         }
 
         .container {
             position: relative;
-            width: 400px; /* Adjust size as needed */
-            height: 400px; /* Adjust size as needed */
+            width: 400px; /* Größe nach Bedarf anpassen */
+            height: 400px; /* Größe nach Bedarf anpassen */
             display: flex;
             justify-content: center;
             align-items: center;
@@ -28,7 +28,7 @@
         .circle-outer, .circle-middle, .circle-inner, .circle-core {
             position: absolute;
             border-radius: 50%;
-            border: 2px solid rgba(255, 255, 255, 0.3); /* Lighter border for outer circles */
+            border: 2px solid rgba(255, 255, 255, 0.3); /* Hellere Umrandung für äußere Kreise */
             box-sizing: border-box;
         }
 
@@ -59,20 +59,54 @@
             width: 80%;
             height: 80%;
             border-color: rgba(255, 255, 255, 0.2);
+            /* Die Rotation für diesen Kreis beibehalten */
             animation: rotate 20s linear infinite;
+            display: flex; /* Für die Zentrierung der neuen dynamischen Elemente */
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Dynamische Segmente, jetzt im mittleren Kreis */
+        .circle-middle::before, .circle-middle::after {
+            content: '';
+            position: absolute;
+            border: 2px solid #00e0ff; /* Farbe der dynamischen Elemente */
+            border-radius: 50%;
+            box-sizing: border-box;
+            opacity: 0.7;
+            /* Um die Rotation des Eltern-Elements (circle-middle) auszugleichen,
+               wenden wir die Gegenrotation an, damit die Segmente sich relativ bewegen */
+            animation: segment-rotate 5s linear infinite;
+        }
+
+        .circle-middle::before {
+            width: 90%; /* Größe der Segmente im mittleren Kreis anpassen */
+            height: 90%;
+            border-top-color: transparent;
+            border-bottom-color: transparent;
+        }
+
+        .circle-middle::after {
+            width: 80%; /* Größe der Segmente im mittleren Kreis anpassen */
+            height: 80%;
+            border-left-color: transparent;
+            border-right-color: transparent;
+            animation: segment-rotate-reverse 5s linear infinite; /* Entgegengesetzte Rotation */
         }
 
         .circle-inner {
             width: 60%;
             height: 60%;
             border-color: rgba(255, 255, 255, 0.3);
-            animation: rotate 15s linear reverse infinite;
+            /* Diesen Kreis beibehalten, aber statisch oder mit weniger Rotation */
+            animation: none; /* Keine Animation, wenn er statisch sein soll */
+            /* Wenn er sich noch leicht drehen soll: animation: rotate 10s linear reverse infinite; */
         }
 
         .circle-core {
             width: 40%;
             height: 40%;
-            border-color: #00e0ff; /* A vibrant blue for the core */
+            border-color: #00e0ff; /* Ein lebhaftes Blau für den Kern */
             box-shadow: 0 0 15px #00e0ff;
             display: flex;
             justify-content: center;
@@ -80,6 +114,7 @@
             text-shadow: 0 0 10px #00e0ff;
             background: radial-gradient(circle, rgba(0,224,255,0.2) 0%, rgba(0,0,0,0) 70%);
             animation: pulse 2s infinite alternate;
+            /* Keine zusätzlichen dynamischen Segmente mehr hier */
         }
 
         .jarvis-text {
@@ -88,32 +123,6 @@
             font-weight: bold;
             letter-spacing: 2px;
             animation: text-pulse 2s infinite alternate;
-        }
-
-        /* Animated segments within the core */
-        .circle-core::before, .circle-core::after {
-            content: '';
-            position: absolute;
-            border: 2px solid #00e0ff;
-            border-radius: 50%;
-            box-sizing: border-box;
-            opacity: 0.7;
-        }
-
-        .circle-core::before {
-            width: 80%;
-            height: 80%;
-            border-top-color: transparent;
-            border-bottom-color: transparent;
-            animation: segment-rotate 5s linear infinite;
-        }
-
-        .circle-core::after {
-            width: 70%;
-            height: 70%;
-            border-left-color: transparent;
-            border-right-color: transparent;
-            animation: segment-rotate-reverse 5s linear infinite;
         }
 
         @keyframes rotate {
@@ -147,6 +156,7 @@
             }
         }
 
+        /* Animation für die Segmente im mittleren Kreis */
         @keyframes segment-rotate {
             from {
                 transform: rotate(0deg);
@@ -165,7 +175,7 @@
             }
         }
 
-        /* Additional design elements for the outer rings */
+        /* Zusätzliche Designelemente für die äußeren Ringe */
         .outer-ring-detail {
             position: absolute;
             border-radius: 50%;
@@ -187,7 +197,7 @@
             animation-direction: reverse;
         }
 
-        /* Subtle glow effect for the entire interface */
+        /* Subtiler Glüheffekt für die gesamte Oberfläche */
         .container::before {
             content: '';
             position: absolute;
@@ -211,12 +221,12 @@
             }
         }
 
-        /* Styling for the ElevenLabs Convai widget */
+        /* Styling für das ElevenLabs Convai Widget */
         elevenlabs-convai {
-            position: fixed; /* Fixed position so it stays on screen */
-            bottom: 20px;    /* Adjust as needed for placement */
-            right: 20px;     /* Adjust as needed for placement */
-            z-index: 1000;   /* Ensure it's above other elements */
+            position: fixed; /* Feste Position, damit es auf dem Bildschirm bleibt */
+            bottom: 20px;    /* Position nach Bedarf anpassen */
+            right: 20px;     /* Position nach Bedarf anpassen */
+            z-index: 1000;   /* Sicherstellen, dass es über anderen Elementen liegt */
         }
     </style>
 </head>
@@ -225,7 +235,8 @@
         <div class="outer-ring-detail one"></div>
         <div class="outer-ring-detail two"></div>
         <div class="circle-outer"></div>
-        <div class="circle-middle"></div>
+        <div class="circle-middle">
+            </div>
         <div class="circle-inner"></div>
         <div class="circle-core">
             <div class="jarvis-text">J.A.R.V.I.S.</div>
