@@ -3,34 +3,164 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>J.A.R.V.I.S. Interface</title>
+    <title>J.A.R.V.I.S. - Login</title>
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
         body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #000;
+            color: #fff;
+            overflow: hidden;
+            width: 100vw;
+            height: 100vh;
+        }
+
+        /* Login Overlay Styles */
+        .login-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
             display: flex;
-            flex-direction: column; /* Vertikale Anordnung für Kreis und Statusleiste */
             justify-content: center;
             align-items: center;
-            min-height: 100vh;
-            background-color: #000;
-            margin: 0;
-            overflow: hidden;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Eine moderne, klare Schriftart */
+            z-index: 1000;
+            backdrop-filter: blur(5px);
+        }
+        
+        .login-container {
+            width: 320px;
+            background: rgba(0, 20, 30, 0.8);
+            border: 1px solid rgba(0, 224, 255, 0.4);
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: 0 0 30px rgba(0, 224, 255, 0.5);
+            text-align: center;
+            animation: login-glow 3s infinite alternate;
+        }
+        
+        @keyframes login-glow {
+            from { box-shadow: 0 0 20px rgba(0, 224, 255, 0.5); }
+            to { box-shadow: 0 0 40px rgba(0, 224, 255, 0.8); }
+        }
+        
+        .login-title {
+            color: #00e0ff;
+            font-size: 1.5em;
+            margin-bottom: 25px;
+            text-shadow: 0 0 10px #00e0ff;
+            letter-spacing: 1px;
+        }
+        
+        .login-input-group {
+            margin-bottom: 15px;
+            text-align: left;
+        }
+        
+        .login-label {
+            display: block;
+            color: #00e0ff;
+            margin-bottom: 6px;
+            font-size: 0.85em;
+            text-shadow: 0 0 5px #00e0ff;
+        }
+        
+        .login-input {
+            width: 100%;
+            padding: 10px;
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(0, 224, 255, 0.3);
+            border-radius: 5px;
+            color: #00e0ff;
+            font-family: 'Consolas', monospace;
+            font-size: 0.95em;
+            box-shadow: inset 0 0 10px rgba(0, 224, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+        
+        .login-input:focus {
+            outline: none;
+            border-color: #00e0ff;
+            box-shadow: inset 0 0 15px rgba(0, 224, 255, 0.4),
+                        0 0 10px rgba(0, 224, 255, 0.3);
+        }
+        
+        .login-button {
+            width: 100%;
+            padding: 10px;
+            background: linear-gradient(to right, rgba(0, 150, 200, 0.7), rgba(0, 100, 150, 0.7));
+            border: none;
+            border-radius: 5px;
+            color: #fff;
+            font-size: 0.95em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 15px;
+            box-shadow: 0 0 10px rgba(0, 224, 255, 0.5);
+        }
+        
+        .login-button:hover {
+            background: linear-gradient(to right, rgba(0, 180, 230, 0.8), rgba(0, 130, 180, 0.8));
+            box-shadow: 0 0 15px rgba(0, 224, 255, 0.8);
+            transform: translateY(-2px);
+        }
+        
+        .login-error {
+            color: #ff5555;
+            margin-top: 12px;
+            font-size: 0.8em;
+            text-shadow: 0 0 5px #ff5555;
+            height: 18px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .login-error.show {
+            opacity: 1;
+        }
+        
+        .login-footer {
+            margin-top: 20px;
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 0.7em;
+            letter-spacing: 0.5px;
+        }
+
+        /* Main Interface Styles */
+        .main-interface {
+            display: none;
+            width: 100%;
+            height: 100%;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
         }
 
         .container {
             position: relative;
-            width: 400px; /* Größe nach Bedarf anpassen */
-            height: 400px; /* Größe nach Bedarf anpassen */
+            width: 400px;
+            height: 400px;
             display: flex;
             justify-content: center;
             align-items: center;
-            margin-bottom: 20px; /* Ca. 2 cm Abstand zur Statusleiste (bleibt für die Flex-Anordnung) */
+            margin-bottom: 20px;
         }
 
         .circle-outer, .circle-middle, .circle-inner, .circle-core {
             position: absolute;
             border-radius: 50%;
-            border: 2px solid rgba(255, 255, 255, 0.3); /* Hellere Umrandung für äußere Kreise */
+            border: 2px solid rgba(255, 255, 255, 0.3);
             box-sizing: border-box;
         }
 
@@ -67,11 +197,10 @@
             align-items: center;
         }
 
-        /* Dynamische Segmente im mittleren Kreis */
         .circle-middle::before, .circle-middle::after {
             content: '';
             position: absolute;
-            border: 2px solid #00e0ff; /* Farbe der dynamischen Elemente */
+            border: 2px solid #00e0ff;
             border-radius: 50%;
             box-sizing: border-box;
             opacity: 0.7;
@@ -103,7 +232,7 @@
         .circle-core {
             width: 40%;
             height: 40%;
-            border-color: #00e0ff; /* Ein lebhaftes Blau für den Kern */
+            border-color: #00e0ff;
             box-shadow: 0 0 15px #00e0ff;
             display: flex;
             justify-content: center;
@@ -121,146 +250,39 @@
             animation: text-pulse 2s infinite alternate;
         }
 
-        @keyframes rotate {
-            from {
-                transform: rotate(0deg);
-            }
-            to {
-                transform: rotate(360deg);
-            }
-        }
-
-        @keyframes pulse {
-            from {
-                transform: scale(1);
-                box-shadow: 0 0 15px #00e0ff;
-            }
-            to {
-                transform: scale(1.05);
-                box-shadow: 0 0 25px #00e0ff, 0 0 50px rgba(0, 224, 255, 0.3);
-            }
-        }
-
-        @keyframes text-pulse {
-            from {
-                color: #00e0ff;
-                text-shadow: 0 0 10px #00e0ff;
-            }
-            to {
-                color: #55faff;
-                text-shadow: 0 0 15px #55faff, 0 0 25px rgba(85, 250, 255, 0.5);
-            }
-        }
-
-        @keyframes segment-rotate {
-            from {
-                transform: rotate(0deg);
-            }
-            to {
-                transform: rotate(360deg);
-            }
-        }
-
-        @keyframes segment-rotate-reverse {
-            from {
-                transform: rotate(360deg);
-            }
-            to {
-                transform: rotate(0deg);
-            }
-        }
-
-        /* Zusätzliche Designelemente für die äußeren Ringe */
-        .outer-ring-detail {
-            position: absolute;
-            border-radius: 50%;
-            border: 1px dashed rgba(255, 255, 255, 0.15);
-            box-sizing: border-box;
-            animation: rotate 60s linear infinite;
-        }
-
-        .outer-ring-detail.one {
-            width: 105%;
-            height: 105%;
-            animation-duration: 50s;
-        }
-
-        .outer-ring-detail.two {
-            width: 95%;
-            height: 95%;
-            animation-duration: 70s;
-            animation-direction: reverse;
-        }
-
-        /* Subtiler Glüheffekt für die gesamte Oberfläche */
-        .container::before {
-            content: '';
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            border-radius: 50%;
-            box-shadow: 0 0 50px rgba(0, 224, 255, 0.5);
-            opacity: 0.3;
-            pointer-events: none;
-            animation: subtle-glow 3s infinite alternate;
-        }
-
-        @keyframes subtle-glow {
-            from {
-                box-shadow: 0 0 50px rgba(0, 224, 255, 0.5);
-                opacity: 0.3;
-            }
-            to {
-                box-shadow: 0 0 70px rgba(0, 224, 255, 0.7);
-                opacity: 0.5;
-            }
-        }
-
-        /* Styling für die Statusleiste */
         .status-bar {
-            width: 80%; /* Breite der Statusleiste, relativ zum Hauptcontainer */
-            max-width: 500px; /* Maximale Breite */
-            height: 30px; /* Höhe der Leiste */
-            background-color: rgba(255, 255, 255, 0.05); /* Sehr dunkler, transparenter Hintergrund */
-            border: 1px solid rgba(0, 224, 255, 0.3); /* Rahmenfarbe passend zum Interface */
+            width: 80%;
+            max-width: 500px;
+            height: 30px;
+            background-color: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(0, 224, 255, 0.3);
             border-radius: 5px;
             display: flex;
             align-items: center;
-            justify-content: space-between; /* Zahlen gleichmäßig verteilen */
+            justify-content: space-between;
             padding: 0 10px;
             box-shadow: 0 0 10px rgba(0, 224, 255, 0.5);
-            overflow: hidden; /* Sicherstellen, dass keine Überläufe sichtbar sind */
-            position: absolute; /* Absolute Positionierung im Body */
-            bottom: 60px; /* HIER IST DER NEUE ABSTAND VON UNTEN (60px) */
+            overflow: hidden;
+            position: absolute;
+            bottom: 60px;
             left: 50%;
-            transform: translateX(-50%); /* Zentrierung */
+            transform: translateX(-50%);
         }
 
         .status-bar span {
-            color: #00e0ff; /* Standardfarbe der binären Zahlen */
-            font-family: 'Consolas', 'Courier New', monospace; /* Monospace-Schriftart für Zahlen */
+            color: #00e0ff;
+            font-family: 'Consolas', 'Courier New', monospace;
             font-size: 1.2em;
             text-shadow: 0 0 5px #00e0ff;
             opacity: 0.8;
-            transition: color 0.1s ease-out; /* Weicher Übergang beim Farbwechsel */
+            transition: color 0.1s ease-out;
         }
 
-        /* Klasse für orange leuchtende Zahlen */
         .status-bar span.orange {
-            color: #FFA500; /* Orange Farbe */
-            text-shadow: 0 0 8px #FFA500, 0 0 15px rgba(255, 165, 0, 0.5); /* Intensiveres Glühen */
+            color: #FFA500;
+            text-shadow: 0 0 8px #FFA500, 0 0 15px rgba(255, 165, 0, 0.5);
         }
 
-
-        /* Styling für das ElevenLabs Convai Widget */
-        elevenlabs-convai {
-            position: fixed; /* Feste Position, damit es auf dem Bildschirm bleibt */
-            bottom: 20px;    /* Position nach Bedarf anpassen */
-            right: 20px;     /* Position nach Bedarf anpassen */
-            z-index: 1000;   /* Sicherstellen, dass es über anderen Elementen liegt */
-        }
-
-        /* Online-Statusanzeige */
         .online-status {
             position: fixed;
             top: 20px;
@@ -270,7 +292,7 @@
             color: #00e0ff;
             font-size: 1.1em;
             text-shadow: 0 0 8px #00e0ff;
-            z-index: 1001; /* Sicherstellen, dass es über allem anderen liegt */
+            z-index: 1001;
         }
 
         .online-dot {
@@ -283,96 +305,208 @@
             animation: dot-pulse 1.5s infinite alternate;
         }
 
+        /* Animationen */
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        @keyframes pulse {
+            from { transform: scale(1); box-shadow: 0 0 15px #00e0ff; }
+            to { transform: scale(1.05); box-shadow: 0 0 25px #00e0ff, 0 0 50px rgba(0, 224, 255, 0.3); }
+        }
+
+        @keyframes text-pulse {
+            from { color: #00e0ff; text-shadow: 0 0 10px #00e0ff; }
+            to { color: #55faff; text-shadow: 0 0 15px #55faff, 0 0 25px rgba(85, 250, 255, 0.5); }
+        }
+
+        @keyframes segment-rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        @keyframes segment-rotate-reverse {
+            from { transform: rotate(360deg); }
+            to { transform: rotate(0deg); }
+        }
+
         @keyframes dot-pulse {
-            from {
-                transform: scale(1);
-                opacity: 1;
-            }
-            to {
-                transform: scale(1.1);
-                opacity: 0.7;
-            }
+            from { transform: scale(1); opacity: 1; }
+            to { transform: scale(1.1); opacity: 0.7; }
+        }
+
+        @keyframes fadeOut {
+            from { opacity: 1; }
+            to { opacity: 0; visibility: hidden; }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="outer-ring-detail one"></div>
-        <div class="outer-ring-detail two"></div>
-        <div class="circle-outer"></div>
-        <div class="circle-middle">
+    <!-- Login Overlay -->
+    <div class="login-overlay" id="loginOverlay">
+        <div class="login-container">
+            <div class="login-title">Login</div>
+            <div class="login-input-group">
+                <label for="username" class="login-label">Name</label>
+                <input type="text" id="username" class="login-input" placeholder="Tony Stark">
             </div>
-        <div class="circle-inner"></div>
-        <div class="circle-core">
-            <div class="jarvis-text">J.A.R.V.I.S.</div>
+            <div class="login-input-group">
+                <label for="password" class="login-label">Passwort</label>
+                <input type="password" id="password" class="login-input" placeholder="••••••••">
+            </div>
+            <div class="login-error" id="loginError"></div>
+            <button class="login-button" id="loginButton">Authentifizieren</button>
+            <div class="login-footer">Stark-Industrie-Security System</div>
         </div>
     </div>
-
-    <div class="status-bar" id="statusBar">
+    
+    <!-- Hauptinterface -->
+    <div class="main-interface" id="mainInterface">
+        <div class="container">
+            <div class="outer-ring-detail one"></div>
+            <div class="outer-ring-detail two"></div>
+            <div class="circle-outer"></div>
+            <div class="circle-middle"></div>
+            <div class="circle-inner"></div>
+            <div class="circle-core">
+                <div class="jarvis-text">J.A.R.V.I.S.</div>
+            </div>
         </div>
 
-    <div class="online-status">
-        <div class="online-dot"></div>
-        Online
+        <div class="status-bar" id="statusBar"></div>
+
+        <div class="online-status">
+            <div class="online-dot"></div>
+            Online
+        </div>
+
+        <elevenlabs-convai agent-id="agent_01jz428zryea58mbj66rbv8hg7"></elevenlabs-convai>
     </div>
 
-    <elevenlabs-convai agent-id="agent_01jz428zryea58mbj66rbv8hg7"></elevenlabs-convai>
     <script src="https://unpkg.com/@elevenlabs/convai-widget-embed" async type="text/javascript"></script>
 
     <script>
-        const statusBar = document.getElementById('statusBar');
-        const numBits = 50; // Anzahl der binären Ziffern in der Leiste
-        const maxOrangeBits = 3; // Maximale Anzahl gleichzeitig oranger Zahlen
-
-        // Initialisiere die Statusleiste mit Zufallszahlen
-        function initializeStatusBar() {
-            statusBar.innerHTML = ''; // Vorherigen Inhalt leeren
-            for (let i = 0; i < numBits; i++) {
-                const span = document.createElement('span');
-                span.textContent = Math.round(Math.random()); // 0 oder 1
-                statusBar.appendChild(span);
-            }
-        }
-
-        // Aktualisiere eine zufällige Zahl in der Leiste und füge Orange hinzu
-        function updateRandomBit() {
-            const spans = statusBar.querySelectorAll('span');
-            if (spans.length === 0) return;
-
-            // Zuerst alle orangefarbenen Klassen entfernen, um sie neu zu verteilen
-            spans.forEach(span => {
-                span.classList.remove('orange');
-            });
-
-            // Wähle eine zufällige Zahl zum Wechseln des Wertes
-            const randomIndexToChange = Math.floor(Math.random() * spans.length);
-            const spanToChange = spans[randomIndexToChange];
-            spanToChange.textContent = spanToChange.textContent === '0' ? '1' : '0';
-
-            // Kurz weiß aufleuchten lassen
-            spanToChange.style.color = '#fff';
-            setTimeout(() => {
-                spanToChange.style.color = ''; // CSS-Farbe wiederherstellen
-            }, 100);
-
-
-            // Zufällig einige Zahlen orange färben
-            let orangeCount = 0;
-            while (orangeCount < maxOrangeBits) {
-                const randomIndexForOrange = Math.floor(Math.random() * spans.length);
-                const randomSpanForOrange = spans[randomIndexForOrange];
-
-                // Nur färben, wenn es noch nicht orange ist und nicht das gerade geänderte Bit
-                if (!randomSpanForOrange.classList.contains('orange')) {
-                    randomSpanForOrange.classList.add('orange');
-                    orangeCount++;
+        document.addEventListener('DOMContentLoaded', function() {
+            const loginOverlay = document.getElementById('loginOverlay');
+            const loginButton = document.getElementById('loginButton');
+            const usernameInput = document.getElementById('username');
+            const passwordInput = document.getElementById('password');
+            const loginError = document.getElementById('loginError');
+            const mainInterface = document.getElementById('mainInterface');
+            
+            // Korrekte Anmeldedaten
+            const CORRECT_USERNAME = "Tony Stark";
+            const CORRECT_PASSWORD = "Morgan stark";
+            
+            // Login-Handler
+            function handleLogin() {
+                const username = usernameInput.value.trim();
+                const password = passwordInput.value.trim();
+                
+                console.log("Login attempt with:", username, password); // Debug output
+                
+                if (username === CORRECT_USERNAME && password === CORRECT_PASSWORD) {
+                    console.log("Login successful!"); // Debug output
+                    
+                    // Erfolgreiche Anmeldung
+                    loginError.textContent = "";
+                    loginError.classList.remove('show');
+                    
+                    // Animation für erfolgreiche Anmeldung
+                    loginOverlay.style.animation = 'fadeOut 0.5s forwards';
+                    setTimeout(() => {
+                        loginOverlay.style.display = 'none';
+                        mainInterface.style.display = 'flex';
+                        
+                        // Initialisiere das Hauptinterface
+                        initializeStatusBar();
+                        setInterval(updateRandomBit, 150);
+                    }, 500);
+                } else {
+                    console.log("Login failed!"); // Debug output
+                    
+                    // Fehler bei der Anmeldung
+                    loginError.textContent = "Zugangsdaten nicht erkannt. Bitte versuchen Sie es erneut.";
+                    loginError.classList.add('show');
+                    
+                    // Animation für Fehler
+                    loginOverlay.animate([
+                        { transform: 'translateX(0)' },
+                        { transform: 'translateX(-10px)' },
+                        { transform: 'translateX(10px)' },
+                        { transform: 'translateX(0)' }
+                    ], {
+                        duration: 300,
+                        iterations: 1
+                    });
                 }
             }
-        }
+            
+            // Event Listener für Login-Button
+            loginButton.addEventListener('click', handleLogin);
+            
+            // Event Listener für Enter-Taste in beiden Feldern
+            usernameInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    handleLogin();
+                }
+            });
+            
+            passwordInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    handleLogin();
+                }
+            });
+            
+            // Statusleisten-Funktionen
+            const statusBar = document.getElementById('statusBar');
+            const numBits = 50;
+            const maxOrangeBits = 3;
 
-        // Starte die Initialisierung und die kontinuierliche Aktualisierung
-        initializeStatusBar();
-        setInterval(updateRandomBit, 150); // Etwas langsamer, um die Orangen besser zu sehen
+            function initializeStatusBar() {
+                statusBar.innerHTML = '';
+                for (let i = 0; i < numBits; i++) {
+                    const span = document.createElement('span');
+                    span.textContent = Math.round(Math.random());
+                    statusBar.appendChild(span);
+                }
+            }
+
+            function updateRandomBit() {
+                const spans = statusBar.querySelectorAll('span');
+                if (spans.length === 0) return;
+
+                spans.forEach(span => {
+                    span.classList.remove('orange');
+                });
+
+                const randomIndexToChange = Math.floor(Math.random() * spans.length);
+                const spanToChange = spans[randomIndexToChange];
+                spanToChange.textContent = spanToChange.textContent === '0' ? '1' : '0';
+
+                spanToChange.style.color = '#fff';
+                setTimeout(() => {
+                    spanToChange.style.color = '';
+                }, 100);
+
+                let orangeCount = 0;
+                while (orangeCount < maxOrangeBits) {
+                    const randomIndexForOrange = Math.floor(Math.random() * spans.length);
+                    const randomSpanForOrange = spans[randomIndexForOrange];
+
+                    if (!randomSpanForOrange.classList.contains('orange')) {
+                        randomSpanForOrange.classList.add('orange');
+                        orangeCount++;
+                    }
+                }
+            }
+            
+            // Debug: Sofortiges Anzeigen des Hauptinterfaces (für Testzwecke)
+            // mainInterface.style.display = 'flex';
+            // initializeStatusBar();
+            // setInterval(updateRandomBit, 150);
+        });
     </script>
 </body>
 </html>
