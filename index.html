@@ -252,10 +252,11 @@
             animation: text-pulse 2s infinite alternate;
         }
 
+        /* Online Status - nach rechts verschoben */
         .online-status {
             position: fixed;
             top: 20px;
-            left: 20px;
+            left: 40px;
             display: flex;
             align-items: center;
             color: #00e0ff;
@@ -277,7 +278,7 @@
         /* Linke Statusleiste (neu positioniert) */
         .left-status-bar {
             position: fixed;
-            top: 60px; /* Unter dem Online-Status */
+            top: 60px;
             left: 20px;
             display: flex;
             flex-direction: column;
@@ -291,37 +292,37 @@
             display: none;
         }
 
-        /* Power Meter Container */
+        /* Power Meter Container - um 35% verkleinert */
         .power-meter-container {
             position: fixed;
-            top: 180px; /* Unter der Statusleiste */
+            top: 180px;
             left: 20px;
-            width: 120px;
-            height: 400px;
+            width: 80px;
+            height: 260px;
             background-color: rgba(0, 0, 0, 0.6);
             border: 2px solid #00e0ff;
-            border-radius: 15px;
-            box-shadow: 0 0 20px rgba(0, 224, 255, 0.7);
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 224, 255, 0.7);
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding: 20px 10px;
+            padding: 15px 8px;
             z-index: 900;
             display: none;
         }
 
         .meter-label {
-            font-size: 1.5em;
+            font-size: 1.1em;
             color: #00e0ff;
             text-shadow: 0 0 10px #00e0ff;
-            margin-bottom: 15px;
+            margin-bottom: 10px;
             letter-spacing: 2px;
             text-transform: uppercase;
             font-family: 'Orbitron', sans-serif;
         }
 
         .meter-body {
-            width: 50px;
+            width: 35px;
             height: 100%;
             background-color: #1a1a2e;
             border: 1px solid rgba(0, 224, 255, 0.5);
@@ -337,29 +338,29 @@
             bottom: 0;
             left: 0;
             transition: height 0.5s ease-in-out;
-            box-shadow: 0 0 15px rgba(57, 255, 20, 0.8), 0 0 25px rgba(0, 224, 255, 0.6);
+            box-shadow: 0 0 10px rgba(57, 255, 20, 0.8), 0 0 20px rgba(0, 224, 255, 0.6);
         }
 
         .meter-fill.low-power {
             background: linear-gradient(to top, #ff4500, #ffa500);
-            box-shadow: 0 0 15px rgba(255, 69, 0, 0.8), 0 0 25px rgba(255, 165, 0, 0.6);
+            box-shadow: 0 0 10px rgba(255, 69, 0, 0.8), 0 0 20px rgba(255, 165, 0, 0.6);
         }
 
         .meter-fill.glitch-active {
             background: linear-gradient(to top, #ff00ff, #ffff00);
-            box-shadow: 0 0 20px #ff00ff, 0 0 30px #ffff00;
+            box-shadow: 0 0 15px #ff00ff, 0 0 25px #ffff00;
             animation: glitch-fill 0.1s steps(2, start) infinite alternate;
         }
 
         .meter-percentage.glitch-active {
             color: #ffff00;
-            text-shadow: 0 0 10px #ffff00, 0 0 20px #ff00ff;
+            text-shadow: 0 0 8px #ffff00, 0 0 15px #ff00ff;
             animation: glitch-text 0.1s steps(2, start) infinite alternate;
         }
 
         .meter-label.glitch-active {
             color: #ff00ff;
-            text-shadow: 0 0 10px #ff00ff, 0 0 20px #ffff00;
+            text-shadow: 0 0 8px #ff00ff, 0 0 15px #ffff00;
             animation: glitch-text 0.1s steps(2, start) infinite alternate;
         }
 
@@ -382,9 +383,9 @@
             position: absolute;
             width: 100%;
             text-align: center;
-            bottom: -25px;
+            bottom: -20px;
             left: 0;
-            font-size: 1.1em;
+            font-size: 0.9em;
             font-weight: bold;
             color: #00e0ff;
             text-shadow: 0 0 8px #00e0ff;
@@ -413,11 +414,11 @@
             position: absolute;
             left: 50%;
             transform: translateX(-50%);
-            width: 8px;
-            height: 8px;
+            width: 6px;
+            height: 6px;
             background-color: #00e0ff;
             border-radius: 50%;
-            box-shadow: 0 0 10px #00e0ff, 0 0 20px rgba(0, 224, 255, 0.5);
+            box-shadow: 0 0 8px #00e0ff, 0 0 15px rgba(0, 224, 255, 0.5);
             animation: dot-pulse 1.5s infinite alternate;
             z-index: 10;
         }
@@ -968,16 +969,14 @@
                 const username = usernameInput.value.trim();
                 const password = passwordInput.value.trim();
                 
-                console.log("Login attempt with:", username, password); // Debug output
+                console.log("Login attempt with:", username, password);
                 
                 if (username === CORRECT_USERNAME && password === CORRECT_PASSWORD) {
-                    console.log("Login successful!"); // Debug output
+                    console.log("Login successful!");
                     
-                    // Erfolgreiche Anmeldung
                     loginError.textContent = "";
                     loginError.classList.remove('show');
                     
-                    // Animation für erfolgreiche Anmeldung
                     loginOverlay.style.animation = 'fadeOut 0.5s forwards';
                     setTimeout(() => {
                         loginOverlay.style.display = 'none';
@@ -986,7 +985,6 @@
                         leftStatusBar.style.display = 'flex';
                         powerMeter.style.display = 'flex';
                         
-                        // Initialisiere das Hauptinterface
                         initializeBinaryCode();
                         initializeMinimalStatus();
                         initializeWeekOverview();
@@ -994,13 +992,11 @@
                         initializePowerMeter();
                     }, 500);
                 } else {
-                    console.log("Login failed!"); // Debug output
+                    console.log("Login failed!");
                     
-                    // Fehler bei der Anmeldung
                     loginError.textContent = "Zugangsdaten nicht erkannt. Bitte versuchen Sie es erneut.";
                     loginError.classList.add('show');
                     
-                    // Animation für Fehler
                     loginOverlay.animate([
                         { transform: 'translateX(0)' },
                         { transform: 'translateX(-10px)' },
@@ -1013,10 +1009,8 @@
                 }
             }
             
-            // Event Listener für Login-Button
             loginButton.addEventListener('click', handleLogin);
             
-            // Event Listener für Enter-Taste in beiden Feldern
             usernameInput.addEventListener('keypress', function(e) {
                 if (e.key === 'Enter') {
                     handleLogin();
@@ -1029,7 +1023,6 @@
                 }
             });
             
-            // Binärcode-Footer Funktionen
             function initializeBinaryCode() {
                 const binaryCodeDisplay = document.getElementById('binary-code-display');
                 const totalChars = 200;
@@ -1039,20 +1032,17 @@
 
                 let currentBinaryArray = [];
 
-                // Initialisiert das Array mit zufälligen Nullen und Einsen
                 for (let i = 0; i < totalChars; i++) {
                     currentBinaryArray.push(Math.round(Math.random()));
                 }
 
                 function updateBinaryDisplay() {
-                    // Zufällig einige Zahlen ändern (0 wird zu 1, 1 wird zu 0)
                     const charsToChange = Math.floor(Math.random() * (totalChars / 8));
                     for (let i = 0; i < charsToChange; i++) {
                         const randomIndex = Math.floor(Math.random() * totalChars);
                         currentBinaryArray[randomIndex] = 1 - currentBinaryArray[randomIndex];
                     }
 
-                    // Highlights setzen
                     let highlightedIndices = new Set();
                     const actualHighlightCount = Math.min(highlightCount, totalChars);
                     while (highlightedIndices.size < actualHighlightCount) {
@@ -1072,14 +1062,10 @@
                     binaryCodeDisplay.innerHTML = htmlString;
                 }
 
-                // Initialer Aufruf
                 updateBinaryDisplay();
-
-                // Regelmäßige Aktualisierung der Binärzeichen und Highlights
                 setInterval(updateBinaryDisplay, updateInterval);
             }
             
-            // Funktionen für die linke Statusleiste
             function initializeMinimalStatus() {
                 const statusItems = {
                     logic: { element: document.getElementById('logic-status'), values: ['ONLINE', 'ACTIVE', 'NOMINAL', 'GREEN'] },
@@ -1088,7 +1074,6 @@
                     pwr: { element: document.getElementById('pwr-status'), values: ['ACTIVE', 'HIGH', 'CHARGED', 'READY'] }
                 };
 
-                // Zustände, die grün sein sollen
                 const greenStates = ['READY', 'ACTIVE', 'ONLINE'];
 
                 function updateMinimalStatus() {
@@ -1099,7 +1084,6 @@
                         
                         item.element.textContent = newValue;
 
-                        // Klasse für grüne Farbe hinzufügen oder entfernen
                         if (greenStates.includes(newValue)) {
                             item.element.classList.add('status-green');
                         } else {
@@ -1108,26 +1092,22 @@
                     }
                 }
 
-                // Initialer Aufruf
                 updateMinimalStatus();
-                // Aktualisiert die Statuswerte alle 3.5 Sekunden
                 setInterval(updateMinimalStatus, 3500);
             }
             
-            // Funktion für die Wochenübersicht
             function initializeWeekOverview() {
                 const horizontalWeekContainer = document.getElementById('jarvis-horizontal-week');
                 const numDaysToShow = 7;
                 const centerIndex = Math.floor(numDaysToShow / 2);
 
                 function renderHorizontalWeek() {
-                    // Den separaten Separator temporär entfernen, um ihn nicht zu löschen
                     const existingSeparator = document.getElementById('full-width-separator');
                     if (existingSeparator) {
                         horizontalWeekContainer.removeChild(existingSeparator);
                     }
                     
-                    horizontalWeekContainer.innerHTML = ''; // Alten Inhalt leeren
+                    horizontalWeekContainer.innerHTML = '';
 
                     const today = new Date();
                     const dayOfWeekNamesShort = ["So", "Mo", "Di", "Mi", "Do", "Fr", "Sa"];
@@ -1167,12 +1147,10 @@
                         horizontalWeekContainer.appendChild(dayBlock);
                     }
 
-                    // Den durchgehenden Separator wieder hinzufügen
                     if (existingSeparator) {
                         horizontalWeekContainer.appendChild(existingSeparator);
                     }
 
-                    // Klasse am Hauptcontainer setzen, wenn "heute" angezeigt wird
                     if (isTodayInView) {
                         horizontalWeekContainer.classList.add('today-active');
                     } else {
@@ -1195,7 +1173,6 @@
                 setDailyUpdate();
             }
             
-            // Funktion für die Systemstatus-Anzeige
             function initializeSystemStatus() {
                 const lines = [
                     document.getElementById('statusLine1'),
@@ -1206,7 +1183,7 @@
                 const promptLine = document.getElementById('statusPromptLine');
 
                 let currentLineIndex = 0;
-                const typingSpeed = 30; // Millisekunden pro Zeichen
+                const typingSpeed = 30;
 
                 function typeWriter(element, text, callback) {
                     let charIndex = 0;
@@ -1249,22 +1226,20 @@
                     }
                 }
 
-                // Glitch-Animationen standardmäßig pausieren, bis der Text getippt wurde
                 document.querySelectorAll('#systemStatus .glitch-text').forEach(el => {
                     el.style.animationPlayState = 'paused';
                 });
                 showNextLine();
             }
             
-            // Funktion für den Power Meter
             function initializePowerMeter() {
                 const powerFill = document.getElementById('powerFill');
                 const powerPercentage = document.getElementById('powerPercentage');
                 const meterLabel = document.getElementById('meterLabel');
 
-                let currentPower = 100; // Startwert bei 100%
-                const minPower = 72; // Minimalwert, auf den es fallen kann
-                const maxPower = 100; // Maximalwert (100%)
+                let currentPower = 100;
+                const minPower = 72;
+                const maxPower = 100;
 
                 function updatePowerDisplay(value) {
                     value = Math.max(0, Math.min(100, value));
@@ -1283,7 +1258,7 @@
                 }
 
                 function generateRandomPower() {
-                    const fluctuation = (Math.random() - 0.5) * 4; // Schwankt zwischen -2 und +2
+                    const fluctuation = (Math.random() - 0.5) * 3;
                     let newPower = currentPower + fluctuation;
                     newPower = Math.max(minPower, Math.min(maxPower, newPower));
                     return Math.round(newPower);
@@ -1302,31 +1277,20 @@
                 }
 
                 function startDynamicPowerFluctuation() {
-                    updatePowerDisplay(100);
+                    updatePowerDisplay(95);
 
                     setInterval(() => {
                         const newRandomPower = generateRandomPower();
                         updatePowerDisplay(newRandomPower);
 
-                        if (Math.random() < 0.05) { 
+                        if (Math.random() < 0.04) {
                             applyGlitchEffect();
                         }
-                    }, 1500);
+                    }, 1800);
                 }
 
                 startDynamicPowerFluctuation();
             }
-            
-            // Debug: Sofortiges Anzeigen des Hauptinterfaces (für Testzwecke)
-            // mainInterface.style.display = 'flex';
-            // binaryFooter.style.display = 'block';
-            // leftStatusBar.style.display = 'flex';
-            // powerMeter.style.display = 'flex';
-            // initializeBinaryCode();
-            // initializeMinimalStatus();
-            // initializeWeekOverview();
-            // initializeSystemStatus();
-            // initializePowerMeter();
         });
     </script>
 </body>
