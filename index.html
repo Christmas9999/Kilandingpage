@@ -147,7 +147,7 @@
             justify-content: center;
             align-items: center;
             position: relative;
-            color: #00e0ff; /* Standardtextfarbe für das Interface */
+            color: #00e0ff;
         }
 
         .container {
@@ -275,6 +275,59 @@
             box-shadow: 0 0 8px #00e0ff, 0 0 15px rgba(0, 224, 255, 0.5);
             animation: dot-pulse 1.5s infinite alternate;
         }
+
+        /* Schwebende Balken - Angepasst für J.A.R.V.I.S. */
+        .dna-container {
+            position: fixed;
+            top: 20px;
+            right: 280px; /* Angepasst von 200px auf 280px für bessere Positionierung */
+            width: 120px;
+            height: 300px;
+            transform-style: preserve-3d;
+            transform: rotateY(0deg) rotateX(0deg) scale(0.5);
+            animation: dna-rotate 20s infinite linear;
+            z-index: 1001;
+            filter: drop-shadow(0 0 5px rgba(0, 224, 255, 0.7));
+        }
+
+        @keyframes dna-rotate {
+            0% { transform: rotateY(0deg) rotateX(0deg) scale(0.5); }
+            100% { transform: rotateY(360deg) rotateX(0deg) scale(0.5); }
+        }
+
+        .dna-rung {
+            position: absolute;
+            width: 80px;
+            height: 6px;
+            background-color: #00e0ff;
+            border-radius: 3px;
+            box-shadow: 0 0 8px rgba(0, 224, 255, 0.8),
+                        0 0 15px rgba(0, 224, 255, 0.4);
+            left: 50%;
+            transform: translateX(-50%) rotateY(0deg) rotateX(0deg);
+            transform-style: preserve-3d;
+        }
+
+        /* Positionierung und Drehung der einzelnen Balken */
+        .rung-1 { top: 20px; transform: translateX(-50%) rotateY(0deg) rotateX(0deg); }
+        .rung-2 { top: 35px; transform: translateX(-50%) rotateY(20deg) rotateX(5deg); }
+        .rung-3 { top: 50px; transform: translateX(-50%) rotateY(40deg) rotateX(10deg); }
+        .rung-4 { top: 65px; transform: translateX(-50%) rotateY(60deg) rotateX(15deg); }
+        .rung-5 { top: 80px; transform: translateX(-50%) rotateY(80deg) rotateX(20deg); }
+        .rung-6 { top: 95px; transform: translateX(-50%) rotateY(100deg) rotateX(25deg); }
+        .rung-7 { top: 110px; transform: translateX(-50%) rotateY(120deg) rotateX(30deg); }
+        .rung-8 { top: 125px; transform: translateX(-50%) rotateY(140deg) rotateX(35deg); }
+        .rung-9 { top: 140px; transform: translateX(-50%) rotateY(160deg) rotateX(40deg); }
+        .rung-10 { top: 155px; transform: translateX(-50%) rotateY(180deg) rotateX(45deg); }
+        .rung-11 { top: 170px; transform: translateX(-50%) rotateY(200deg) rotateX(40deg); }
+        .rung-12 { top: 185px; transform: translateX(-50%) rotateY(220deg) rotateX(35deg); }
+        .rung-13 { top: 200px; transform: translateX(-50%) rotateY(240deg) rotateX(30deg); }
+        .rung-14 { top: 215px; transform: translateX(-50%) rotateY(260deg) rotateX(25deg); }
+        .rung-15 { top: 230px; transform: translateX(-50%) rotateY(280deg) rotateX(20deg); }
+        .rung-16 { top: 245px; transform: translateX(-50%) rotateY(300deg) rotateX(15deg); }
+        .rung-17 { top: 260px; transform: translateX(-50%) rotateY(320deg) rotateX(10deg); }
+        .rung-18 { top: 275px; transform: translateX(-50%) rotateY(340deg) rotateX(5deg); }
+        .rung-19 { top: 290px; transform: translateX(-50%) rotateY(360deg) rotateX(0deg); }
 
         /* EKG Display */
         .ekg-display {
@@ -1055,6 +1108,10 @@
                 width: 95%;
                 margin: 20px auto;
             }
+
+            .dna-container {
+                display: none;
+            }
         }
 
         @media (max-width: 480px) {
@@ -1109,6 +1166,29 @@
         <div class="online-status">
             <div class="online-dot"></div>
             Online
+        </div>
+
+        <!-- Schwebende Balken (DNA-ähnlich) - Position angepasst -->
+        <div class="dna-container" id="floatingBars">
+            <div class="dna-rung rung-1"></div>
+            <div class="dna-rung rung-2"></div>
+            <div class="dna-rung rung-3"></div>
+            <div class="dna-rung rung-4"></div>
+            <div class="dna-rung rung-5"></div>
+            <div class="dna-rung rung-6"></div>
+            <div class="dna-rung rung-7"></div>
+            <div class="dna-rung rung-8"></div>
+            <div class="dna-rung rung-9"></div>
+            <div class="dna-rung rung-10"></div>
+            <div class="dna-rung rung-11"></div>
+            <div class="dna-rung rung-12"></div>
+            <div class="dna-rung rung-13"></div>
+            <div class="dna-rung rung-14"></div>
+            <div class="dna-rung rung-15"></div>
+            <div class="dna-rung rung-16"></div>
+            <div class="dna-rung rung-17"></div>
+            <div class="dna-rung rung-18"></div>
+            <div class="dna-rung rung-19"></div>
         </div>
 
         <!-- EKG Display -->
