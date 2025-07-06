@@ -147,6 +147,7 @@
             justify-content: center;
             align-items: center;
             position: relative;
+            color: #00e0ff; /* Standardtextfarbe für das Interface */
         }
 
         .container {
@@ -295,15 +296,109 @@
             height: 100%;
         }
 
-        /* Linke Statusleiste */
-        .left-status-bar {
+        /* System Stats Container */
+        .system-stats-container {
             position: fixed;
-            top: 60px;
-            left: 210px;
+            top: 140px;
+            left: 20px;
+            z-index: 900;
+            transform: scale(0.8);
+            transform-origin: left top;
+            background-color: rgba(0, 20, 30, 0.6);
+            border: 1px solid rgba(0, 224, 255, 0.3);
+            border-radius: 10px;
+            padding: 15px;
+            box-shadow: 0 0 15px rgba(0, 224, 255, 0.4);
+            display: none;
+        }
+
+        .stats-boxes {
+            display: flex;
+            gap: 30px;
+        }
+
+        .stat-box {
             display: flex;
             flex-direction: column;
-            gap: 15px;
-            padding: 20px 15px;
+            align-items: center;
+            text-align: center;
+            position: relative;
+            padding: 15px 0;
+            transition: all 0.3s ease;
+        }
+
+        .stat-box:hover {
+            transform: translateY(-5px);
+            cursor: pointer;
+        }
+
+        .circle-container {
+            position: relative;
+            width: 120px;
+            height: 120px;
+            margin-bottom: 10px;
+        }
+
+        .circle-container svg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            transform: rotate(-90deg);
+        }
+
+        .circle-bg {
+            stroke: rgba(255, 255, 255, 0.1);
+            stroke-width: 8;
+            fill: transparent;
+        }
+
+        .circle-fill {
+            stroke: #00e0ff;
+            stroke-width: 8;
+            fill: transparent;
+            transition: all 0.5s ease;
+            filter: drop-shadow(0 0 5px rgba(0, 224, 255, 0.7));
+        }
+
+        .stat-box:hover .circle-fill {
+            stroke: #39ff14;
+            filter: drop-shadow(0 0 10px rgba(57, 255, 20, 0.9));
+        }
+
+        .circle-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 1.8em;
+            font-weight: bold;
+            color: #fff;
+            font-family: 'Orbitron', sans-serif;
+            text-shadow: 0 0 8px rgba(0, 224, 255, 0.7);
+        }
+
+        .stats-text {
+            font-family: 'Roboto Mono', monospace;
+            font-size: 0.9em;
+            line-height: 1.6;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .stats-value {
+            color: #00e0ff;
+            font-weight: bold;
+            text-shadow: 0 0 5px rgba(0, 224, 255, 0.5);
+        }
+
+        /* Linke Statusleiste - jetzt links über der Powerleiste */
+        .left-status-bar {
+            position: fixed;
+            bottom: 250px;
+            left: 20px;
+            display: flex;
+            flex-direction: row;
+            gap: 30px;
+            padding: 15px 25px;
             background-color: rgba(0, 188, 212, 0.08);
             border: 1px solid rgba(0, 188, 212, 0.3);
             border-radius: 8px;
@@ -452,7 +547,7 @@
         .cyberpunk-globe {
             position: fixed;
             bottom: 20px;
-            left: 100px; /* Position rechts neben der Powerleiste */
+            left: 100px;
             z-index: 900;
             width: 192px;
             height: 192px;
@@ -589,6 +684,7 @@
             z-index: 1000;
             width: 300px;
             height: 150px;
+            display: none;
         }
 
         /* Wochenübersicht Stil */
@@ -598,6 +694,7 @@
             right: 20px;
             z-index: 1000;
             width: 300px;
+            display: none;
         }
 
         .jarvis-horizontal-week {
@@ -710,6 +807,7 @@
             padding: 12px;
             box-shadow: 0 0 20px rgba(0, 224, 255, 0.5);
             animation: container-glow 3s infinite alternate;
+            display: none;
         }
 
         @keyframes container-glow {
@@ -1018,7 +1116,48 @@
             <canvas class="ekg-canvas" id="ekgCanvas"></canvas>
         </div>
 
-        <!-- Linke Statusleiste -->
+        <!-- System Stats Container -->
+        <div class="system-stats-container" id="systemStatsContainer">
+            <div class="stats-boxes">
+                <div class="stat-box">
+                    <div class="circle-container">
+                        <svg viewBox="0 0 100 100">
+                            <circle class="circle-bg" cx="50" cy="50" r="45"></circle>
+                            <circle class="circle-fill" id="dwn-fill" cx="50" cy="50" r="45"></circle>
+                        </svg>
+                        <div class="circle-text">DWN</div>
+                    </div>
+                    <div class="stats-text">Speed: <span class="stats-value" id="dwn-speed">3.9</span> kB/s</div>
+                    <div class="stats-text">Total: <span class="stats-value" id="dwn-total">653.6</span> GB</div>
+                </div>
+
+                <div class="stat-box">
+                    <div class="circle-container">
+                        <svg viewBox="0 0 100 100">
+                            <circle class="circle-bg" cx="50" cy="50" r="45"></circle>
+                            <circle class="circle-fill" id="ram-fill" cx="50" cy="50" r="45"></circle>
+                        </svg>
+                        <div class="circle-text">RAM</div>
+                    </div>
+                    <div class="stats-text">Used: <span class="stats-value" id="ram-used">2.0</span> GB</div>
+                    <div class="stats-text">Free: <span class="stats-value" id="ram-free">2.0</span> GB</div>
+                </div>
+
+                <div class="stat-box">
+                    <div class="circle-container">
+                        <svg viewBox="0 0 100 100">
+                            <circle class="circle-bg" cx="50" cy="50" r="45"></circle>
+                            <circle class="circle-fill" id="up-fill" cx="50" cy="50" r="45"></circle>
+                        </svg>
+                        <div class="circle-text">UP</div>
+                    </div>
+                    <div class="stats-text">Speed: <span class="stats-value" id="up-speed">126.7</span> kB/s</div>
+                    <div class="stats-text">Total: <span class="stats-value" id="up-total">149.7</span> GB</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Linke Statusleiste - jetzt links über der Powerleiste -->
         <div class="left-status-bar">
             <div class="status-item-minimal">
                 <span class="status-label-minimal">LOGIC:</span>
@@ -1153,6 +1292,10 @@
             const powerMeter = document.querySelector('.power-meter-container');
             const ekgDisplay = document.getElementById('ekgDisplay');
             const cyberpunkGlobe = document.querySelector('.cyberpunk-globe');
+            const systemStatsContainer = document.getElementById('systemStatsContainer');
+            const systemStatus = document.getElementById('systemStatus');
+            const weekOverview = document.querySelector('.week-overview');
+            const weatherWidget = document.querySelector('.weather-widget');
             
             // Korrekte Anmeldedaten
             const CORRECT_USERNAME = "Tony Stark";
@@ -1175,11 +1318,17 @@
                     setTimeout(() => {
                         loginOverlay.style.display = 'none';
                         mainInterface.style.display = 'flex';
+                        
+                        // Alle Interface-Elemente korrekt anzeigen
                         binaryFooter.style.display = 'block';
                         leftStatusBar.style.display = 'flex';
                         powerMeter.style.display = 'flex';
                         ekgDisplay.style.display = 'block';
                         cyberpunkGlobe.style.display = 'block';
+                        systemStatsContainer.style.display = 'block';
+                        systemStatus.style.display = 'block';
+                        weekOverview.style.display = 'block';
+                        weatherWidget.style.display = 'block';
                         
                         initializeBinaryCode();
                         initializeMinimalStatus();
@@ -1188,6 +1337,7 @@
                         initializePowerMeter();
                         initializeEKG();
                         initializeGlobeConnectors();
+                        initializeSystemStats();
                     }, 500);
                 } else {
                     console.log("Login failed!");
@@ -1610,6 +1760,63 @@
                 // Positioniere die Container mit festem Abstand zu den Punkten
                 positionLabelContainer(labelGermanyContainer, germanySourceDot, 30);
                 positionLabelContainer(labelCoordsContainer, coordsSourceDot, 30);
+            }
+
+            function initializeSystemStats() {
+                function updateCircleFill(circleId, percentage) {
+                    const circle = document.getElementById(circleId);
+                    const radius = circle.r.baseVal.value;
+                    const circumference = 2 * Math.PI * radius;
+
+                    circle.style.strokeDasharray = `${circumference} ${circumference}`;
+                    const offset = circumference - (percentage / 100) * circumference;
+                    circle.style.strokeDashoffset = offset;
+                }
+
+                const maxDownloadSpeed = 1200;
+                const maxUploadSpeed = 600;
+                const totalRamGb = 8.0;
+
+                function updateStats() {
+                    // Download Stats
+                    const dwnCurrentSpeed = parseFloat(document.getElementById('dwn-speed').textContent);
+                    const dwnSpeedChange = (Math.random() * 50 - 25);
+                    const newDwnSpeed = Math.max(10, Math.min(maxDownloadSpeed * 0.9, dwnCurrentSpeed + dwnSpeedChange)).toFixed(1);
+                    document.getElementById('dwn-speed').textContent = newDwnSpeed;
+                    const dwnTotal = (parseFloat(document.getElementById('dwn-total').textContent) + Math.random() * 0.01).toFixed(1);
+                    document.getElementById('dwn-total').textContent = dwnTotal;
+                    const dwnPercentage = (parseFloat(newDwnSpeed) / maxDownloadSpeed) * 100;
+                    updateCircleFill('dwn-fill', dwnPercentage);
+
+                    // RAM Stats
+                    let ramUsed = parseFloat(document.getElementById('ram-used').textContent);
+                    const ramChange = (Math.random() * 0.1 - 0.05);
+                    ramUsed = Math.max(0.5, Math.min(totalRamGb - 0.5, ramUsed + ramChange)).toFixed(1);
+                    const ramFree = (totalRamGb - parseFloat(ramUsed)).toFixed(1);
+
+                    document.getElementById('ram-used').textContent = ramUsed;
+                    document.getElementById('ram-free').textContent = ramFree;
+                    const ramPercentage = (parseFloat(ramUsed) / totalRamGb) * 100;
+                    updateCircleFill('ram-fill', ramPercentage);
+
+                    // Upload Stats
+                    const upCurrentSpeed = parseFloat(document.getElementById('up-speed').textContent);
+                    const upSpeedChange = (Math.random() * 30 - 15);
+                    const newUpSpeed = Math.max(5, Math.min(maxUploadSpeed * 0.9, upCurrentSpeed + upSpeedChange)).toFixed(1);
+                    document.getElementById('up-speed').textContent = newUpSpeed;
+                    const upTotal = (parseFloat(document.getElementById('up-total').textContent) + Math.random() * 0.005).toFixed(1);
+                    document.getElementById('up-total').textContent = upTotal;
+                    const upPercentage = (parseFloat(newUpSpeed) / maxUploadSpeed) * 100;
+                    updateCircleFill('up-fill', upPercentage);
+                }
+
+                // Initialisiere die Kreise
+                updateCircleFill('dwn-fill', 30);
+                updateCircleFill('ram-fill', 50);
+                updateCircleFill('up-fill', 20);
+
+                setInterval(updateStats, 800);
+                updateStats();
             }
 
             // Initialisiere die Verbindungslinien beim Laden und bei Größenänderungen
