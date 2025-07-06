@@ -292,13 +292,13 @@
             display: none;
         }
 
-        /* Power Meter Container - um 35% verkleinert */
+        /* Power Meter Container - nach unten links verschoben und angepasst */
         .power-meter-container {
             position: fixed;
-            top: 180px;
+            bottom: 20px;
             left: 20px;
-            width: 80px;
-            height: 260px;
+            width: 70px;
+            height: 220px;
             background-color: rgba(0, 0, 0, 0.6);
             border: 2px solid #00e0ff;
             border-radius: 10px;
@@ -306,23 +306,23 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding: 15px 8px;
+            padding: 12px 5px;
             z-index: 900;
             display: none;
         }
 
         .meter-label {
-            font-size: 1.1em;
+            font-size: 0.9em;
             color: #00e0ff;
             text-shadow: 0 0 10px #00e0ff;
-            margin-bottom: 10px;
-            letter-spacing: 2px;
+            margin-bottom: 8px;
+            letter-spacing: 1px;
             text-transform: uppercase;
             font-family: 'Orbitron', sans-serif;
         }
 
         .meter-body {
-            width: 35px;
+            width: 30px;
             height: 100%;
             background-color: #1a1a2e;
             border: 1px solid rgba(0, 224, 255, 0.5);
@@ -385,7 +385,7 @@
             text-align: center;
             bottom: -20px;
             left: 0;
-            font-size: 0.9em;
+            font-size: 0.8em;
             font-weight: bold;
             color: #00e0ff;
             text-shadow: 0 0 8px #00e0ff;
@@ -882,7 +882,7 @@
 
         <!-- Power Meter -->
         <div class="power-meter-container">
-            <div class="meter-label" id="meterLabel">POWER</div>
+            <div class="meter-label" id="meterLabel">PWR</div>
             <div class="meter-body">
                 <div class="meter-fill" id="powerFill"></div>
                 <div class="glow-dot" style="bottom: 15%;"></div>
