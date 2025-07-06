@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>J.A.R.V.I.S. - Login</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -282,6 +283,112 @@
             height: 150px;
         }
 
+        /* Wochenübersicht Stil */
+        .week-overview {
+            position: fixed;
+            bottom: 180px; /* Platz über dem Wetter-Widget */
+            right: 20px;
+            z-index: 1000;
+            width: 300px;
+        }
+
+        .jarvis-horizontal-week {
+            width: 100%;
+            padding: 15px 0;
+            background-color: transparent;
+            border: none;
+            border-radius: 0;
+            box-shadow: none;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            gap: 0px;
+        }
+
+        .day-block {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 5px 0;
+            width: calc(100% / 7);
+            position: relative;
+            z-index: 1;
+            opacity: 0.7;
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+
+        .day-block.today {
+            opacity: 1;
+            transform: scale(1.05);
+        }
+
+        .day-block::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: transparent;
+            border-radius: 4px;
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+            z-index: -1;
+        }
+
+        .day-name {
+            font-family: 'Roboto Mono', monospace;
+            font-size: 0.9em;
+            color: #00bcd4;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 2px;
+            transition: color 0.3s ease;
+        }
+
+        .day-separator-horizontal {
+            width: 100%;
+            height: 1px;
+            background-color: rgba(0, 188, 212, 0.3);
+            margin: 3px 0;
+            transition: background-color 0.3s ease;
+            position: absolute;
+            bottom: 50px;
+            left: 0;
+        }
+
+        .day-date {
+            font-family: 'Roboto Mono', monospace;
+            font-size: 1.6em;
+            font-weight: bold;
+            color: #00bcd4;
+            transition: color 0.3s ease;
+        }
+
+        .day-block.today::before {
+            background-color: rgba(0, 188, 212, 0.6);
+            box-shadow: 0 0 10px rgba(0, 188, 212, 0.7);
+            animation: subtleHighlightPulse 1.8s infinite alternate;
+        }
+        
+        .day-block.today .day-name,
+        .day-block.today .day-date {
+            color: #e6edf3;
+            text-shadow: 0 0 5px rgba(230, 237, 243, 0.5);
+        }
+
+        .jarvis-horizontal-week.today-active .day-separator-horizontal {
+            background-color: #00bcd4;
+            box-shadow: 0 0 8px rgba(0, 188, 212, 0.6);
+        }
+
+        @keyframes subtleHighlightPulse {
+            0% { box-shadow: 0 0 8px rgba(0, 188, 212, 0.6); transform: scale(1.05); }
+            100% { box-shadow: 0 0 15px rgba(0, 188, 212, 0.8); transform: scale(1.06); }
+        }
+
         /* --- Stil für den Binärcode-Footer --- */
         .binary-footer {
             width: 100%;
@@ -441,6 +548,14 @@
             .status-value-minimal {
                 font-size: 0.9em;
             }
+
+            .week-overview {
+                position: relative;
+                bottom: auto;
+                right: auto;
+                width: 95%;
+                margin: 20px auto;
+            }
         }
 
         @media (max-width: 480px) {
@@ -448,6 +563,16 @@
                 flex-wrap: wrap;
                 gap: 8px 15px;
                 padding: 8px;
+            }
+            
+            .jarvis-horizontal-week {
+                flex-wrap: wrap;
+                gap: 5px;
+            }
+            
+            .day-block {
+                width: calc(100% / 4);
+                margin-bottom: 5px;
             }
         }
     </style>
@@ -509,6 +634,13 @@
             Online
         </div>
 
+        <!-- Wochenübersicht -->
+        <div class="week-overview">
+            <div class="jarvis-horizontal-week" id="jarvis-horizontal-week">
+                <div class="day-separator-horizontal" id="full-width-separator"></div>
+            </div>
+        </div>
+
         <!-- Wetter Widget -->
         <div class="weather-widget">
             <a class="weatherwidget-io" href="https://forecast7.com/de/53d9910d78/timmendorfer-strand/" data-label_1="Timmendorfer Strand" data-label_2="WEATHER" data-font="Roboto" data-mode="Current" data-days="3" data-textcolor="#0a9e96">Timmendorfer Strand WEATHER</a>
@@ -567,6 +699,7 @@
                         // Initialisiere das Hauptinterface
                         initializeBinaryCode();
                         initializeMinimalStatus();
+                        initializeWeekOverview();
                     }, 500);
                 } else {
                     console.log("Login failed!"); // Debug output
@@ -689,12 +822,94 @@
                 setInterval(updateMinimalStatus, 3500);
             }
             
+            // Funktion für die Wochenübersicht
+            function initializeWeekOverview() {
+                const horizontalWeekContainer = document.getElementById('jarvis-horizontal-week');
+                const numDaysToShow = 7;
+                const centerIndex = Math.floor(numDaysToShow / 2);
+
+                function renderHorizontalWeek() {
+                    // Den separaten Separator temporär entfernen, um ihn nicht zu löschen
+                    const existingSeparator = document.getElementById('full-width-separator');
+                    if (existingSeparator) {
+                        horizontalWeekContainer.removeChild(existingSeparator);
+                    }
+                    
+                    horizontalWeekContainer.innerHTML = ''; // Alten Inhalt leeren
+
+                    const today = new Date();
+                    const dayOfWeekNamesShort = ["So", "Mo", "Di", "Mi", "Do", "Fr", "Sa"];
+
+                    const startDate = new Date(today);
+                    startDate.setDate(today.getDate() - centerIndex);
+
+                    let isTodayInView = false;
+
+                    for (let i = 0; i < numDaysToShow; i++) {
+                        const currentDate = new Date(startDate);
+                        currentDate.setDate(startDate.getDate() + i);
+
+                        const dayBlock = document.createElement('div');
+                        dayBlock.classList.add('day-block');
+
+                        const isToday = (currentDate.getDate() === today.getDate() &&
+                                         currentDate.getMonth() === today.getMonth() &&
+                                         currentDate.getFullYear() === today.getFullYear());
+                        
+                        if (isToday) {
+                            dayBlock.classList.add('today');
+                            isTodayInView = true;
+                        }
+
+                        const dayName = document.createElement('span');
+                        dayName.classList.add('day-name');
+                        dayName.textContent = dayOfWeekNamesShort[currentDate.getDay()];
+
+                        const dayDate = document.createElement('span');
+                        dayDate.classList.add('day-date');
+                        dayDate.textContent = currentDate.getDate();
+
+                        dayBlock.appendChild(dayName);
+                        dayBlock.appendChild(dayDate);
+
+                        horizontalWeekContainer.appendChild(dayBlock);
+                    }
+
+                    // Den durchgehenden Separator wieder hinzufügen
+                    if (existingSeparator) {
+                        horizontalWeekContainer.appendChild(existingSeparator);
+                    }
+
+                    // Klasse am Hauptcontainer setzen, wenn "heute" angezeigt wird
+                    if (isTodayInView) {
+                        horizontalWeekContainer.classList.add('today-active');
+                    } else {
+                        horizontalWeekContainer.classList.remove('today-active');
+                    }
+                }
+
+                renderHorizontalWeek();
+
+                function setDailyUpdate() {
+                    const now = new Date();
+                    const midnight = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1, 0, 0, 0);
+                    const timeUntilMidnight = midnight.getTime() - now.getTime();
+
+                    setTimeout(() => {
+                        renderHorizontalWeek();
+                        setDailyUpdate();
+                    }, timeUntilMidnight);
+                }
+                setDailyUpdate();
+            }
+            
             // Debug: Sofortiges Anzeigen des Hauptinterfaces (für Testzwecke)
             // mainInterface.style.display = 'flex';
             // binaryFooter.style.display = 'block';
             // leftStatusBar.style.display = 'flex';
             // initializeBinaryCode();
             // initializeMinimalStatus();
+            // initializeWeekOverview();
         });
     </script>
 </body>
