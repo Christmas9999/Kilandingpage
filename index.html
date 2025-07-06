@@ -250,39 +250,6 @@
             animation: text-pulse 2s infinite alternate;
         }
 
-        .status-bar {
-            width: 80%;
-            max-width: 500px;
-            height: 30px;
-            background-color: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(0, 224, 255, 0.3);
-            border-radius: 5px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0 10px;
-            box-shadow: 0 0 10px rgba(0, 224, 255, 0.5);
-            overflow: hidden;
-            position: absolute;
-            bottom: 60px;
-            left: 50%;
-            transform: translateX(-50%);
-        }
-
-        .status-bar span {
-            color: #00e0ff;
-            font-family: 'Consolas', 'Courier New', monospace;
-            font-size: 1.2em;
-            text-shadow: 0 0 5px #00e0ff;
-            opacity: 0.8;
-            transition: color 0.1s ease-out;
-        }
-
-        .status-bar span.orange {
-            color: #FFA500;
-            text-shadow: 0 0 8px #FFA500, 0 0 15px rgba(255, 165, 0, 0.5);
-        }
-
         .online-status {
             position: fixed;
             top: 20px;
@@ -311,6 +278,45 @@
             bottom: 20px;
             right: 20px;
             z-index: 1000;
+            width: 300px;
+            height: 150px;
+        }
+
+        /* --- Stil für den Binärcode-Footer --- */
+        .binary-footer {
+            width: 100%;
+            padding: 10px 0;
+            background-color: #0d1117;
+            border-top: 1px solid #00bcd4;
+            text-align: center;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            z-index: 1000;
+            box-shadow: 0 -2px 15px rgba(0, 188, 212, 0.3);
+            overflow: hidden;
+            display: none; /* Standardmäßig ausgeblendet */
+        }
+
+        .binary-line {
+            white-space: nowrap;
+            overflow: hidden;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 0.8em;
+            color: #00bcd4;
+            opacity: 0.6;
+        }
+
+        .binary-line .highlight {
+            color: #ff9800;
+            font-weight: bold;
+            text-shadow: 0 0 5px rgba(255, 152, 0, 0.7);
+            animation: binary-pulse 1.5s infinite alternate;
+        }
+
+        @keyframes binary-pulse {
+            0% { opacity: 0.8; }
+            100% { opacity: 1; }
         }
 
         /* Animationen */
@@ -382,8 +388,6 @@
             </div>
         </div>
 
-        <div class="status-bar" id="statusBar"></div>
-
         <div class="online-status">
             <div class="online-dot"></div>
             Online
@@ -391,13 +395,21 @@
 
         <!-- Wetter Widget -->
         <div class="weather-widget">
-            <iframe width='300' height='100' name='CW1' style='border:1px solid;border-radius:17px;border-color:#e5e8e8;' src='https://api.wetteronline.de/wetterwidget?gid=x0757&modeid=CW1&seourl=timmendorfer-strand&locationname=Timmendorfer Strand&lang=de'></iframe>
+            <a class="weatherwidget-io" href="https://forecast7.com/de/53d9910d78/timmendorfer-strand/" data-label_1="Timmendorfer Strand" data-label_2="WEATHER" data-font="Roboto" data-mode="Current" data-days="3" data-textcolor="#0a9e96">Timmendorfer Strand WEATHER</a>
         </div>
 
         <elevenlabs-convai agent-id="agent_01jz428zryea58mbj66rbv8hg7"></elevenlabs-convai>
     </div>
 
+    <!-- Binärcode-Footer -->
+    <div class="binary-footer">
+        <div id="binary-code-display" class="binary-line"></div>
+    </div>
+
     <script src="https://unpkg.com/@elevenlabs/convai-widget-embed" async type="text/javascript"></script>
+    <script>
+        !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src='https://weatherwidget.io/js/widget.min.js';fjs.parentNode.insertBefore(js,fjs);}}(document,'script','weatherwidget-io-js');
+    </script>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
@@ -407,6 +419,7 @@
             const passwordInput = document.getElementById('password');
             const loginError = document.getElementById('loginError');
             const mainInterface = document.getElementById('mainInterface');
+            const binaryFooter = document.querySelector('.binary-footer');
             
             // Korrekte Anmeldedaten
             const CORRECT_USERNAME = "Tony Stark";
@@ -431,10 +444,10 @@
                     setTimeout(() => {
                         loginOverlay.style.display = 'none';
                         mainInterface.style.display = 'flex';
+                        binaryFooter.style.display = 'block'; // Binärcode-Footer anzeigen
                         
                         // Initialisiere das Hauptinterface
-                        initializeStatusBar();
-                        setInterval(updateRandomBit, 150);
+                        initializeBinaryCode();
                     }, 500);
                 } else {
                     console.log("Login failed!"); // Debug output
@@ -472,53 +485,60 @@
                 }
             });
             
-            // Statusleisten-Funktionen
-            const statusBar = document.getElementById('statusBar');
-            const numBits = 50;
-            const maxOrangeBits = 3;
+            // Binärcode-Footer Funktionen
+            function initializeBinaryCode() {
+                const binaryCodeDisplay = document.getElementById('binary-code-display');
+                const totalChars = 200;
+                const updateInterval = 195;
+                const highlightCount = 3;
+                const gapProbability = 0.08;
 
-            function initializeStatusBar() {
-                statusBar.innerHTML = '';
-                for (let i = 0; i < numBits; i++) {
-                    const span = document.createElement('span');
-                    span.textContent = Math.round(Math.random());
-                    statusBar.appendChild(span);
+                let currentBinaryArray = [];
+
+                // Initialisiert das Array mit zufälligen Nullen und Einsen
+                for (let i = 0; i < totalChars; i++) {
+                    currentBinaryArray.push(Math.round(Math.random()));
                 }
-            }
 
-            function updateRandomBit() {
-                const spans = statusBar.querySelectorAll('span');
-                if (spans.length === 0) return;
-
-                spans.forEach(span => {
-                    span.classList.remove('orange');
-                });
-
-                const randomIndexToChange = Math.floor(Math.random() * spans.length);
-                const spanToChange = spans[randomIndexToChange];
-                spanToChange.textContent = spanToChange.textContent === '0' ? '1' : '0';
-
-                spanToChange.style.color = '#fff';
-                setTimeout(() => {
-                    spanToChange.style.color = '';
-                }, 100);
-
-                let orangeCount = 0;
-                while (orangeCount < maxOrangeBits) {
-                    const randomIndexForOrange = Math.floor(Math.random() * spans.length);
-                    const randomSpanForOrange = spans[randomIndexForOrange];
-
-                    if (!randomSpanForOrange.classList.contains('orange')) {
-                        randomSpanForOrange.classList.add('orange');
-                        orangeCount++;
+                function updateBinaryDisplay() {
+                    // Zufällig einige Zahlen ändern (0 wird zu 1, 1 wird zu 0)
+                    const charsToChange = Math.floor(Math.random() * (totalChars / 8));
+                    for (let i = 0; i < charsToChange; i++) {
+                        const randomIndex = Math.floor(Math.random() * totalChars);
+                        currentBinaryArray[randomIndex] = 1 - currentBinaryArray[randomIndex];
                     }
+
+                    // Highlights setzen
+                    let highlightedIndices = new Set();
+                    const actualHighlightCount = Math.min(highlightCount, totalChars);
+                    while (highlightedIndices.size < actualHighlightCount) {
+                        highlightedIndices.add(Math.floor(Math.random() * totalChars));
+                    }
+
+                    let htmlString = '';
+                    for (let i = 0; i < totalChars; i++) {
+                        if (Math.random() < gapProbability) {
+                            htmlString += '&nbsp;';
+                        } else if (highlightedIndices.has(i)) {
+                            htmlString += `<span class="highlight">${currentBinaryArray[i]}</span>`;
+                        } else {
+                            htmlString += currentBinaryArray[i];
+                        }
+                    }
+                    binaryCodeDisplay.innerHTML = htmlString;
                 }
+
+                // Initialer Aufruf
+                updateBinaryDisplay();
+
+                // Regelmäßige Aktualisierung der Binärzeichen und Highlights
+                setInterval(updateBinaryDisplay, updateInterval);
             }
             
             // Debug: Sofortiges Anzeigen des Hauptinterfaces (für Testzwecke)
             // mainInterface.style.display = 'flex';
-            // initializeStatusBar();
-            // setInterval(updateRandomBit, 150);
+            // binaryFooter.style.display = 'block';
+            // initializeBinaryCode();
         });
     </script>
 </body>
