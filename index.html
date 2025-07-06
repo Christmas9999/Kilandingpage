@@ -254,7 +254,7 @@
         .online-status {
             position: fixed;
             top: 20px;
-            right: 20px;
+            left: 20px;
             display: flex;
             align-items: center;
             color: #00e0ff;
@@ -286,7 +286,7 @@
         /* Wochenübersicht Stil */
         .week-overview {
             position: fixed;
-            bottom: 180px; /* Platz über dem Wetter-Widget */
+            bottom: 180px;
             right: 20px;
             z-index: 1000;
             width: 300px;
@@ -389,6 +389,116 @@
             100% { box-shadow: 0 0 15px rgba(0, 188, 212, 0.8); transform: scale(1.06); }
         }
 
+        /* Systemstatus-Anzeige */
+        .system-status {
+            position: fixed;
+            bottom: 350px;
+            right: 20px;
+            z-index: 1000;
+            width: 250px;
+            background: rgba(0, 20, 30, 0.8);
+            border: 1px solid rgba(0, 224, 255, 0.4);
+            border-radius: 10px;
+            padding: 12px;
+            box-shadow: 0 0 20px rgba(0, 224, 255, 0.5);
+            animation: container-glow 3s infinite alternate;
+        }
+
+        @keyframes container-glow {
+            from { box-shadow: 0 0 20px rgba(0, 224, 255, 0.5); }
+            to { box-shadow: 0 0 30px rgba(0, 224, 255, 0.8); }
+        }
+
+        .status-line {
+            opacity: 0;
+            transform: translateY(10px);
+            transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+            padding: 3px 0;
+            white-space: pre-wrap;
+            position: relative;
+            overflow: hidden;
+            line-height: 1.3;
+            font-family: 'Roboto Mono', monospace;
+            font-size: 0.8em;
+            color: #00e0ff;
+        }
+
+        .status-line.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .glitch-text {
+            position: relative;
+            display: inline-block;
+        }
+
+        .glitch-text::before,
+        .glitch-text::after {
+            content: attr(data-text);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .glitch-text::before {
+            left: 1px;
+            text-shadow: -1px 0 rgba(0, 255, 255, 0.7);
+            animation: glitch-subtle-1 0.5s infinite linear alternate-reverse;
+            animation-delay: var(--glitch-delay, 0s);
+        }
+
+        .glitch-text::after {
+            left: -1px;
+            text-shadow: -1px 0 rgba(255, 0, 255, 0.7);
+            animation: glitch-subtle-2 0.5s infinite linear alternate-reverse;
+            animation-delay: var(--glitch-delay, 0s);
+        }
+
+        @keyframes glitch-subtle-1 {
+            0% { transform: translateX(0); opacity: 0.9; }
+            20% { transform: translateX(0.5px); opacity: 0.8; }
+            40% { transform: translateX(-0.5px); opacity: 0.9; }
+            60% { transform: translateX(0.3px); opacity: 0.8; }
+            80% { transform: translateX(-0.3px); opacity: 0.9; }
+            100% { transform: translateX(0); opacity: 1; }
+        }
+
+        @keyframes glitch-subtle-2 {
+            0% { transform: translateX(0); opacity: 0.9; }
+            25% { transform: translateX(-0.6px); opacity: 0.85; }
+            50% { transform: translateX(0.6px); opacity: 0.9; }
+            75% { transform: translateX(-0.4px); opacity: 0.85; }
+            100% { transform: translateX(0); opacity: 1; }
+        }
+
+        .typewriter-text {
+            display: inline-block;
+            overflow: hidden;
+            white-space: nowrap;
+            border-right: 2px solid rgba(0, 224, 255, 0.8);
+            animation: typing 2s steps(40, end) forwards, blink-cursor 0.75s step-end infinite;
+        }
+
+        .typewriter-text.finished {
+            border-right: none;
+            animation: none;
+        }
+
+        @keyframes typing {
+            from { width: 0; }
+            to { width: 100%; }
+        }
+
+        @keyframes blink-cursor {
+            from, to { border-color: transparent; }
+            50% { border-color: rgba(0, 224, 255, 0.8); }
+        }
+
         /* --- Stil für den Binärcode-Footer --- */
         .binary-footer {
             width: 100%;
@@ -402,7 +512,7 @@
             z-index: 1000;
             box-shadow: 0 -2px 15px rgba(0, 188, 212, 0.3);
             overflow: hidden;
-            display: none; /* Standardmäßig ausgeblendet */
+            display: none;
         }
 
         .binary-line {
@@ -436,7 +546,7 @@
             border-radius: 8px;
             box-shadow: 0 0 20px rgba(0, 188, 212, 0.4);
             z-index: 900;
-            display: none; /* Standardmäßig ausgeblendet */
+            display: none;
         }
 
         .status-item-minimal {
@@ -468,41 +578,6 @@
             text-shadow: 0 0 8px rgba(57, 255, 20, 0.8), 0 0 15px rgba(57, 255, 20, 0.6);
             animation: glowPulseGreen 2s infinite alternate;
         }
-
-        /* NEUE GLITCH-EFFEKTE */
-
-        /* Glitch Animation für Text (Horizontaler Versatz + Farbe) */
-        @keyframes text-glitch {
-            0% { transform: translate(0); text-shadow: none; }
-            10% { transform: translate(-2px, 2px); color: rgba(0,224,255,0.8); text-shadow: 0 0 5px rgba(0,224,255,0.5); }
-            12% { transform: translate(0); color: inherit; text-shadow: none; }
-            14% { transform: translate(1px, -1px); color: rgba(255,0,0,0.7); text-shadow: 0 0 3px rgba(255,0,0,0.5); }
-            16% { transform: translate(0); color: inherit; text-shadow: none; }
-            100% { transform: translate(0); text-shadow: none; }
-        }
-
-        /* Glitch Animation für Linien (Vertikaler Versatz und Opazität) */
-        @keyframes line-glitch {
-            0% { transform: translateY(0); opacity: 1; }
-            5% { transform: translateY(-1px); opacity: 0.8; }
-            10% { transform: translateY(1px); opacity: 0.8; }
-            15% { transform: translateY(0); opacity: 1; }
-            20% { transform: translateY(-2px); opacity: 0.6; }
-            25% { transform: translateY(2px); opacity: 0.6; }
-            30% { transform: translateY(0); opacity: 1; }
-            100% { transform: translateY(0); opacity: 1; }
-        }
-
-        /* Angewandt auf Statuswerte */
-        .status-value-minimal.glitch {
-            animation: text-glitch 0.3s steps(2, end) 1; /* Kurzer, ruckeliger Glitch */
-        }
-
-        /* Angewandt auf den Binary Footer, aber nur beim Update */
-        .binary-footer.glitch .binary-line {
-            animation: line-glitch 0.2s steps(2, end) 1; /* Kurzer, ruckeliger Glitch */
-        }
-
 
         /* Animationen */
         @keyframes rotate {
@@ -555,7 +630,7 @@
             100% { text-shadow: 0 0 15px rgba(57, 255, 20, 1), 0 0 20px rgba(57, 255, 20, 0.8); opacity: 1; }
         }
 
-        /* --- Responsive Anpassung für die Statusleiste --- */
+        /* --- Responsive Anpassung --- */
         @media (max-width: 768px) {
             .left-status-bar {
                 position: relative;
@@ -584,7 +659,7 @@
                 font-size: 0.9em;
             }
 
-            .week-overview {
+            .week-overview, .system-status {
                 position: relative;
                 bottom: auto;
                 right: auto;
@@ -609,10 +684,19 @@
                 width: calc(100% / 4);
                 margin-bottom: 5px;
             }
+            
+            .system-status {
+                padding: 10px;
+            }
+            
+            .status-line {
+                font-size: 0.8em;
+            }
         }
     </style>
 </head>
 <body>
+    <!-- Login Overlay -->
     <div class="login-overlay" id="loginOverlay">
         <div class="login-container">
             <div class="login-title">Login</div>
@@ -630,8 +714,10 @@
         </div>
     </div>
     
+    <!-- Hauptinterface -->
     <div class="main-interface" id="mainInterface">
-        <div class="left-status-bar" id="leftStatusBar">
+        <!-- Linke Statusleiste -->
+        <div class="left-status-bar">
             <div class="status-item-minimal">
                 <span class="status-label-minimal">LOGIC:</span>
                 <span class="status-value-minimal" id="logic-status">ONLINE</span>
@@ -651,6 +737,8 @@
         </div>
 
         <div class="container">
+            <div class="outer-ring-detail one"></div>
+            <div class="outer-ring-detail two"></div>
             <div class="circle-outer"></div>
             <div class="circle-middle"></div>
             <div class="circle-inner"></div>
@@ -664,12 +752,33 @@
             Online
         </div>
 
+        <!-- Systemstatus-Anzeige -->
+        <div class="system-status" id="systemStatus">
+            <div class="status-line" id="statusLine1">
+                <span class="glitch-text" data-text="> Initializing systems..."></span>
+            </div>
+            <div class="status-line" id="statusLine2">
+                <span class="glitch-text" data-text="> Scanning environment..."></span>
+            </div>
+            <div class="status-line" id="statusLine3">
+                <span class="glitch-text" data-text="> User authenticated"></span>
+            </div>
+            <div class="status-line" id="statusLine4">
+                <span class="glitch-text" data-text="> Security protocols engaged"></span>
+            </div>
+            <div class="status-line" id="statusPromptLine">
+                <span class="glitch-text" data-text="> SYSTEM STATUS: NOMINAL"></span>
+            </div>
+        </div>
+
+        <!-- Wochenübersicht -->
         <div class="week-overview">
             <div class="jarvis-horizontal-week" id="jarvis-horizontal-week">
                 <div class="day-separator-horizontal" id="full-width-separator"></div>
             </div>
         </div>
 
+        <!-- Wetter Widget -->
         <div class="weather-widget">
             <a class="weatherwidget-io" href="https://forecast7.com/de/53d9910d78/timmendorfer-strand/" data-label_1="Timmendorfer Strand" data-label_2="WEATHER" data-font="Roboto" data-mode="Current" data-days="3" data-textcolor="#0a9e96">Timmendorfer Strand WEATHER</a>
         </div>
@@ -677,7 +786,8 @@
         <elevenlabs-convai agent-id="agent_01jz428zryea58mbj66rbv8hg7"></elevenlabs-convai>
     </div>
 
-    <div class="binary-footer" id="binaryFooter">
+    <!-- Binärcode-Footer -->
+    <div class="binary-footer">
         <div id="binary-code-display" class="binary-line"></div>
     </div>
 
@@ -694,8 +804,8 @@
             const passwordInput = document.getElementById('password');
             const loginError = document.getElementById('loginError');
             const mainInterface = document.getElementById('mainInterface');
-            const binaryFooter = document.getElementById('binaryFooter'); // ID hinzugefügt
-            const leftStatusBar = document.getElementById('leftStatusBar'); // ID hinzugefügt
+            const binaryFooter = document.querySelector('.binary-footer');
+            const leftStatusBar = document.querySelector('.left-status-bar');
             
             // Korrekte Anmeldedaten
             const CORRECT_USERNAME = "Tony Stark";
@@ -727,6 +837,7 @@
                         initializeBinaryCode();
                         initializeMinimalStatus();
                         initializeWeekOverview();
+                        initializeSystemStatus();
                     }, 500);
                 } else {
                     console.log("Login failed!"); // Debug output
@@ -771,7 +882,6 @@
                 const updateInterval = 195;
                 const highlightCount = 3;
                 const gapProbability = 0.08;
-                const glitchProbability = 0.005; // Geringe Wahrscheinlichkeit für Glitch (0.5%)
 
                 let currentBinaryArray = [];
 
@@ -806,14 +916,6 @@
                         }
                     }
                     binaryCodeDisplay.innerHTML = htmlString;
-
-                    // Zufälligen Glitch auf den Footer anwenden
-                    if (Math.random() < glitchProbability) {
-                        binaryFooter.classList.add('glitch');
-                        setTimeout(() => {
-                            binaryFooter.classList.remove('glitch');
-                        }, 200); // Dauer des Glitches (muss kürzer sein als die Animation)
-                    }
                 }
 
                 // Initialer Aufruf
@@ -838,24 +940,16 @@
                 function updateMinimalStatus() {
                     for (const key in statusItems) {
                         const item = statusItems[key];
-                        const oldText = item.element.textContent; // Vorherigen Text speichern
                         const randomIndex = Math.floor(Math.random() * item.values.length);
                         const newValue = item.values[randomIndex];
                         
-                        // Nur glitchen, wenn der Wert sich ändert
-                        if (newValue !== oldText) {
-                            item.element.classList.add('glitch');
-                            setTimeout(() => {
-                                item.element.textContent = newValue;
-                                if (greenStates.includes(newValue)) {
-                                    item.element.classList.add('status-green');
-                                } else {
-                                    item.element.classList.remove('status-green');
-                                }
-                                item.element.classList.remove('glitch');
-                            }, 150); // Glitch-Dauer, bevor der Text wirklich geändert wird
+                        item.element.textContent = newValue;
+
+                        // Klasse für grüne Farbe hinzufügen oder entfernen
+                        if (greenStates.includes(newValue)) {
+                            item.element.classList.add('status-green');
                         } else {
-                            item.element.textContent = newValue; // Text trotzdem setzen, falls keine Änderung
+                            item.element.classList.remove('status-green');
                         }
                     }
                 }
@@ -946,7 +1040,76 @@
                 }
                 setDailyUpdate();
             }
-            // Ensure functions are called after successful login
+            
+            // Funktion für die Systemstatus-Anzeige
+            function initializeSystemStatus() {
+                const lines = [
+                    document.getElementById('statusLine1'),
+                    document.getElementById('statusLine2'),
+                    document.getElementById('statusLine3'),
+                    document.getElementById('statusLine4')
+                ];
+                const promptLine = document.getElementById('statusPromptLine');
+
+                let currentLineIndex = 0;
+                const typingSpeed = 30; // Millisekunden pro Zeichen
+
+                function typeWriter(element, text, callback) {
+                    let charIndex = 0;
+                    const textSpan = element.querySelector('.glitch-text');
+                    textSpan.textContent = '';
+                    textSpan.classList.add('typewriter-text');
+
+                    function type() {
+                        if (charIndex < text.length) {
+                            textSpan.textContent += text.charAt(charIndex);
+                            charIndex++;
+                            setTimeout(type, typingSpeed);
+                        } else {
+                            textSpan.classList.add('finished');
+                            if (callback) callback();
+                        }
+                    }
+                    type();
+                }
+
+                function showNextLine() {
+                    if (currentLineIndex < lines.length) {
+                        const lineElement = lines[currentLineIndex];
+                        const textToType = lineElement.querySelector('.glitch-text').getAttribute('data-text');
+
+                        lineElement.classList.add('show');
+                        
+                        typeWriter(lineElement, textToType, () => {
+                            lineElement.querySelector('.glitch-text').style.animationPlayState = 'running'; 
+                            currentLineIndex++;
+                            setTimeout(showNextLine, 1000);
+                        });
+
+                    } else {
+                        const promptText = promptLine.querySelector('.glitch-text').getAttribute('data-text');
+                        promptLine.classList.add('show');
+                        typeWriter(promptLine, promptText, () => {
+                            promptLine.querySelector('.glitch-text').style.animationPlayState = 'running';
+                        });
+                    }
+                }
+
+                // Glitch-Animationen standardmäßig pausieren, bis der Text getippt wurde
+                document.querySelectorAll('#systemStatus .glitch-text').forEach(el => {
+                    el.style.animationPlayState = 'paused';
+                });
+                showNextLine();
+            }
+            
+            // Debug: Sofortiges Anzeigen des Hauptinterfaces (für Testzwecke)
+            // mainInterface.style.display = 'flex';
+            // binaryFooter.style.display = 'block';
+            // leftStatusBar.style.display = 'flex';
+            // initializeBinaryCode();
+            // initializeMinimalStatus();
+            // initializeWeekOverview();
+            // initializeSystemStatus();
         });
     </script>
 </body>
