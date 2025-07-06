@@ -252,7 +252,7 @@
             animation: text-pulse 2s infinite alternate;
         }
 
-        /* Online Status - nach rechts verschoben */
+        /* Online Status */
         .online-status {
             position: fixed;
             top: 20px;
@@ -275,11 +275,31 @@
             animation: dot-pulse 1.5s infinite alternate;
         }
 
-        /* Linke Statusleiste (neu positioniert) */
-        .left-status-bar {
+        /* EKG Display */
+        .ekg-display {
             position: fixed;
             top: 60px;
             left: 20px;
+            width: 180px;
+            height: 60px;
+            background-color: rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(0, 224, 255, 0.3);
+            border-radius: 5px;
+            overflow: hidden;
+            z-index: 900;
+            display: none;
+        }
+
+        .ekg-canvas {
+            width: 100%;
+            height: 100%;
+        }
+
+        /* Linke Statusleiste */
+        .left-status-bar {
+            position: fixed;
+            top: 60px;
+            left: 210px;
             display: flex;
             flex-direction: column;
             gap: 15px;
@@ -292,7 +312,7 @@
             display: none;
         }
 
-        /* Power Meter Container - nach unten links verschoben und angepasst */
+        /* Power Meter Container */
         .power-meter-container {
             position: fixed;
             bottom: 20px;
@@ -860,6 +880,11 @@
             Online
         </div>
 
+        <!-- EKG Display -->
+        <div class="ekg-display" id="ekgDisplay">
+            <canvas class="ekg-canvas" id="ekgCanvas"></canvas>
+        </div>
+
         <!-- Linke Statusleiste -->
         <div class="left-status-bar">
             <div class="status-item-minimal">
@@ -959,6 +984,7 @@
             const binaryFooter = document.querySelector('.binary-footer');
             const leftStatusBar = document.querySelector('.left-status-bar');
             const powerMeter = document.querySelector('.power-meter-container');
+            const ekgDisplay = document.getElementById('ekgDisplay');
             
             // Korrekte Anmeldedaten
             const CORRECT_USERNAME = "Tony Stark";
@@ -984,12 +1010,14 @@
                         binaryFooter.style.display = 'block';
                         leftStatusBar.style.display = 'flex';
                         powerMeter.style.display = 'flex';
+                        ekgDisplay.style.display = 'block';
                         
                         initializeBinaryCode();
                         initializeMinimalStatus();
                         initializeWeekOverview();
                         initializeSystemStatus();
                         initializePowerMeter();
+                        initializeEKG();
                     }, 500);
                 } else {
                     console.log("Login failed!");
@@ -1290,6 +1318,85 @@
                 }
 
                 startDynamicPowerFluctuation();
+            }
+            
+            function initializeEKG() {
+                const canvas = document.getElementById('ekgCanvas');
+                const ctx = canvas.getContext('2d');
+
+                function resizeCanvas() {
+                    canvas.width = canvas.offsetWidth;
+                    canvas.height = canvas.offsetHeight;
+                }
+                resizeCanvas();
+                window.addEventListener('resize', resizeCanvas);
+
+                let ekgLineColor = '#00e0ff';
+                const lineWidth = 2;
+                const historyLength = 100;
+                const linePoints = [];
+
+                for (let i = 0; i < historyLength; i++) {
+                    linePoints.push(canvas.height / 2);
+                }
+
+                let animationFrameId;
+                let glitchingEKG = false;
+
+                function drawEKG() {
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                    ctx.strokeStyle = ekgLineColor;
+                    ctx.lineWidth = lineWidth;
+
+                    ctx.beginPath();
+                    ctx.moveTo(0, linePoints[0]);
+
+                    for (let i = 1; i < linePoints.length; i++) {
+                        const x = (i / historyLength) * canvas.width;
+                        ctx.lineTo(x, linePoints[i]);
+                    }
+                    ctx.stroke();
+                }
+
+                function generateEKGPoint() {
+                    let newPoint = canvas.height / 2 + (Math.random() - 0.5) * 5;
+
+                    // Häufigere Spikes bei Glitch
+                    if (glitchingEKG || Math.random() < 0.05) {
+                        newPoint += (Math.random() > 0.5 ? 1 : -1) * (canvas.height * 0.3 + Math.random() * canvas.height * 0.2);
+                    }
+
+                    newPoint = Math.max(lineWidth, Math.min(canvas.height - lineWidth, newPoint));
+                    return newPoint;
+                }
+
+                function animateEKG() {
+                    linePoints.shift();
+                    linePoints.push(generateEKGPoint());
+                    
+                    drawEKG();
+                    animationFrameId = requestAnimationFrame(animateEKG);
+                }
+
+                function applyEKGGlitch() {
+                    glitchingEKG = true;
+                    ekgLineColor = '#ff00ff';
+
+                    setTimeout(() => {
+                        glitchingEKG = false;
+                        ekgLineColor = '#00e0ff';
+                    }, 150);
+                }
+
+                // Starte EKG-Animation
+                animateEKG();
+
+                // Zufällige Glitch-Effekte
+                setInterval(() => {
+                    if (Math.random() < 0.03) {
+                        applyEKGGlitch();
+                    }
+                }, 1500);
             }
         });
     </script>
