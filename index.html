@@ -314,9 +314,52 @@
             animation: binary-pulse 1.5s infinite alternate;
         }
 
-        @keyframes binary-pulse {
-            0% { opacity: 0.8; }
-            100% { opacity: 1; }
+        /* --- Stil für die linke, minimalistische Statusleiste --- */
+        .left-status-bar {
+            position: fixed;
+            top: 50%;
+            left: 20px;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            padding: 20px 15px;
+            background-color: rgba(0, 188, 212, 0.08);
+            border: 1px solid rgba(0, 188, 212, 0.3);
+            border-radius: 8px;
+            box-shadow: 0 0 20px rgba(0, 188, 212, 0.4);
+            z-index: 900;
+            display: none; /* Standardmäßig ausgeblendet */
+        }
+
+        .status-item-minimal {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .status-label-minimal {
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 0.85em;
+            color: #00bcd4;
+            opacity: 0.7;
+            margin-bottom: 3px;
+        }
+
+        .status-value-minimal {
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 1.1em;
+            font-weight: bold;
+            color: #e6edf3;
+            text-shadow: 0 0 8px rgba(230, 237, 243, 0.6);
+            animation: glowPulseWhite 2s infinite alternate;
+            transition: color 0.5s ease-in-out, text-shadow 0.5s ease-in-out;
+        }
+
+        .status-value-minimal.status-green {
+            color: #39ff14;
+            text-shadow: 0 0 8px rgba(57, 255, 20, 0.8), 0 0 15px rgba(57, 255, 20, 0.6);
+            animation: glowPulseGreen 2s infinite alternate;
         }
 
         /* Animationen */
@@ -354,6 +397,59 @@
             from { opacity: 1; }
             to { opacity: 0; visibility: hidden; }
         }
+
+        @keyframes binary-pulse {
+            0% { opacity: 0.8; }
+            100% { opacity: 1; }
+        }
+
+        @keyframes glowPulseWhite {
+            0% { text-shadow: 0 0 5px rgba(230, 237, 243, 0.6); opacity: 0.9; }
+            100% { text-shadow: 0 0 12px rgba(230, 237, 243, 1); opacity: 1; }
+        }
+
+        @keyframes glowPulseGreen {
+            0% { text-shadow: 0 0 5px rgba(57, 255, 20, 0.7); opacity: 0.9; }
+            100% { text-shadow: 0 0 15px rgba(57, 255, 20, 1), 0 0 20px rgba(57, 255, 20, 0.8); opacity: 1; }
+        }
+
+        /* --- Responsive Anpassung für die Statusleiste --- */
+        @media (max-width: 768px) {
+            .left-status-bar {
+                position: relative;
+                top: auto;
+                left: auto;
+                transform: none;
+                flex-direction: row;
+                justify-content: center;
+                gap: 10px;
+                width: 95%;
+                margin: 20px auto;
+                padding: 10px 5px;
+            }
+
+            .status-item-minimal {
+                flex-direction: row;
+                align-items: center;
+                gap: 5px;
+            }
+
+            .status-label-minimal {
+                font-size: 0.75em;
+            }
+
+            .status-value-minimal {
+                font-size: 0.9em;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .left-status-bar {
+                flex-wrap: wrap;
+                gap: 8px 15px;
+                padding: 8px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -377,6 +473,26 @@
     
     <!-- Hauptinterface -->
     <div class="main-interface" id="mainInterface">
+        <!-- Linke Statusleiste -->
+        <div class="left-status-bar">
+            <div class="status-item-minimal">
+                <span class="status-label-minimal">LOGIC:</span>
+                <span class="status-value-minimal" id="logic-status">ONLINE</span>
+            </div>
+            <div class="status-item-minimal">
+                <span class="status-label-minimal">NET:</span>
+                <span class="status-value-minimal" id="net-status">STABLE</span>
+            </div>
+            <div class="status-item-minimal">
+                <span class="status-label-minimal">CACHE:</span>
+                <span class="status-value-minimal" id="cache-status">OPTIMAL</span>
+            </div>
+            <div class="status-item-minimal">
+                <span class="status-label-minimal">PWR:</span>
+                <span class="status-value-minimal" id="pwr-status">ACTIVE</span>
+            </div>
+        </div>
+
         <div class="container">
             <div class="outer-ring-detail one"></div>
             <div class="outer-ring-detail two"></div>
@@ -420,6 +536,7 @@
             const loginError = document.getElementById('loginError');
             const mainInterface = document.getElementById('mainInterface');
             const binaryFooter = document.querySelector('.binary-footer');
+            const leftStatusBar = document.querySelector('.left-status-bar');
             
             // Korrekte Anmeldedaten
             const CORRECT_USERNAME = "Tony Stark";
@@ -444,10 +561,12 @@
                     setTimeout(() => {
                         loginOverlay.style.display = 'none';
                         mainInterface.style.display = 'flex';
-                        binaryFooter.style.display = 'block'; // Binärcode-Footer anzeigen
+                        binaryFooter.style.display = 'block';
+                        leftStatusBar.style.display = 'flex';
                         
                         // Initialisiere das Hauptinterface
                         initializeBinaryCode();
+                        initializeMinimalStatus();
                     }, 500);
                 } else {
                     console.log("Login failed!"); // Debug output
@@ -535,10 +654,47 @@
                 setInterval(updateBinaryDisplay, updateInterval);
             }
             
+            // Funktionen für die linke Statusleiste
+            function initializeMinimalStatus() {
+                const statusItems = {
+                    logic: { element: document.getElementById('logic-status'), values: ['ONLINE', 'ACTIVE', 'NOMINAL', 'GREEN'] },
+                    net: { element: document.getElementById('net-status'), values: ['STABLE', 'OPTIMAL', 'SECURE', 'SYNCED'] },
+                    cache: { element: document.getElementById('cache-status'), values: ['OPTIMAL', 'READY', 'LOADED', 'CLEAN'] },
+                    pwr: { element: document.getElementById('pwr-status'), values: ['ACTIVE', 'HIGH', 'CHARGED', 'READY'] }
+                };
+
+                // Zustände, die grün sein sollen
+                const greenStates = ['READY', 'ACTIVE', 'ONLINE'];
+
+                function updateMinimalStatus() {
+                    for (const key in statusItems) {
+                        const item = statusItems[key];
+                        const randomIndex = Math.floor(Math.random() * item.values.length);
+                        const newValue = item.values[randomIndex];
+                        
+                        item.element.textContent = newValue;
+
+                        // Klasse für grüne Farbe hinzufügen oder entfernen
+                        if (greenStates.includes(newValue)) {
+                            item.element.classList.add('status-green');
+                        } else {
+                            item.element.classList.remove('status-green');
+                        }
+                    }
+                }
+
+                // Initialer Aufruf
+                updateMinimalStatus();
+                // Aktualisiert die Statuswerte alle 3.5 Sekunden
+                setInterval(updateMinimalStatus, 3500);
+            }
+            
             // Debug: Sofortiges Anzeigen des Hauptinterfaces (für Testzwecke)
             // mainInterface.style.display = 'flex';
             // binaryFooter.style.display = 'block';
+            // leftStatusBar.style.display = 'flex';
             // initializeBinaryCode();
+            // initializeMinimalStatus();
         });
     </script>
 </body>
