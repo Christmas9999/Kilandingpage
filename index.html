@@ -469,6 +469,41 @@
             animation: glowPulseGreen 2s infinite alternate;
         }
 
+        /* NEUE GLITCH-EFFEKTE */
+
+        /* Glitch Animation für Text (Horizontaler Versatz + Farbe) */
+        @keyframes text-glitch {
+            0% { transform: translate(0); text-shadow: none; }
+            10% { transform: translate(-2px, 2px); color: rgba(0,224,255,0.8); text-shadow: 0 0 5px rgba(0,224,255,0.5); }
+            12% { transform: translate(0); color: inherit; text-shadow: none; }
+            14% { transform: translate(1px, -1px); color: rgba(255,0,0,0.7); text-shadow: 0 0 3px rgba(255,0,0,0.5); }
+            16% { transform: translate(0); color: inherit; text-shadow: none; }
+            100% { transform: translate(0); text-shadow: none; }
+        }
+
+        /* Glitch Animation für Linien (Vertikaler Versatz und Opazität) */
+        @keyframes line-glitch {
+            0% { transform: translateY(0); opacity: 1; }
+            5% { transform: translateY(-1px); opacity: 0.8; }
+            10% { transform: translateY(1px); opacity: 0.8; }
+            15% { transform: translateY(0); opacity: 1; }
+            20% { transform: translateY(-2px); opacity: 0.6; }
+            25% { transform: translateY(2px); opacity: 0.6; }
+            30% { transform: translateY(0); opacity: 1; }
+            100% { transform: translateY(0); opacity: 1; }
+        }
+
+        /* Angewandt auf Statuswerte */
+        .status-value-minimal.glitch {
+            animation: text-glitch 0.3s steps(2, end) 1; /* Kurzer, ruckeliger Glitch */
+        }
+
+        /* Angewandt auf den Binary Footer, aber nur beim Update */
+        .binary-footer.glitch .binary-line {
+            animation: line-glitch 0.2s steps(2, end) 1; /* Kurzer, ruckeliger Glitch */
+        }
+
+
         /* Animationen */
         @keyframes rotate {
             from { transform: rotate(0deg); }
@@ -578,7 +613,6 @@
     </style>
 </head>
 <body>
-    <!-- Login Overlay -->
     <div class="login-overlay" id="loginOverlay">
         <div class="login-container">
             <div class="login-title">Login</div>
@@ -596,10 +630,8 @@
         </div>
     </div>
     
-    <!-- Hauptinterface -->
     <div class="main-interface" id="mainInterface">
-        <!-- Linke Statusleiste -->
-        <div class="left-status-bar">
+        <div class="left-status-bar" id="leftStatusBar">
             <div class="status-item-minimal">
                 <span class="status-label-minimal">LOGIC:</span>
                 <span class="status-value-minimal" id="logic-status">ONLINE</span>
@@ -619,8 +651,6 @@
         </div>
 
         <div class="container">
-            <div class="outer-ring-detail one"></div>
-            <div class="outer-ring-detail two"></div>
             <div class="circle-outer"></div>
             <div class="circle-middle"></div>
             <div class="circle-inner"></div>
@@ -634,14 +664,12 @@
             Online
         </div>
 
-        <!-- Wochenübersicht -->
         <div class="week-overview">
             <div class="jarvis-horizontal-week" id="jarvis-horizontal-week">
                 <div class="day-separator-horizontal" id="full-width-separator"></div>
             </div>
         </div>
 
-        <!-- Wetter Widget -->
         <div class="weather-widget">
             <a class="weatherwidget-io" href="https://forecast7.com/de/53d9910d78/timmendorfer-strand/" data-label_1="Timmendorfer Strand" data-label_2="WEATHER" data-font="Roboto" data-mode="Current" data-days="3" data-textcolor="#0a9e96">Timmendorfer Strand WEATHER</a>
         </div>
@@ -649,8 +677,7 @@
         <elevenlabs-convai agent-id="agent_01jz428zryea58mbj66rbv8hg7"></elevenlabs-convai>
     </div>
 
-    <!-- Binärcode-Footer -->
-    <div class="binary-footer">
+    <div class="binary-footer" id="binaryFooter">
         <div id="binary-code-display" class="binary-line"></div>
     </div>
 
@@ -667,8 +694,8 @@
             const passwordInput = document.getElementById('password');
             const loginError = document.getElementById('loginError');
             const mainInterface = document.getElementById('mainInterface');
-            const binaryFooter = document.querySelector('.binary-footer');
-            const leftStatusBar = document.querySelector('.left-status-bar');
+            const binaryFooter = document.getElementById('binaryFooter'); // ID hinzugefügt
+            const leftStatusBar = document.getElementById('leftStatusBar'); // ID hinzugefügt
             
             // Korrekte Anmeldedaten
             const CORRECT_USERNAME = "Tony Stark";
@@ -744,6 +771,7 @@
                 const updateInterval = 195;
                 const highlightCount = 3;
                 const gapProbability = 0.08;
+                const glitchProbability = 0.005; // Geringe Wahrscheinlichkeit für Glitch (0.5%)
 
                 let currentBinaryArray = [];
 
@@ -778,6 +806,14 @@
                         }
                     }
                     binaryCodeDisplay.innerHTML = htmlString;
+
+                    // Zufälligen Glitch auf den Footer anwenden
+                    if (Math.random() < glitchProbability) {
+                        binaryFooter.classList.add('glitch');
+                        setTimeout(() => {
+                            binaryFooter.classList.remove('glitch');
+                        }, 200); // Dauer des Glitches (muss kürzer sein als die Animation)
+                    }
                 }
 
                 // Initialer Aufruf
@@ -802,16 +838,24 @@
                 function updateMinimalStatus() {
                     for (const key in statusItems) {
                         const item = statusItems[key];
+                        const oldText = item.element.textContent; // Vorherigen Text speichern
                         const randomIndex = Math.floor(Math.random() * item.values.length);
                         const newValue = item.values[randomIndex];
                         
-                        item.element.textContent = newValue;
-
-                        // Klasse für grüne Farbe hinzufügen oder entfernen
-                        if (greenStates.includes(newValue)) {
-                            item.element.classList.add('status-green');
+                        // Nur glitchen, wenn der Wert sich ändert
+                        if (newValue !== oldText) {
+                            item.element.classList.add('glitch');
+                            setTimeout(() => {
+                                item.element.textContent = newValue;
+                                if (greenStates.includes(newValue)) {
+                                    item.element.classList.add('status-green');
+                                } else {
+                                    item.element.classList.remove('status-green');
+                                }
+                                item.element.classList.remove('glitch');
+                            }, 150); // Glitch-Dauer, bevor der Text wirklich geändert wird
                         } else {
-                            item.element.classList.remove('status-green');
+                            item.element.textContent = newValue; // Text trotzdem setzen, falls keine Änderung
                         }
                     }
                 }
@@ -902,14 +946,7 @@
                 }
                 setDailyUpdate();
             }
-            
-            // Debug: Sofortiges Anzeigen des Hauptinterfaces (für Testzwecke)
-            // mainInterface.style.display = 'flex';
-            // binaryFooter.style.display = 'block';
-            // leftStatusBar.style.display = 'flex';
-            // initializeBinaryCode();
-            // initializeMinimalStatus();
-            // initializeWeekOverview();
+            // Ensure functions are called after successful login
         });
     </script>
 </body>
