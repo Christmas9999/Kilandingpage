@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>J.A.R.V.I.S. - Login</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -273,6 +274,159 @@
             animation: dot-pulse 1.5s infinite alternate;
         }
 
+        /* Linke Statusleiste (neu positioniert) */
+        .left-status-bar {
+            position: fixed;
+            top: 60px; /* Unter dem Online-Status */
+            left: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            padding: 20px 15px;
+            background-color: rgba(0, 188, 212, 0.08);
+            border: 1px solid rgba(0, 188, 212, 0.3);
+            border-radius: 8px;
+            box-shadow: 0 0 20px rgba(0, 188, 212, 0.4);
+            z-index: 900;
+            display: none;
+        }
+
+        /* Power Meter Container */
+        .power-meter-container {
+            position: fixed;
+            top: 180px; /* Unter der Statusleiste */
+            left: 20px;
+            width: 120px;
+            height: 400px;
+            background-color: rgba(0, 0, 0, 0.6);
+            border: 2px solid #00e0ff;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(0, 224, 255, 0.7);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px 10px;
+            z-index: 900;
+            display: none;
+        }
+
+        .meter-label {
+            font-size: 1.5em;
+            color: #00e0ff;
+            text-shadow: 0 0 10px #00e0ff;
+            margin-bottom: 15px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        .meter-body {
+            width: 50px;
+            height: 100%;
+            background-color: #1a1a2e;
+            border: 1px solid rgba(0, 224, 255, 0.5);
+            border-radius: 8px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .meter-fill {
+            width: 100%;
+            background: linear-gradient(to top, #39ff14, #00e0ff);
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            transition: height 0.5s ease-in-out;
+            box-shadow: 0 0 15px rgba(57, 255, 20, 0.8), 0 0 25px rgba(0, 224, 255, 0.6);
+        }
+
+        .meter-fill.low-power {
+            background: linear-gradient(to top, #ff4500, #ffa500);
+            box-shadow: 0 0 15px rgba(255, 69, 0, 0.8), 0 0 25px rgba(255, 165, 0, 0.6);
+        }
+
+        .meter-fill.glitch-active {
+            background: linear-gradient(to top, #ff00ff, #ffff00);
+            box-shadow: 0 0 20px #ff00ff, 0 0 30px #ffff00;
+            animation: glitch-fill 0.1s steps(2, start) infinite alternate;
+        }
+
+        .meter-percentage.glitch-active {
+            color: #ffff00;
+            text-shadow: 0 0 10px #ffff00, 0 0 20px #ff00ff;
+            animation: glitch-text 0.1s steps(2, start) infinite alternate;
+        }
+
+        .meter-label.glitch-active {
+            color: #ff00ff;
+            text-shadow: 0 0 10px #ff00ff, 0 0 20px #ffff00;
+            animation: glitch-text 0.1s steps(2, start) infinite alternate;
+        }
+
+        @keyframes glitch-fill {
+            0% { transform: translate(0, 0); opacity: 1; }
+            33% { transform: translate(-2px, 2px); opacity: 0.9; }
+            66% { transform: translate(2px, -2px); opacity: 0.8; }
+            100% { transform: translate(0, 0); opacity: 1; }
+        }
+
+        @keyframes glitch-text {
+            0% { transform: translate(0, 0); opacity: 1; }
+            25% { transform: translate(1px, -1px); opacity: 0.9; }
+            50% { transform: translate(-1px, 1px); opacity: 0.8; }
+            75% { transform: translate(1px, 1px); opacity: 0.9; }
+            100% { transform: translate(0, 0); opacity: 1; }
+        }
+
+        .meter-percentage {
+            position: absolute;
+            width: 100%;
+            text-align: center;
+            bottom: -25px;
+            left: 0;
+            font-size: 1.1em;
+            font-weight: bold;
+            color: #00e0ff;
+            text-shadow: 0 0 8px #00e0ff;
+            transition: color 0.5s ease-in-out, text-shadow 0.5s ease-in-out;
+            font-family: 'Orbitron', sans-serif;
+        }
+        
+        .meter-percentage.low-power-text {
+            color: #ff4500;
+            text-shadow: 0 0 8px #ff4500;
+        }
+
+        .meter-body::before, .meter-body::after {
+            content: '';
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80%;
+            height: 1px;
+            background-color: rgba(0, 224, 255, 0.3);
+        }
+        .meter-body::before { top: 15%; }
+        .meter-body::after { bottom: 15%; }
+
+        .glow-dot {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 8px;
+            height: 8px;
+            background-color: #00e0ff;
+            border-radius: 50%;
+            box-shadow: 0 0 10px #00e0ff, 0 0 20px rgba(0, 224, 255, 0.5);
+            animation: dot-pulse 1.5s infinite alternate;
+            z-index: 10;
+        }
+
+        @keyframes dot-pulse {
+            0% { transform: translateX(-50%) scale(1); opacity: 0.8; }
+            100% { transform: translateX(-50%) scale(1.1); opacity: 1; }
+        }
+
         /* Wetter Widget Stil */
         .weather-widget {
             position: fixed;
@@ -531,24 +685,7 @@
             animation: binary-pulse 1.5s infinite alternate;
         }
 
-        /* --- Stil für die linke, minimalistische Statusleiste --- */
-        .left-status-bar {
-            position: fixed;
-            top: 50%;
-            left: 20px;
-            transform: translateY(-50%);
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-            padding: 20px 15px;
-            background-color: rgba(0, 188, 212, 0.08);
-            border: 1px solid rgba(0, 188, 212, 0.3);
-            border-radius: 8px;
-            box-shadow: 0 0 20px rgba(0, 188, 212, 0.4);
-            z-index: 900;
-            display: none;
-        }
-
+        /* Status Item Minimal */
         .status-item-minimal {
             display: flex;
             flex-direction: column;
@@ -716,6 +853,12 @@
     
     <!-- Hauptinterface -->
     <div class="main-interface" id="mainInterface">
+        <!-- Online Status -->
+        <div class="online-status">
+            <div class="online-dot"></div>
+            Online
+        </div>
+
         <!-- Linke Statusleiste -->
         <div class="left-status-bar">
             <div class="status-item-minimal">
@@ -736,6 +879,19 @@
             </div>
         </div>
 
+        <!-- Power Meter -->
+        <div class="power-meter-container">
+            <div class="meter-label" id="meterLabel">POWER</div>
+            <div class="meter-body">
+                <div class="meter-fill" id="powerFill"></div>
+                <div class="glow-dot" style="bottom: 15%;"></div>
+                <div class="glow-dot" style="bottom: 40%;"></div>
+                <div class="glow-dot" style="bottom: 65%;"></div>
+                <div class="glow-dot" style="bottom: 90%;"></div>
+            </div>
+            <div class="meter-percentage" id="powerPercentage">0%</div>
+        </div>
+
         <div class="container">
             <div class="outer-ring-detail one"></div>
             <div class="outer-ring-detail two"></div>
@@ -745,11 +901,6 @@
             <div class="circle-core">
                 <div class="jarvis-text">J.A.R.V.I.S.</div>
             </div>
-        </div>
-
-        <div class="online-status">
-            <div class="online-dot"></div>
-            Online
         </div>
 
         <!-- Systemstatus-Anzeige -->
@@ -806,6 +957,7 @@
             const mainInterface = document.getElementById('mainInterface');
             const binaryFooter = document.querySelector('.binary-footer');
             const leftStatusBar = document.querySelector('.left-status-bar');
+            const powerMeter = document.querySelector('.power-meter-container');
             
             // Korrekte Anmeldedaten
             const CORRECT_USERNAME = "Tony Stark";
@@ -832,12 +984,14 @@
                         mainInterface.style.display = 'flex';
                         binaryFooter.style.display = 'block';
                         leftStatusBar.style.display = 'flex';
+                        powerMeter.style.display = 'flex';
                         
                         // Initialisiere das Hauptinterface
                         initializeBinaryCode();
                         initializeMinimalStatus();
                         initializeWeekOverview();
                         initializeSystemStatus();
+                        initializePowerMeter();
                     }, 500);
                 } else {
                     console.log("Login failed!"); // Debug output
@@ -1102,14 +1256,77 @@
                 showNextLine();
             }
             
+            // Funktion für den Power Meter
+            function initializePowerMeter() {
+                const powerFill = document.getElementById('powerFill');
+                const powerPercentage = document.getElementById('powerPercentage');
+                const meterLabel = document.getElementById('meterLabel');
+
+                let currentPower = 100; // Startwert bei 100%
+                const minPower = 72; // Minimalwert, auf den es fallen kann
+                const maxPower = 100; // Maximalwert (100%)
+
+                function updatePowerDisplay(value) {
+                    value = Math.max(0, Math.min(100, value));
+                    currentPower = value;
+
+                    powerFill.style.height = `${value}%`;
+                    powerPercentage.textContent = `${value}%`;
+
+                    if (value <= 20) {
+                        powerFill.classList.add('low-power');
+                        powerPercentage.classList.add('low-power-text');
+                    } else {
+                        powerFill.classList.remove('low-power');
+                        powerPercentage.classList.remove('low-power-text');
+                    }
+                }
+
+                function generateRandomPower() {
+                    const fluctuation = (Math.random() - 0.5) * 4; // Schwankt zwischen -2 und +2
+                    let newPower = currentPower + fluctuation;
+                    newPower = Math.max(minPower, Math.min(maxPower, newPower));
+                    return Math.round(newPower);
+                }
+
+                function applyGlitchEffect() {
+                    powerFill.classList.add('glitch-active');
+                    powerPercentage.classList.add('glitch-active');
+                    meterLabel.classList.add('glitch-active');
+
+                    setTimeout(() => {
+                        powerFill.classList.remove('glitch-active');
+                        powerPercentage.classList.remove('glitch-active');
+                        meterLabel.classList.remove('glitch-active');
+                    }, 100);
+                }
+
+                function startDynamicPowerFluctuation() {
+                    updatePowerDisplay(100);
+
+                    setInterval(() => {
+                        const newRandomPower = generateRandomPower();
+                        updatePowerDisplay(newRandomPower);
+
+                        if (Math.random() < 0.05) { 
+                            applyGlitchEffect();
+                        }
+                    }, 1500);
+                }
+
+                startDynamicPowerFluctuation();
+            }
+            
             // Debug: Sofortiges Anzeigen des Hauptinterfaces (für Testzwecke)
             // mainInterface.style.display = 'flex';
             // binaryFooter.style.display = 'block';
             // leftStatusBar.style.display = 'flex';
+            // powerMeter.style.display = 'flex';
             // initializeBinaryCode();
             // initializeMinimalStatus();
             // initializeWeekOverview();
             // initializeSystemStatus();
+            // initializePowerMeter();
         });
     </script>
 </body>
