@@ -448,6 +448,139 @@
             100% { transform: translateX(-50%) scale(1.1); opacity: 1; }
         }
 
+        /* Cyberpunk Globe Widget */
+        .cyberpunk-globe {
+            position: fixed;
+            bottom: 20px;
+            left: 100px; /* Position rechts neben der Powerleiste */
+            z-index: 900;
+            width: 192px;
+            height: 192px;
+            display: none;
+        }
+
+        .globe-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+        
+        .sphere {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            border: 0.8px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 
+                inset 0 0 28.8px rgba(255, 255, 255, 0.1),
+                0 0 19.2px rgba(255, 255, 255, 0.1);
+            background: 
+                radial-gradient(circle at 30% 30%, rgba(255,255,255,0.05) 0%, transparent 50%),
+                linear-gradient(rgba(255,255,255,0.08) 0.4px, transparent 0.4px),
+                linear-gradient(90deg, rgba(255,255,255,0.08) 0.4px, transparent 0.4px),
+                linear-gradient(rgba(255,255,255,0.05) 0.24px, transparent 0.24px),
+                linear-gradient(90deg, rgba(255,255,255,0.05) 0.24px, transparent 0.24px);
+            background-size: 
+                100% 100%, 
+                9.6px 9.6px, 9.6px 9.6px,
+                4.8px 4.8px, 4.8px 4.8px;
+        }
+        
+        .center-circle {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 28.8px;
+            height: 28.8px;
+            border: 0.8px solid rgba(255, 255, 255, 0.4);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            box-shadow: 
+                inset 0 0 4.8px rgba(255, 255, 255, 0.2),
+                0 0 7.2px rgba(255, 255, 255, 0.2);
+        }
+        
+        .eclipse {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            border: 0.96px solid rgba(255, 255, 255, 0.12);
+            transform-style: preserve-3d;
+        }
+        
+        .eclipse-h1 { transform: rotateX(10deg) rotateY(20deg); }
+        .eclipse-h2 { transform: rotateX(20deg) rotateY(20deg); }
+        .eclipse-h3 { transform: rotateX(30deg) rotateY(20deg); }
+        .eclipse-h4 { transform: rotateX(40deg) rotateY(20deg); }
+        .eclipse-h5 { transform: rotateX(50deg) rotateY(20deg); }
+        .eclipse-h6 { transform: rotateX(60deg) rotateY(20deg); }
+        .eclipse-h7 { transform: rotateX(70deg) rotateY(20deg); }
+        .eclipse-h8 { transform: rotateX(80deg) rotateY(20deg); }
+        
+        .eclipse-v1 { transform: rotateY(55deg); }
+        .eclipse-v2 { transform: rotateY(75deg); }
+        
+        .label-container {
+            position: absolute;
+            display: flex;
+            align-items: center;
+            right: 12%;
+        }
+        
+        .label {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 10.4px;
+            text-shadow: 0 0 4.8px rgba(255, 255, 255, 0.5);
+            background-color: rgba(0, 0, 0, 0.3);
+            padding: 1.6px 4.8px;
+            border-radius: 3.2px;
+            white-space: nowrap;
+            margin-left: 6.4px;
+        }
+        
+        .label-coords-container {
+            top: 30%;
+        }
+        
+        .label-germany-container {
+            top: 35%;
+        }
+        
+        .short-connector {
+            height: 0.8px;
+            width: 48px;
+            background: linear-gradient(90deg, rgba(255,255,255,0), rgba(255,255,255,0.7));
+        }
+
+        .globe-dot {
+            position: absolute;
+            width: 4.8px;
+            height: 4.8px;
+            background-color: rgba(255, 50, 50, 0.8);
+            border-radius: 50%;
+            box-shadow: 0 0 5.6px 1.6px rgba(255, 50, 50, 0.5);
+            transform: translate(-50%, -50%);
+        }
+        
+        .dot-germany-source {
+            top: 35%;
+            left: 55%;
+            animation: pulse 1.5s infinite;
+        }
+        
+        .dot-coords-source {
+            top: 30%;
+            left: 50%;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { opacity: 0.5; transform: scale(0.8) translate(-50%, -50%); }
+            50% { opacity: 1; transform: scale(1.2) translate(-50%, -50%); }
+            100% { opacity: 0.5; transform: scale(0.8) translate(-50%, -50%); }
+        }
+
         /* Wetter Widget Stil */
         .weather-widget {
             position: fixed;
@@ -918,6 +1051,40 @@
             <div class="meter-percentage" id="powerPercentage">0%</div>
         </div>
 
+        <!-- Cyberpunk Globe Widget -->
+        <div class="cyberpunk-globe">
+            <div class="globe-container" id="globeContainer">
+                <div class="sphere">
+                    <div class="eclipse eclipse-h1"></div>
+                    <div class="eclipse eclipse-h2"></div>
+                    <div class="eclipse eclipse-h3"></div>
+                    <div class="eclipse eclipse-h4"></div>
+                    <div class="eclipse eclipse-h5"></div>
+                    <div class="eclipse eclipse-h6"></div>
+                    <div class="eclipse eclipse-h7"></div>
+                    <div class="eclipse eclipse-h8"></div>
+                    
+                    <div class="eclipse eclipse-v1"></div>
+                    <div class="eclipse eclipse-v2"></div>
+                    
+                    <div class="center-circle"></div>
+                    
+                    <div class="globe-dot dot-germany-source" id="germanySourceDot"></div>
+                    <div class="globe-dot dot-coords-source" id="coordsSourceDot"></div>
+                </div>
+            </div>
+            
+            <div class="label-container label-coords-container" id="labelCoordsContainer">
+                <div class="short-connector" id="connectorCoords"></div>
+                <div class="label" id="labelCoords">54° 1′ N, 10° 45′ O</div>
+            </div>
+            
+            <div class="label-container label-germany-container" id="labelGermanyContainer">
+                <div class="short-connector" id="connectorGermany"></div>
+                <div class="label" id="labelGermany">Germany</div>
+            </div>
+        </div>
+
         <div class="container">
             <div class="outer-ring-detail one"></div>
             <div class="outer-ring-detail two"></div>
@@ -985,6 +1152,7 @@
             const leftStatusBar = document.querySelector('.left-status-bar');
             const powerMeter = document.querySelector('.power-meter-container');
             const ekgDisplay = document.getElementById('ekgDisplay');
+            const cyberpunkGlobe = document.querySelector('.cyberpunk-globe');
             
             // Korrekte Anmeldedaten
             const CORRECT_USERNAME = "Tony Stark";
@@ -1011,6 +1179,7 @@
                         leftStatusBar.style.display = 'flex';
                         powerMeter.style.display = 'flex';
                         ekgDisplay.style.display = 'block';
+                        cyberpunkGlobe.style.display = 'block';
                         
                         initializeBinaryCode();
                         initializeMinimalStatus();
@@ -1018,6 +1187,7 @@
                         initializeSystemStatus();
                         initializePowerMeter();
                         initializeEKG();
+                        initializeGlobeConnectors();
                     }, 500);
                 } else {
                     console.log("Login failed!");
@@ -1398,6 +1568,53 @@
                     }
                 }, 1500);
             }
+            
+            function initializeGlobeConnectors() {
+                const container = document.querySelector('.cyberpunk-globe');
+                const containerRect = container.getBoundingClientRect();
+
+                const globeContainer = document.getElementById('globeContainer');
+                const germanySourceDot = document.getElementById('germanySourceDot');
+                const coordsSourceDot = document.getElementById('coordsSourceDot');
+                
+                const labelGermanyContainer = document.getElementById('labelGermanyContainer');
+                const labelCoordsContainer = document.getElementById('labelCoordsContainer');
+                
+                const connectorGermany = document.getElementById('connectorGermany');
+                const connectorCoords = document.getElementById('connectorCoords');
+
+                function getRelativeCenter(element, parentRect) {
+                    const rect = element.getBoundingClientRect();
+                    return {
+                        x: rect.left + rect.width / 2 - parentRect.left,
+                        y: rect.top + rect.height / 2 - parentRect.top
+                    };
+                }
+
+                function getConnectorStartPoint(containerElement, parentRect) {
+                    const rect = containerElement.getBoundingClientRect();
+                    return {
+                        x: rect.left - parentRect.left,
+                        y: rect.top + rect.height / 2 - parentRect.top
+                    };
+                }
+
+                // Positioniere die Label-Container basierend auf den Punkten
+                function positionLabelContainer(container, dot, offsetX) {
+                    const dotPos = getRelativeCenter(dot, containerRect);
+                    container.style.left = `${dotPos.x + offsetX * 0.8}px`;
+                    container.style.top = `${dotPos.y}px`;
+                    container.style.transform = 'translateY(-50%)';
+                }
+
+                // Positioniere die Container mit festem Abstand zu den Punkten
+                positionLabelContainer(labelGermanyContainer, germanySourceDot, 30);
+                positionLabelContainer(labelCoordsContainer, coordsSourceDot, 30);
+            }
+
+            // Initialisiere die Verbindungslinien beim Laden und bei Größenänderungen
+            window.addEventListener('load', initializeGlobeConnectors);
+            window.addEventListener('resize', initializeGlobeConnectors);
         });
     </script>
 </body>
