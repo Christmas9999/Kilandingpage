@@ -160,98 +160,41 @@
             align-items: center;
             margin-bottom: 20px;
         }
-
-        .circle-outer, .circle-middle, .circle-inner, .circle-core {
-            position: absolute;
-            border-radius: 50%;
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            box-sizing: border-box;
-        }
-
-        .circle-outer {
+        
+        #jarvis-visual {
             width: 100%;
             height: 100%;
-            border-color: rgba(255, 255, 255, 0.1);
-        }
-
-        .circle-outer::before, .circle-outer::after {
-            content: '';
-            position: absolute;
             border-radius: 50%;
-            border: 1px dotted rgba(255, 255, 255, 0.1);
-            top: -5%;
-            left: -5%;
-            width: 110%;
-            height: 110%;
-            animation: rotate 30s linear infinite;
+            object-fit: cover;
+            box-shadow: 0 0 25px rgba(0, 224, 255, 0.6), 
+                        0 0 40px rgba(0, 224, 255, 0.4),
+                        inset 0 0 30px rgba(0, 224, 255, 0.3);
         }
 
-        .circle-outer::after {
-            animation-direction: reverse;
-            animation-duration: 40s;
-        }
-
-        .circle-middle {
-            width: 80%;
-            height: 80%;
-            border-color: rgba(255, 255, 255, 0.2);
-            animation: rotate 20s linear infinite;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .circle-middle::before, .circle-middle::after {
-            content: '';
+        .jarvis-text-overlay {
             position: absolute;
-            border: 2px solid #00e0ff;
-            border-radius: 50%;
-            box-sizing: border-box;
-            opacity: 0.7;
-            animation: segment-rotate 5s linear infinite;
-        }
-
-        .circle-middle::before {
-            width: 90%;
-            height: 90%;
-            border-top-color: transparent;
-            border-bottom-color: transparent;
-        }
-
-        .circle-middle::after {
-            width: 80%;
-            height: 80%;
-            border-left-color: transparent;
-            border-right-color: transparent;
-            animation: segment-rotate-reverse 5s linear infinite;
-        }
-
-        .circle-inner {
-            width: 60%;
-            height: 60%;
-            border-color: rgba(255, 255, 255, 0.3);
-            animation: none;
-        }
-
-        .circle-core {
-            width: 40%;
-            height: 40%;
-            border-color: #00e0ff;
-            box-shadow: 0 0 15px #00e0ff;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            text-shadow: 0 0 10px #00e0ff;
-            background: radial-gradient(circle, rgba(0,224,255,0.2) 0%, rgba(0,0,0,0) 70%);
-            animation: pulse 2s infinite alternate;
-        }
-
-        .jarvis-text {
-            color: #00e0ff;
-            font-size: 2em;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #ffffff;
+            opacity: 1;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.5em;
             font-weight: bold;
-            letter-spacing: 2px;
-            animation: text-pulse 2s infinite alternate;
+            letter-spacing: 3px;
+            text-shadow: 0 0 8px #00e0ff, 0 0 15px #00e0ff, 0 0 25px rgba(0, 224, 255, 0.7);
+            pointer-events: none;
+            z-index: 10;
+            animation: text-pulse 3s infinite alternate;
+        }
+        
+        @keyframes text-pulse {
+            from {
+                text-shadow: 0 0 8px #00e0ff, 0 0 15px #00e0ff, 0 0 25px rgba(0, 224, 255, 0.7);
+            }
+            to {
+                text-shadow: 0 0 12px #55faff, 0 0 25px #55faff, 0 0 40px rgba(85, 250, 255, 0.8);
+            }
         }
 
         /* Online Status */
@@ -276,76 +219,17 @@
             box-shadow: 0 0 8px #00e0ff, 0 0 15px rgba(0, 224, 255, 0.5);
             animation: dot-pulse 1.5s infinite alternate;
         }
-
-        /* DNA-Balken mit verbesserter Animation und angepasster Höhe */
-        .dna-container {
-            position: fixed;
-            top: 40px; /* Höher positioniert */
-            right: 280px;
-            width: 120px;
-            height: 280px; /* Höhe reduziert */
-            transform-style: preserve-3d;
-            transform: rotateY(0deg) rotateX(0deg) scale(0.5);
-            animation: dna-rotate 20s infinite linear;
-            z-index: 1001;
-            filter: drop-shadow(0 0 5px rgba(0, 224, 255, 0.7));
-        }
-
-        @keyframes dna-rotate {
-            0% { transform: rotateY(0deg) rotateX(0deg) scale(0.5); }
-            100% { transform: rotateY(360deg) rotateX(0deg) scale(0.5); }
-        }
-
-        .dna-rung {
-            position: absolute;
-            width: 80px;
-            height: 6px;
-            background-color: #00e0ff;
-            border-radius: 3px;
-            box-shadow: 0 0 8px rgba(0, 224, 255, 0.8),
-                        0 0 15px rgba(0, 224, 255, 0.4);
-            left: 50%;
-            transform: translateX(-50%) rotateY(0deg) rotateX(0deg);
-            transform-style: preserve-3d;
-            animation: dna-rung-pulse 2s infinite alternate ease-in-out;
-        }
-
-        @keyframes dna-rung-pulse {
-            0% { height: 4px; opacity: 0.8; transform: translateX(-50%) rotateY(var(--rot)) rotateX(var(--rot-x)) scaleY(0.9); }
-            50% { height: 8px; opacity: 1; transform: translateX(-50%) rotateY(var(--rot)) rotateX(var(--rot-x)) scaleY(1.1); }
-            100% { height: 6px; opacity: 0.9; transform: translateX(-50%) rotateY(var(--rot)) rotateX(var(--rot-x)) scaleY(1); }
-        }
-
-        /* Positionierung und Drehung der einzelnen Balken */
-        .rung-1 { top: 20px; --rot: 0deg; --rot-x: 0deg; }
-        .rung-2 { top: 35px; --rot: 20deg; --rot-x: 5deg; }
-        .rung-3 { top: 50px; --rot: 40deg; --rot-x: 10deg; }
-        .rung-4 { top: 65px; --rot: 60deg; --rot-x: 15deg; }
-        .rung-5 { top: 80px; --rot: 80deg; --rot-x: 20deg; }
-        .rung-6 { top: 95px; --rot: 100deg; --rot-x: 25deg; }
-        .rung-7 { top: 110px; --rot: 120deg; --rot-x: 30deg; }
-        .rung-8 { top: 125px; --rot: 140deg; --rot-x: 35deg; }
-        .rung-9 { top: 140px; --rot: 160deg; --rot-x: 40deg; }
-        .rung-10 { top: 155px; --rot: 180deg; --rot-x: 45deg; }
-        .rung-11 { top: 170px; --rot: 200deg; --rot-x: 40deg; }
-        .rung-12 { top: 185px; --rot: 220deg; --rot-x: 35deg; }
-        .rung-13 { top: 200px; --rot: 240deg; --rot-x: 30deg; }
-        .rung-14 { top: 215px; --rot: 260deg; --rot-x: 25deg; }
-        .rung-15 { top: 230px; --rot: 280deg; --rot-x: 20deg; }
-        .rung-16 { top: 245px; --rot: 300deg; --rot-x: 15deg; }
-        .rung-17 { top: 260px; --rot: 320deg; --rot-x: 10deg; }
-        .rung-18 { top: 275px; --rot: 340deg; --rot-x: 5deg; }
-        .rung-19 { top: 290px; --rot: 360deg; --rot-x: 0deg; }
-
-        /* Hexagon-Gruppe mit angepasster Position */
+        
+        /* Hexagon-Gruppe */
         .hexagon-group-container {
             position: fixed;
-            bottom: 100px; /* Höher positioniert */
-            right: 320px;
+            top: 40px;
+            right: 20px;
             width: 180px;
             height: 150px;
             transform: scale(0.8);
             z-index: 1001;
+            display: none;
         }
 
         .hexagon-item {
@@ -392,13 +276,13 @@
             height: 100%;
         }
 
-        /* System Stats Container - VERKLEINERT */
+        /* System Stats Container */
         .system-stats-container {
             position: fixed;
             top: 140px;
             left: 20px;
             z-index: 900;
-            transform: scale(0.7); /* Geändert */
+            transform: scale(0.7);
             transform-origin: left top;
             background-color: rgba(0, 20, 30, 0.6);
             border: 1px solid rgba(0, 224, 255, 0.3);
@@ -470,7 +354,6 @@
             font-weight: bold;
             color: #fff;
             font-family: 'Orbitron', sans-serif;
-            text-shadow: 0 0 8px rgba(0, 224, 255, 0.7));
         }
 
         .stats-text {
@@ -486,24 +369,23 @@
             text-shadow: 0 0 5px rgba(0, 224, 255, 0.5);
         }
 
-        /* Linke Statusleiste - VERKLEINERT & VERSCHOBEN */
+        /* Linke Statusleiste */
         .left-status-bar {
             position: fixed;
-            bottom: 230px; /* Geändert */
+            bottom: 230px;
             left: 20px;
-            display: flex;
+            display: none;
             flex-direction: row;
-            gap: 20px; /* Geändert */
-            padding: 10px 15px; /* Geändert */
+            gap: 20px;
+            padding: 10px 15px;
             background-color: rgba(0, 188, 212, 0.08);
             border: 1px solid rgba(0, 188, 212, 0.3);
             border-radius: 8px;
             box-shadow: 0 0 20px rgba(0, 188, 212, 0.4);
             z-index: 900;
-            display: none;
         }
-
-        /* Compact System Panel - ZENTRIERT */
+        
+        /* Compact System Panel */
         .compact-system-panel {
             position: fixed;
             top: 50%;
@@ -519,6 +401,7 @@
             font-family: 'Roboto Mono', monospace;
             font-size: 0.8em;
             animation: panel-glow 3s infinite alternate;
+            display: none;
         }
 
         .compact-system-panel strong {
@@ -558,23 +441,22 @@
             to { box-shadow: 0 0 15px rgba(0, 224, 255, 0.6); }
         }
 
-        /* Power Meter Container - VERKLEINERT */
+        /* Power Meter Container */
         .power-meter-container {
             position: fixed;
             bottom: 20px;
             left: 20px;
             width: 70px;
-            height: 190px; /* Geändert */
+            height: 190px;
             background-color: rgba(0, 0, 0, 0.6);
             border: 2px solid #00e0ff;
             border-radius: 10px;
             box-shadow: 0 0 15px rgba(0, 224, 255, 0.7);
-            display: flex;
+            display: none;
             flex-direction: column;
             align-items: center;
             padding: 12px 5px;
             z-index: 900;
-            display: none;
         }
 
         .meter-label {
@@ -606,94 +488,7 @@
             transition: height 0.5s ease-in-out;
             box-shadow: 0 0 10px rgba(57, 255, 20, 0.8), 0 0 20px rgba(0, 224, 255, 0.6);
         }
-
-        .meter-fill.low-power {
-            background: linear-gradient(to top, #ff4500, #ffa500);
-            box-shadow: 0 0 10px rgba(255, 69, 0, 0.8), 0 0 20px rgba(255, 165, 0, 0.6);
-        }
-
-        .meter-fill.glitch-active {
-            background: linear-gradient(to top, #ff00ff, #ffff00);
-            box-shadow: 0 0 15px #ff00ff, 0 0 25px #ffff00;
-            animation: glitch-fill 0.1s steps(2, start) infinite alternate;
-        }
-
-        .meter-percentage.glitch-active {
-            color: #ffff00;
-            text-shadow: 0 0 8px #ffff00, 0 0 15px #ff00ff;
-            animation: glitch-text 0.1s steps(2, start) infinite alternate;
-        }
-
-        .meter-label.glitch-active {
-            color: #ff00ff;
-            text-shadow: 0 0 8px #ff00ff, 0 0 15px #ffff00;
-            animation: glitch-text 0.1s steps(2, start) infinite alternate;
-        }
-
-        @keyframes glitch-fill {
-            0% { transform: translate(0, 0); opacity: 1; }
-            33% { transform: translate(-2px, 2px); opacity: 0.9; }
-            66% { transform: translate(2px, -2px); opacity: 0.8; }
-            100% { transform: translate(0, 0); opacity: 1; }
-        }
-
-        @keyframes glitch-text {
-            0% { transform: translate(0, 0); opacity: 1; }
-            25% { transform: translate(1px, -1px); opacity: 0.9; }
-            50% { transform: translate(-1px, 1px); opacity: 0.8; }
-            75% { transform: translate(1px, 1px); opacity: 0.9; }
-            100% { transform: translate(0, 0); opacity: 1; }
-        }
-
-        .meter-percentage {
-            position: absolute;
-            width: 100%;
-            text-align: center;
-            bottom: -20px;
-            left: 0;
-            font-size: 0.8em;
-            font-weight: bold;
-            color: #00e0ff;
-            text-shadow: 0 0 8px #00e0ff;
-            transition: color 0.5s ease-in-out, text-shadow 0.5s ease-in-out;
-            font-family: 'Orbitron', sans-serif;
-        }
         
-        .meter-percentage.low-power-text {
-            color: #ff4500;
-            text-shadow: 0 0 8px #ff4500;
-        }
-
-        .meter-body::before, .meter-body::after {
-            content: '';
-            position: absolute;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 80%;
-            height: 1px;
-            background-color: rgba(0, 224, 255, 0.3);
-        }
-        .meter-body::before { top: 15%; }
-        .meter-body::after { bottom: 15%; }
-
-        .glow-dot {
-            position: absolute;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 6px;
-            height: 6px;
-            background-color: #00e0ff;
-            border-radius: 50%;
-            box-shadow: 0 0 8px #00e0ff, 0 0 15px rgba(0, 224, 255, 0.5);
-            animation: dot-pulse 1.5s infinite alternate;
-            z-index: 10;
-        }
-
-        @keyframes dot-pulse {
-            0% { transform: translateX(-50%) scale(1); opacity: 0.8; }
-            100% { transform: translateX(-50%) scale(1.1); opacity: 1; }
-        }
-
         /* Cyberpunk Globe Widget */
         .cyberpunk-globe {
             position: fixed;
@@ -704,48 +499,34 @@
             height: 192px;
             display: none;
         }
-
         .globe-container {
             position: relative;
             width: 100%;
             height: 100%;
         }
-        
         .sphere {
             position: absolute;
             width: 100%;
             height: 100%;
             border-radius: 50%;
             border: 0.8px solid rgba(255, 255, 255, 0.3);
-            box-shadow: 
-                inset 0 0 28.8px rgba(255, 255, 255, 0.1),
-                0 0 19.2px rgba(255, 255, 255, 0.1);
-            background: 
-                radial-gradient(circle at 30% 30%, rgba(255,255,255,0.05) 0%, transparent 50%),
-                linear-gradient(rgba(255,255,255,0.08) 0.4px, transparent 0.4px),
-                linear-gradient(90deg, rgba(255,255,255,0.08) 0.4px, transparent 0.4px),
-                linear-gradient(rgba(255,255,255,0.05) 0.24px, transparent 0.24px),
-                linear-gradient(90deg, rgba(255,255,255,0.05) 0.24px, transparent 0.24px);
-            background-size: 
-                100% 100%, 
-                9.6px 9.6px, 9.6px 9.6px,
-                4.8px 4.8px, 4.8px 4.8px;
+            box-shadow: inset 0 0 28.8px rgba(255, 255, 255, 0.1), 0 0 19.2px rgba(255, 255, 255, 0.1);
+            background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.05) 0%, transparent 50%),
+                        linear-gradient(rgba(255,255,255,0.08) 0.4px, transparent 0.4px),
+                        linear-gradient(90deg, rgba(255,255,255,0.08) 0.4px, transparent 0.4px),
+                        linear-gradient(rgba(255,255,255,0.05) 0.24px, transparent 0.24px),
+                        linear-gradient(90deg, rgba(255,255,255,0.05) 0.24px, transparent 0.24px);
+            background-size: 100% 100%, 9.6px 9.6px, 9.6px 9.6px, 4.8px 4.8px, 4.8px 4.8px;
         }
-        
         .center-circle {
             position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 28.8px;
-            height: 28.8px;
+            top: 50%; left: 50%;
+            width: 28.8px; height: 28.8px;
             border: 0.8px solid rgba(255, 255, 255, 0.4);
             border-radius: 50%;
             transform: translate(-50%, -50%);
-            box-shadow: 
-                inset 0 0 4.8px rgba(255, 255, 255, 0.2),
-                0 0 7.2px rgba(255, 255, 255, 0.2);
+            box-shadow: inset 0 0 4.8px rgba(255, 255, 255, 0.2), 0 0 7.2px rgba(255, 255, 255, 0.2);
         }
-        
         .eclipse {
             position: absolute;
             width: 100%;
@@ -754,7 +535,6 @@
             border: 0.96px solid rgba(255, 255, 255, 0.12);
             transform-style: preserve-3d;
         }
-        
         .eclipse-h1 { transform: rotateX(10deg) rotateY(20deg); }
         .eclipse-h2 { transform: rotateX(20deg) rotateY(20deg); }
         .eclipse-h3 { transform: rotateX(30deg) rotateY(20deg); }
@@ -763,17 +543,14 @@
         .eclipse-h6 { transform: rotateX(60deg) rotateY(20deg); }
         .eclipse-h7 { transform: rotateX(70deg) rotateY(20deg); }
         .eclipse-h8 { transform: rotateX(80deg) rotateY(20deg); }
-        
         .eclipse-v1 { transform: rotateY(55deg); }
         .eclipse-v2 { transform: rotateY(75deg); }
-        
         .label-container {
             position: absolute;
             display: flex;
             align-items: center;
             right: 12%;
         }
-        
         .label {
             color: rgba(255, 255, 255, 0.9);
             font-size: 10.4px;
@@ -784,21 +561,13 @@
             white-space: nowrap;
             margin-left: 6.4px;
         }
-        
-        .label-coords-container {
-            top: 30%;
-        }
-        
-        .label-germany-container {
-            top: 35%;
-        }
-        
+        .label-coords-container { top: 30%; }
+        .label-germany-container { top: 35%; }
         .short-connector {
             height: 0.8px;
             width: 48px;
             background: linear-gradient(90deg, rgba(255,255,255,0), rgba(255,255,255,0.7));
         }
-
         .globe-dot {
             position: absolute;
             width: 4.8px;
@@ -807,26 +576,11 @@
             border-radius: 50%;
             box-shadow: 0 0 5.6px 1.6px rgba(255, 50, 50, 0.5);
             transform: translate(-50%, -50%);
-        }
-        
-        .dot-germany-source {
-            top: 35%;
-            left: 55%;
             animation: pulse 1.5s infinite;
         }
+        .dot-germany-source { top: 35%; left: 55%; }
+        .dot-coords-source { top: 30%; left: 50%; }
         
-        .dot-coords-source {
-            top: 30%;
-            left: 50%;
-            animation: pulse 2s infinite;
-        }
-        
-        @keyframes pulse {
-            0% { opacity: 0.5; transform: scale(0.8) translate(-50%, -50%); }
-            50% { opacity: 1; transform: scale(1.2) translate(-50%, -50%); }
-            100% { opacity: 0.5; transform: scale(0.8) translate(-50%, -50%); }
-        }
-
         /* Wetter Widget Stil */
         .weather-widget {
             position: fixed;
@@ -851,13 +605,7 @@
         .jarvis-horizontal-week {
             width: 100%;
             padding: 15px 0;
-            background-color: transparent;
-            border: none;
-            border-radius: 0;
-            box-shadow: none;
-            text-align: center;
             position: relative;
-            overflow: hidden;
             display: flex;
             justify-content: center;
             align-items: flex-end;
@@ -880,7 +628,6 @@
             opacity: 1;
             transform: scale(1.05);
         }
-
         .day-block::before {
             content: '';
             position: absolute;
@@ -893,170 +640,30 @@
             transition: background-color 0.3s ease, box-shadow 0.3s ease;
             z-index: -1;
         }
-
         .day-block.today::before {
             background-color: rgba(0, 188, 212, 0.6);
             box-shadow: 0 0 10px rgba(0, 188, 212, 0.7);
             animation: subtleHighlightPulse 1.8s infinite alternate;
         }
-
         .day-name {
             font-family: 'Roboto Mono', monospace;
             font-size: 0.9em;
             color: #00bcd4;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
-            margin-bottom: 2px;
-            transition: color 0.3s ease;
         }
-
-        .day-separator-horizontal {
-            width: 100%;
-            height: 1px;
-            background-color: rgba(0, 188, 212, 0.3);
-            margin: 3px 0;
-            transition: background-color 0.3s ease;
-            position: absolute;
-            bottom: 50px;
-            left: 0;
-        }
-
         .day-date {
             font-family: 'Roboto Mono', monospace;
             font-size: 1.6em;
             font-weight: bold;
             color: #00bcd4;
-            transition: color 0.3s ease;
         }
-
         .day-block.today .day-name,
         .day-block.today .day-date {
             color: #e6edf3;
             text-shadow: 0 0 5px rgba(230, 237, 243, 0.5);
         }
-
-        .jarvis-horizontal-week.today-active .day-separator-horizontal {
-            background-color: #00bcd4;
-            box-shadow: 0 0 8px rgba(0, 188, 212, 0.6);
-        }
-
-        @keyframes subtleHighlightPulse {
-            0% { box-shadow: 0 0 8px rgba(0, 188, 212, 0.6); transform: scale(1.05); }
-            100% { box-shadow: 0 0 15px rgba(0, 188, 212, 0.8); transform: scale(1.06); }
-        }
-
-        /* Systemstatus-Anzeige */
-        .system-status {
-            position: fixed;
-            bottom: 350px;
-            right: 20px;
-            z-index: 1000;
-            width: 250px;
-            background: rgba(0, 20, 30, 0.8);
-            border: 1px solid rgba(0, 224, 255, 0.4);
-            border-radius: 10px;
-            padding: 12px;
-            box-shadow: 0 0 20px rgba(0, 224, 255, 0.5);
-            animation: container-glow 3s infinite alternate;
-            display: none;
-        }
-
-        @keyframes container-glow {
-            from { box-shadow: 0 0 20px rgba(0, 224, 255, 0.5); }
-            to { box-shadow: 0 0 30px rgba(0, 224, 255, 0.8); }
-        }
-
-        .status-line {
-            opacity: 0;
-            transform: translateY(10px);
-            transition: opacity 0.5s ease-out, transform 0.5s ease-out;
-            padding: 3px 0;
-            white-space: pre-wrap;
-            position: relative;
-            overflow: hidden;
-            line-height: 1.3;
-            font-family: 'Roboto Mono', monospace;
-            font-size: 0.8em;
-            color: #00e0ff;
-        }
-
-        .status-line.show {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .glitch-text {
-            position: relative;
-            display: inline-block;
-        }
-
-        .glitch-text::before,
-        .glitch-text::after {
-            content: attr(data-text);
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            overflow: hidden;
-        }
-
-        .glitch-text::before {
-            left: 1px;
-            text-shadow: -1px 0 rgba(0, 255, 255, 0.7);
-            animation: glitch-subtle-1 0.5s infinite linear alternate-reverse;
-            animation-delay: var(--glitch-delay, 0s);
-        }
-
-        .glitch-text::after {
-            left: -1px;
-            text-shadow: -1px 0 rgba(255, 0, 255, 0.7);
-            animation: glitch-subtle-2 0.5s infinite linear alternate-reverse;
-            animation-delay: var(--glitch-delay, 0s);
-        }
-
-        @keyframes glitch-subtle-1 {
-            0% { transform: translateX(0); opacity: 0.9; }
-            20% { transform: translateX(0.5px); opacity: 0.8; }
-            40% { transform: translateX(-0.5px); opacity: 0.9; }
-            60% { transform: translateX(0.3px); opacity: 0.8; }
-            80% { transform: translateX(-0.3px); opacity: 0.9; }
-            100% { transform: translateX(0); opacity: 1; }
-        }
-
-        @keyframes glitch-subtle-2 {
-            0% { transform: translateX(0); opacity: 0.9; }
-            25% { transform: translateX(-0.6px); opacity: 0.85; }
-            50% { transform: translateX(0.6px); opacity: 0.9; }
-            75% { transform: translateX(-0.4px); opacity: 0.85; }
-            100% { transform: translateX(0); opacity: 1; }
-        }
-
-        .typewriter-text {
-            display: inline-block;
-            overflow: hidden;
-            white-space: nowrap;
-            border-right: 2px solid rgba(0, 224, 255, 0.8);
-            animation: typing 2s steps(40, end) forwards, blink-cursor 0.75s step-end infinite;
-        }
-
-        .typewriter-text.finished {
-            border-right: none;
-            animation: none;
-        }
-
-        @keyframes typing {
-            from { width: 0; }
-            to { width: 100%; }
-        }
-
-        @keyframes blink-cursor {
-            from, to { border-color: transparent; }
-            50% { border-color: rgba(0, 224, 255, 0.8); }
-        }
-
-        /* --- Stil für den Binärcode-Footer --- */
+        
+        /* Binärcode-Footer */
         .binary-footer {
             width: 100%;
             padding: 10px 0;
@@ -1070,6 +677,12 @@
             box-shadow: 0 -2px 15px rgba(0, 188, 212, 0.3);
             overflow: hidden;
             display: none;
+            transition: all 0.2s ease-in-out;
+        }
+        
+        .binary-footer.glitch-active .binary-line {
+            color: #55faff;
+            text-shadow: 0 0 8px #55faff;
         }
 
         .binary-line {
@@ -1087,7 +700,7 @@
             text-shadow: 0 0 5px rgba(255, 152, 0, 0.7);
             animation: binary-pulse 1.5s infinite alternate;
         }
-
+        
         /* Status Item Minimal */
         .status-item-minimal {
             display: flex;
@@ -1112,22 +725,14 @@
             animation: glowPulseWhite 2s infinite alternate;
             transition: color 0.5s ease-in-out, text-shadow 0.5s ease-in-out;
         }
-
-        .status-value-minimal.status-green {
-            color: #39ff14;
-            text-shadow: 0 0 8px rgba(57, 255, 20, 0.8), 0 0 15px rgba(57, 255, 20, 0.6);
-            animation: glowPulseGreen 2s infinite alternate;
-        }
-
-        /* HINZUGEFÜGT: Datums-Widget */
+        
+        /* Datums-Widget */
         #current-date {
             position: fixed;
             right: 20px;
-            bottom: 260px; /* Positioniert über der Wochenansicht */
+            bottom: 260px;
             z-index: 1000;
-            display: none; /* Initial unsichtbar */
-            
-            /* Stile aus der Vorlage */
+            display: none;
             font-family: 'Share Tech Mono', monospace;
             color: #00FFFF;
             text-shadow: 0 0 8px rgba(0, 255, 255, 0.6);
@@ -1140,124 +745,31 @@
             background-color: rgba(0, 50, 50, 0.2);
         }
 
-
         /* Animationen */
-        @keyframes rotate {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
-
-        @keyframes pulse {
-            from { transform: scale(1); box-shadow: 0 0 15px #00e0ff; }
-            to { transform: scale(1.05); box-shadow: 0 0 25px #00e0ff, 0 0 50px rgba(0, 224, 255, 0.3); }
-        }
-
-        @keyframes text-pulse {
-            from { color: #00e0ff; text-shadow: 0 0 10px #00e0ff; }
-            to { color: #55faff; text-shadow: 0 0 15px #55faff, 0 0 25px rgba(85, 250, 255, 0.5); }
-        }
-
-        @keyframes segment-rotate {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
-
-        @keyframes segment-rotate-reverse {
-            from { transform: rotate(360deg); }
-            to { transform: rotate(0deg); }
-        }
-
         @keyframes dot-pulse {
             from { transform: scale(1); opacity: 1; }
             to { transform: scale(1.1); opacity: 0.7; }
         }
-
         @keyframes fadeOut {
             from { opacity: 1; }
             to { opacity: 0; visibility: hidden; }
         }
-
         @keyframes binary-pulse {
             0% { opacity: 0.8; }
             100% { opacity: 1; }
         }
-
         @keyframes glowPulseWhite {
             0% { text-shadow: 0 0 5px rgba(230, 237, 243, 0.6); opacity: 0.9; }
             100% { text-shadow: 0 0 12px rgba(230, 237, 243, 1); opacity: 1; }
         }
-
-        @keyframes glowPulseGreen {
-            0% { text-shadow: 0 0 5px rgba(57, 255, 20, 0.7); opacity: 0.9; }
-            100% { text-shadow: 0 0 15px rgba(57, 255, 20, 1), 0 0 20px rgba(57, 255, 20, 0.8); opacity: 1; }
+        @keyframes pulse {
+            0% { opacity: 0.5; transform: scale(0.8) translate(-50%, -50%); }
+            50% { opacity: 1; transform: scale(1.2) translate(-50%, -50%); }
+            100% { opacity: 0.5; transform: scale(0.8) translate(-50%, -50%); }
         }
-
-        /* --- Responsive Anpassung --- */
-        @media (max-width: 768px) {
-            .left-status-bar {
-                position: relative;
-                top: auto;
-                left: auto;
-                transform: none;
-                flex-direction: row;
-                justify-content: center;
-                gap: 10px;
-                width: 95%;
-                margin: 20px auto;
-                padding: 10px 5px;
-            }
-
-            .status-item-minimal {
-                flex-direction: row;
-                align-items: center;
-                gap: 5px;
-            }
-
-            .status-label-minimal {
-                font-size: 0.75em;
-            }
-
-            .status-value-minimal {
-                font-size: 0.9em;
-            }
-
-            .week-overview, .system-status {
-                position: relative;
-                bottom: auto;
-                right: auto;
-                width: 95%;
-                margin: 20px auto;
-            }
-
-            .dna-container {
-                display: none;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .left-status-bar {
-                flex-wrap: wrap;
-                gap: 8px 15px;
-                padding: 8px;
-            }
-            
-            .jarvis-horizontal-week {
-                flex-wrap: wrap;
-                gap: 5px;
-            }
-            
-            .day-block {
-                width: calc(100% / 4);
-                margin-bottom: 5px;
-            }
-            
-            .system-status {
-                padding: 10px;
-            }
-            
-            .status-line {
-                font-size: 0.8em;
-            }
+        @keyframes subtleHighlightPulse {
+            0% { box-shadow: 0 0 8px rgba(0, 188, 212, 0.6); }
+            100% { box-shadow: 0 0 15px rgba(0, 188, 212, 0.8); }
         }
     </style>
 </head>
@@ -1285,224 +797,54 @@
             Online
         </div>
 
-        <div class="dna-container" id="floatingBars">
-            <div class="dna-rung rung-1"></div>
-            <div class="dna-rung rung-2"></div>
-            <div class="dna-rung rung-3"></div>
-            <div class="dna-rung rung-4"></div>
-            <div class="dna-rung rung-5"></div>
-            <div class="dna-rung rung-6"></div>
-            <div class="dna-rung rung-7"></div>
-            <div class="dna-rung rung-8"></div>
-            <div class="dna-rung rung-9"></div>
-            <div class="dna-rung rung-10"></div>
-            <div class="dna-rung rung-11"></div>
-            <div class="dna-rung rung-12"></div>
-            <div class="dna-rung rung-13"></div>
-            <div class="dna-rung rung-14"></div>
-            <div class="dna-rung rung-15"></div>
-            <div class="dna-rung rung-16"></div>
-            <div class="dna-rung rung-17"></div>
-            <div class="dna-rung rung-18"></div>
-            <div class="dna-rung rung-19"></div>
-        </div>
-
         <div class="hexagon-group-container">
-            <div class="hexagon-item hex-1">
-                <svg viewBox="0 0 100 100" class="hexagon-outline">
-                    <polygon points="50,0 93.3,25 93.3,75 50,100 6.7,75 6.7,25" />
-                </svg>
-            </div>
-            <div class="hexagon-item hex-2">
-                <svg viewBox="0 0 100 100" class="hexagon-outline">
-                    <polygon points="50,0 93.3,25 93.3,75 50,100 6.7,75 6.7,25" />
-                </svg>
-            </div>
-            <div class="hexagon-item hex-3">
-                <svg viewBox="0 0 100 100" class="hexagon-outline">
-                    <polygon points="50,0 93.3,25 93.3,75 50,100 6.7,75 6.7,25" />
-                </svg>
-            </div>
-            <div class="hexagon-item hex-4">
-                <svg viewBox="0 0 100 100" class="hexagon-outline">
-                    <polygon points="50,0 93.3,25 93.3,75 50,100 6.7,75 6.7,25" />
-                </svg>
-            </div>
-            <div class="hexagon-item hex-5">
-                <svg viewBox="0 0 100 100" class="hexagon-outline">
-                    <polygon points="50,0 93.3,25 93.3,75 50,100 6.7,75 6.7,25" />
-                </svg>
-            </div>
-            <div class="hexagon-item hex-6">
-                <svg viewBox="0 0 100 100" class="hexagon-outline">
-                    <polygon points="50,0 93.3,25 93.3,75 50,100 6.7,75 6.7,25" />
-                </svg>
-            </div>
+            <div class="hexagon-item hex-1"><svg viewBox="0 0 100 100" class="hexagon-outline"><polygon points="50,0 93.3,25 93.3,75 50,100 6.7,75 6.7,25" /></svg></div><div class="hexagon-item hex-2"><svg viewBox="0 0 100 100" class="hexagon-outline"><polygon points="50,0 93.3,25 93.3,75 50,100 6.7,75 6.7,25" /></svg></div><div class="hexagon-item hex-3"><svg viewBox="0 0 100 100" class="hexagon-outline"><polygon points="50,0 93.3,25 93.3,75 50,100 6.7,75 6.7,25" /></svg></div><div class="hexagon-item hex-4"><svg viewBox="0 0 100 100" class="hexagon-outline"><polygon points="50,0 93.3,25 93.3,75 50,100 6.7,75 6.7,25" /></svg></div><div class="hexagon-item hex-5"><svg viewBox="0 0 100 100" class="hexagon-outline"><polygon points="50,0 93.3,25 93.3,75 50,100 6.7,75 6.7,25" /></svg></div><div class="hexagon-item hex-6"><svg viewBox="0 0 100 100" class="hexagon-outline"><polygon points="50,0 93.3,25 93.3,75 50,100 6.7,75 6.7,25" /></svg></div>
         </div>
 
-        <div class="ekg-display" id="ekgDisplay">
-            <canvas class="ekg-canvas" id="ekgCanvas"></canvas>
-        </div>
+        <div class="ekg-display" id="ekgDisplay"><canvas class="ekg-canvas" id="ekgCanvas"></canvas></div>
 
         <div class="system-stats-container" id="systemStatsContainer">
-            <div class="stats-boxes">
-                <div class="stat-box">
-                    <div class="circle-container">
-                        <svg viewBox="0 0 100 100">
-                            <circle class="circle-bg" cx="50" cy="50" r="45"></circle>
-                            <circle class="circle-fill" id="dwn-fill" cx="50" cy="50" r="45"></circle>
-                        </svg>
-                        <div class="circle-text">DWN</div>
-                    </div>
-                    <div class="stats-text">Speed: <span class="stats-value" id="dwn-speed">3.9</span> kB/s</div>
-                    <div class="stats-text">Total: <span class="stats-value" id="dwn-total">653.6</span> GB</div>
-                </div>
-
-                <div class="stat-box">
-                    <div class="circle-container">
-                        <svg viewBox="0 0 100 100">
-                            <circle class="circle-bg" cx="50" cy="50" r="45"></circle>
-                            <circle class="circle-fill" id="ram-fill" cx="50" cy="50" r="45"></circle>
-                        </svg>
-                        <div class="circle-text">RAM</div>
-                    </div>
-                    <div class="stats-text">Used: <span class="stats-value" id="ram-used">2.0</span> GB</div>
-                    <div class="stats-text">Free: <span class="stats-value" id="ram-free">2.0</span> GB</div>
-                </div>
-
-                <div class="stat-box">
-                    <div class="circle-container">
-                        <svg viewBox="0 0 100 100">
-                            <circle class="circle-bg" cx="50" cy="50" r="45"></circle>
-                            <circle class="circle-fill" id="up-fill" cx="50" cy="50" r="45"></circle>
-                        </svg>
-                        <div class="circle-text">UP</div>
-                    </div>
-                    <div class="stats-text">Speed: <span class="stats-value" id="up-speed">126.7</span> kB/s</div>
-                    <div class="stats-text">Total: <span class="stats-value" id="up-total">149.7</span> GB</div>
-                </div>
-            </div>
+             <div class="stats-boxes"><div class="stat-box"><div class="circle-container"><svg viewBox="0 0 100 100"><circle class="circle-bg" cx="50" cy="50" r="45"></circle><circle class="circle-fill" id="dwn-fill" cx="50" cy="50" r="45"></circle></svg><div class="circle-text">DWN</div></div><div class="stats-text">Speed: <span class="stats-value" id="dwn-speed">3.9</span> kB/s</div><div class="stats-text">Total: <span class="stats-value" id="dwn-total">653.6</span> GB</div></div><div class="stat-box"><div class="circle-container"><svg viewBox="0 0 100 100"><circle class="circle-bg" cx="50" cy="50" r="45"></circle><circle class="circle-fill" id="ram-fill" cx="50" cy="50" r="45"></circle></svg><div class="circle-text">RAM</div></div><div class="stats-text">Used: <span class="stats-value" id="ram-used">2.0</span> GB</div><div class="stats-text">Free: <span class="stats-value" id="ram-free">2.0</span> GB</div></div><div class="stat-box"><div class="circle-container"><svg viewBox="0 0 100 100"><circle class="circle-bg" cx="50" cy="50" r="45"></circle><circle class="circle-fill" id="up-fill" cx="50" cy="50" r="45"></circle></svg><div class="circle-text">UP</div></div><div class="stats-text">Speed: <span class="stats-value" id="up-speed">126.7</span> kB/s</div><div class="stats-text">Total: <span class="stats-value" id="up-total">149.7</span> GB</div></div></div>
         </div>
 
         <div class="left-status-bar">
-            <div class="status-item-minimal">
-                <span class="status-label-minimal">LOGIC:</span>
-                <span class="status-value-minimal" id="logic-status">ONLINE</span>
-            </div>
-            <div class="status-item-minimal">
-                <span class="status-label-minimal">NET:</span>
-                <span class="status-value-minimal" id="net-status">STABLE</span>
-            </div>
-            <div class="status-item-minimal">
-                <span class="status-label-minimal">CACHE:</span>
-                <span class="status-value-minimal" id="cache-status">OPTIMAL</span>
-            </div>
-            <div class="status-item-minimal">
-                <span class="status-label-minimal">PWR:</span>
-                <span class="status-value-minimal" id="pwr-status">ACTIVE</span>
-            </div>
+            <div class="status-item-minimal"><span class="status-label-minimal">LOGIC:</span><span class="status-value-minimal" id="logic-status">ONLINE</span></div><div class="status-item-minimal"><span class="status-label-minimal">NET:</span><span class="status-value-minimal" id="net-status">STABLE</span></div><div class="status-item-minimal"><span class="status-label-minimal">CACHE:</span><span class="status-value-minimal" id="cache-status">OPTIMAL</span></div><div class="status-item-minimal"><span class="status-label-minimal">PWR:</span><span class="status-value-minimal" id="pwr-status">ACTIVE</span></div>
         </div>
 
         <div class="compact-system-panel">
-            <div class="panel-content">
-                <div class="panel-grid">
-                    <div class="panel-section">
-                        <p><strong>System:</strong> <span>JVS-MK4-ALPHA</span></p>
-                        <p><strong>Core OS:</strong> <span>NeuralNet 7.1</span></p>
-                        <p><strong>Prozessorlast:</strong> <span id="compact-processor-load">30%</span></p>
-                        <p><strong>RAM:</strong> <span id="compact-ram-usage">54%</span></p>
-                    </div>
-                    
-                    <div class="panel-section">
-                        <p><strong>Betriebszeit:</strong> <span id="compact-uptime">00:00:00</span></p>
-                        <p><strong>Energie:</strong> <span id="compact-energy">100%</span></p>
-                        <p><strong>Netzwerk:</strong> <span id="compact-network">5.7 Gb/s</span></p>
-                        <p><strong>Speicher:</strong> <span>636 TB</span></p>
-                    </div>
-                </div>
-            </div>
+             <div class="panel-content"><div class="panel-grid"><div class="panel-section"><p><strong>System:</strong> <span>JVS-MK4-ALPHA</span></p><p><strong>Core OS:</strong> <span>NeuralNet 7.1</span></p><p><strong>Prozessorlast:</strong> <span id="compact-processor-load">30%</span></p><p><strong>RAM:</strong> <span id="compact-ram-usage">54%</span></p></div> <div class="panel-section"><p><strong>Betriebszeit:</strong> <span id="compact-uptime">00:00:00</span></p><p><strong>Energie:</strong> <span id="compact-energy">100%</span></p><p><strong>Netzwerk:</strong> <span id="compact-network">5.7 Gb/s</span></p><p><strong>Speicher:</strong> <span>636 TB</span></p></div></div></div>
         </div>
 
         <div class="power-meter-container">
-            <div class="meter-label" id="meterLabel">PWR</div>
-            <div class="meter-body">
-                <div class="meter-fill" id="powerFill"></div>
-                <div class="glow-dot" style="bottom: 15%;"></div>
-                <div class="glow-dot" style="bottom: 40%;"></div>
-                <div class="glow-dot" style="bottom: 65%;"></div>
-                <div class="glow-dot" style="bottom: 90%;"></div>
-            </div>
-            <div class="meter-percentage" id="powerPercentage">0%</div>
+            <div class="meter-label" id="meterLabel">PWR</div><div class="meter-body"><div class="meter-fill" id="powerFill"></div><div class="glow-dot" style="bottom: 15%;"></div><div class="glow-dot" style="bottom: 40%;"></div><div class="glow-dot" style="bottom: 65%;"></div><div class="glow-dot" style="bottom: 90%;"></div></div><div class="meter-percentage" id="powerPercentage">0%</div>
         </div>
 
         <div class="cyberpunk-globe">
             <div class="globe-container" id="globeContainer">
                 <div class="sphere">
-                    <div class="eclipse eclipse-h1"></div>
-                    <div class="eclipse eclipse-h2"></div>
-                    <div class="eclipse eclipse-h3"></div>
-                    <div class="eclipse eclipse-h4"></div>
-                    <div class="eclipse eclipse-h5"></div>
-                    <div class="eclipse eclipse-h6"></div>
-                    <div class="eclipse eclipse-h7"></div>
-                    <div class="eclipse eclipse-h8"></div>
-                    
-                    <div class="eclipse eclipse-v1"></div>
-                    <div class="eclipse eclipse-v2"></div>
-                    
+                    <div class="eclipse eclipse-h1"></div><div class="eclipse eclipse-h2"></div><div class="eclipse eclipse-h3"></div><div class="eclipse eclipse-h4"></div><div class="eclipse eclipse-h5"></div><div class="eclipse eclipse-h6"></div><div class="eclipse eclipse-h7"></div><div class="eclipse eclipse-h8"></div>
+                    <div class="eclipse eclipse-v1"></div><div class="eclipse eclipse-v2"></div>
                     <div class="center-circle"></div>
-                    
-                    <div class="globe-dot dot-germany-source" id="germanySourceDot"></div>
-                    <div class="globe-dot dot-coords-source" id="coordsSourceDot"></div>
+                    <div class="globe-dot dot-germany-source" id="germanySourceDot"></div><div class="globe-dot dot-coords-source" id="coordsSourceDot"></div>
                 </div>
             </div>
-            
             <div class="label-container label-coords-container" id="labelCoordsContainer">
-                <div class="short-connector" id="connectorCoords"></div>
-                <div class="label" id="labelCoords">54° 1′ N, 10° 45′ O</div>
+                <div class="short-connector" id="connectorCoords"></div><div class="label" id="labelCoords">54° 1′ N, 10° 45′ O</div>
             </div>
-            
             <div class="label-container label-germany-container" id="labelGermanyContainer">
-                <div class="short-connector" id="connectorGermany"></div>
-                <div class="label" id="labelGermany">Germany</div>
+                <div class="short-connector" id="connectorGermany"></div><div class="label" id="labelGermany">Germany</div>
             </div>
         </div>
 
         <div class="container">
-            <div class="outer-ring-detail one"></div>
-            <div class="outer-ring-detail two"></div>
-            <div class="circle-outer"></div>
-            <div class="circle-middle"></div>
-            <div class="circle-inner"></div>
-            <div class="circle-core">
-                <div class="jarvis-text">J.A.R.V.I.S.</div>
-            </div>
-        </div>
-
-        <div class="system-status" id="systemStatus">
-            <div class="status-line" id="statusLine1">
-                <span class="glitch-text" data-text="> Initializing systems..."></span>
-            </div>
-            <div class="status-line" id="statusLine2">
-                <span class="glitch-text" data-text="> Scanning environment..."></span>
-            </div>
-            <div class="status-line" id="statusLine3">
-                <span class="glitch-text" data-text="> User authenticated"></span>
-            </div>
-            <div class="status-line" id="statusLine4">
-                <span class="glitch-text" data-text="> Security protocols engaged"></span>
-            </div>
-            <div class="status-line" id="statusPromptLine">
-                <span class="glitch-text" data-text="> SYSTEM STATUS: NOMINAL"></span>
-            </div>
+            <img id="jarvis-visual" src="https://raw.githubusercontent.com/Christmas9999/Kilandingpage/48f173a2d527a97da1c7892598cd74383e06ecdd/jarvis-core.gif" alt="J.A.R.V.I.S. Core Animation">
+            <div class="jarvis-text-overlay">J.A.R.V.I.S.</div>
         </div>
 
         <div id="current-date"></div>
 
         <div class="week-overview">
-            <div class="jarvis-horizontal-week" id="jarvis-horizontal-week">
-                <div class="day-separator-horizontal" id="full-width-separator"></div>
-            </div>
+             <div class="jarvis-horizontal-week" id="jarvis-horizontal-week"></div>
         </div>
 
         <div class="weather-widget">
@@ -1522,17 +864,8 @@
     </script>
 
     <script>
-        // HINZUGEFÜGT: Funktion zur Datumsaktualisierung
-        function updateDate() {
-            const now = new Date();
-            const day = String(now.getDate()).padStart(2, '0');
-            const month = String(now.getMonth() + 1).padStart(2, '0');
-            const year = now.getFullYear();
-            document.getElementById('current-date').textContent = `${day}.${month}.${year}`;
-        }
-
-
         document.addEventListener('DOMContentLoaded', function() {
+            // Alle const-Definitionen für die Elemente
             const loginOverlay = document.getElementById('loginOverlay');
             const loginButton = document.getElementById('loginButton');
             const usernameInput = document.getElementById('username');
@@ -1545,27 +878,17 @@
             const ekgDisplay = document.getElementById('ekgDisplay');
             const cyberpunkGlobe = document.querySelector('.cyberpunk-globe');
             const systemStatsContainer = document.getElementById('systemStatsContainer');
-            const systemStatus = document.getElementById('systemStatus');
             const weekOverview = document.querySelector('.week-overview');
             const weatherWidget = document.querySelector('.weather-widget');
             const hexagonGroup = document.querySelector('.hexagon-group-container');
             const compactSystemPanel = document.querySelector('.compact-system-panel');
-            const currentDate = document.getElementById('current-date'); // HINZUGEFÜGT
+            const currentDate = document.getElementById('current-date');
             
-            // Korrekte Anmeldedaten
             const CORRECT_USERNAME = "Tony Stark";
             const CORRECT_PASSWORD = "Morgan stark";
             
-            // Login-Handler
             function handleLogin() {
-                const username = usernameInput.value.trim();
-                const password = passwordInput.value.trim();
-                
-                console.log("Login attempt with:", username, password);
-                
-                if (username === CORRECT_USERNAME && password === CORRECT_PASSWORD) {
-                    console.log("Login successful!");
-                    
+                if (usernameInput.value.trim() === CORRECT_USERNAME && passwordInput.value.trim() === CORRECT_PASSWORD) {
                     loginError.textContent = "";
                     loginError.classList.remove('show');
                     
@@ -1581,586 +904,254 @@
                         ekgDisplay.style.display = 'block';
                         cyberpunkGlobe.style.display = 'block';
                         systemStatsContainer.style.display = 'block';
-                        systemStatus.style.display = 'block';
                         weekOverview.style.display = 'block';
                         weatherWidget.style.display = 'block';
                         hexagonGroup.style.display = 'block';
                         compactSystemPanel.style.display = 'block';
-                        currentDate.style.display = 'block'; // HINZUGEFÜGT
+                        currentDate.style.display = 'block';
                         
+                        // Alle Animationen und Updates starten
                         initializeBinaryCode();
                         initializeMinimalStatus();
                         initializeWeekOverview();
-                        initializeSystemStatus();
                         initializePowerMeter();
                         initializeEKG();
-                        initializeGlobeConnectors();
                         initializeSystemStats();
                         initializeHexagonAnimation();
                         initializeCompactSystemPanel();
-
-                        // HINZUGEFÜGT: Datum initialisieren und Intervall starten
                         updateDate();
-                        setInterval(updateDate, 1000);
+                        setInterval(updateDate, 1000 * 60);
+
                     }, 500);
                 } else {
-                    console.log("Login failed!");
-                    
-                    loginError.textContent = "Zugangsdaten nicht erkannt. Bitte versuchen Sie es erneut.";
+                    loginError.textContent = "Zugangsdaten nicht erkannt.";
                     loginError.classList.add('show');
-                    
-                    loginOverlay.animate([
-                        { transform: 'translateX(0)' },
-                        { transform: 'translateX(-10px)' },
-                        { transform: 'translateX(10px)' },
-                        { transform: 'translateX(0)' }
-                    ], {
-                        duration: 300,
-                        iterations: 1
-                    });
+                    loginOverlay.animate([ { transform: 'translateX(0)' }, { transform: 'translateX(-10px)' }, { transform: 'translateX(10px)' }, { transform: 'translateX(0)' } ], { duration: 300, iterations: 1 });
                 }
             }
             
             loginButton.addEventListener('click', handleLogin);
-            
-            usernameInput.addEventListener('keypress', function(e) {
-                if (e.key === 'Enter') {
-                    handleLogin();
-                }
-            });
-            
-            passwordInput.addEventListener('keypress', function(e) {
-                if (e.key === 'Enter') {
-                    handleLogin();
-                }
-            });
-            
+            usernameInput.addEventListener('keypress', (e) => e.key === 'Enter' && handleLogin());
+            passwordInput.addEventListener('keypress', (e) => e.key === 'Enter' && handleLogin());
+
+            function updateDate() {
+                const now = new Date();
+                const day = String(now.getDate()).padStart(2, '0');
+                const month = String(now.getMonth() + 1).padStart(2, '0');
+                const year = now.getFullYear();
+                if(currentDate) currentDate.textContent = `${day}.${month}.${year}`;
+            }
+
             function initializeBinaryCode() {
-                const binaryCodeDisplay = document.getElementById('binary-code-display');
+                const display = document.getElementById('binary-code-display');
+                if (!display) return;
+                const container = document.querySelector('.binary-footer');
                 const totalChars = 200;
-                const updateInterval = 195;
-                const highlightCount = 3;
+                const updateInterval = 150;
+                const highlightCount = 5;
                 const gapProbability = 0.08;
 
-                let currentBinaryArray = [];
-
-                for (let i = 0; i < totalChars; i++) {
-                    currentBinaryArray.push(Math.round(Math.random()));
-                }
-
-                function updateBinaryDisplay() {
-                    const charsToChange = Math.floor(Math.random() * (totalChars / 8));
-                    for (let i = 0; i < charsToChange; i++) {
-                        const randomIndex = Math.floor(Math.random() * totalChars);
-                        currentBinaryArray[randomIndex] = 1 - currentBinaryArray[randomIndex];
-                    }
-
-                    let highlightedIndices = new Set();
-                    const actualHighlightCount = Math.min(highlightCount, totalChars);
-                    while (highlightedIndices.size < actualHighlightCount) {
-                        highlightedIndices.add(Math.floor(Math.random() * totalChars));
-                    }
-
+                function update() {
                     let htmlString = '';
                     for (let i = 0; i < totalChars; i++) {
                         if (Math.random() < gapProbability) {
-                            htmlString += '&nbsp;';
-                        } else if (highlightedIndices.has(i)) {
-                            htmlString += `<span class="highlight">${currentBinaryArray[i]}</span>`;
+                            htmlString += '&nbsp;&nbsp;';
                         } else {
-                            htmlString += currentBinaryArray[i];
+                            const isHighlighted = Math.random() < (highlightCount / totalChars);
+                            const char = Math.round(Math.random());
+                            if (isHighlighted) {
+                                htmlString += `<span class="highlight">${char}</span>`;
+                            } else {
+                                htmlString += char;
+                            }
                         }
                     }
-                    binaryCodeDisplay.innerHTML = htmlString;
+                    display.innerHTML = htmlString;
                 }
+                setInterval(update, updateInterval);
+                
+                setInterval(() => {
+                    container.classList.add('glitch-active');
+                    setTimeout(() => container.classList.remove('glitch-active'), 125);
+                }, 5000 + Math.random() * 5000);
 
-                updateBinaryDisplay();
-                setInterval(updateBinaryDisplay, updateInterval);
+                update();
             }
-            
+
             function initializeMinimalStatus() {
-                const statusItems = {
-                    logic: { element: document.getElementById('logic-status'), values: ['ONLINE', 'ACTIVE', 'NOMINAL', 'GREEN'] },
-                    net: { element: document.getElementById('net-status'), values: ['STABLE', 'OPTIMAL', 'SECURE', 'SYNCED'] },
-                    cache: { element: document.getElementById('cache-status'), values: ['OPTIMAL', 'READY', 'LOADED', 'CLEAN'] },
-                    pwr: { element: document.getElementById('pwr-status'), values: ['ACTIVE', 'HIGH', 'CHARGED', 'READY'] }
-                };
-
-                const greenStates = ['READY', 'ACTIVE', 'ONLINE'];
-
-                function updateMinimalStatus() {
-                    for (const key in statusItems) {
-                        const item = statusItems[key];
-                        const randomIndex = Math.floor(Math.random() * item.values.length);
-                        const newValue = item.values[randomIndex];
-                        
-                        item.element.textContent = newValue;
-
-                        if (greenStates.includes(newValue)) {
-                            item.element.classList.add('status-green');
-                        } else {
-                            item.element.classList.remove('status-green');
-                        }
-                    }
-                }
-
-                updateMinimalStatus();
-                setInterval(updateMinimalStatus, 3500);
+                 const statuses = {
+                     logic: { el: document.getElementById('logic-status'), values: ['ONLINE', 'ACTIVE', 'NOMINAL'] },
+                     net: { el: document.getElementById('net-status'), values: ['STABLE', 'OPTIMAL', 'SECURE'] },
+                     cache: { el: document.getElementById('cache-status'), values: ['OPTIMAL', 'READY', 'CLEAN'] },
+                     pwr: { el: document.getElementById('pwr-status'), values: ['ACTIVE', 'STABLE', 'CHARGED'] }
+                 };
+                 
+                 setInterval(() => {
+                     for (let key in statuses) {
+                         const item = statuses[key];
+                         if (item.el) {
+                             item.el.textContent = item.values[Math.floor(Math.random() * item.values.length)];
+                         }
+                     }
+                 }, 3500);
             }
-            
+
             function initializeWeekOverview() {
-                const horizontalWeekContainer = document.getElementById('jarvis-horizontal-week');
-                const numDaysToShow = 7;
-                const centerIndex = Math.floor(numDaysToShow / 2);
-
-                function renderHorizontalWeek() {
-                    const existingSeparator = document.getElementById('full-width-separator');
-                    if (existingSeparator) {
-                        horizontalWeekContainer.removeChild(existingSeparator);
-                    }
-                    
-                    horizontalWeekContainer.innerHTML = '';
-
-                    const today = new Date();
-                    const dayOfWeekNamesShort = ["So", "Mo", "Di", "Mi", "Do", "Fr", "Sa"];
-
-                    const startDate = new Date(today);
-                    startDate.setDate(today.getDate() - centerIndex);
-
-                    let isTodayInView = false;
-
-                    for (let i = 0; i < numDaysToShow; i++) {
-                        const currentDate = new Date(startDate);
-                        currentDate.setDate(startDate.getDate() + i);
-
-                        const dayBlock = document.createElement('div');
-                        dayBlock.classList.add('day-block');
-
-                        const isToday = (currentDate.getDate() === today.getDate() &&
-                                         currentDate.getMonth() === today.getMonth() &&
-                                         currentDate.getFullYear() === today.getFullYear());
-                        
-                        if (isToday) {
-                            dayBlock.classList.add('today');
-                            isTodayInView = true;
-                        }
-
-                        const dayName = document.createElement('span');
-                        dayName.classList.add('day-name');
-                        dayName.textContent = dayOfWeekNamesShort[currentDate.getDay()];
-
-                        const dayDate = document.createElement('span');
-                        dayDate.classList.add('day-date');
-                        dayDate.textContent = currentDate.getDate();
-
-                        dayBlock.appendChild(dayName);
-                        dayBlock.appendChild(dayDate);
-
-                        horizontalWeekContainer.appendChild(dayBlock);
-                    }
-
-                    if (existingSeparator) {
-                        horizontalWeekContainer.appendChild(existingSeparator);
-                    }
-
-                    if (isTodayInView) {
-                        horizontalWeekContainer.classList.add('today-active');
-                    } else {
-                        horizontalWeekContainer.classList.remove('today-active');
-                    }
+                const container = document.getElementById('jarvis-horizontal-week');
+                if (!container) return;
+                const today = new Date();
+                const dayNames = ["SO", "MO", "DI", "MI", "DO", "FR", "SA"];
+                container.innerHTML = ''; 
+                for (let i = -3; i <= 3; i++) {
+                    const day = new Date();
+                    day.setDate(today.getDate() + i);
+                    const dayBlock = document.createElement('div');
+                    dayBlock.className = 'day-block';
+                    if (i === 0) dayBlock.classList.add('today');
+                    dayBlock.innerHTML = `<span class="day-name">${dayNames[day.getDay()]}</span><span class="day-date">${day.getDate()}</span>`;
+                    container.appendChild(dayBlock);
                 }
-
-                renderHorizontalWeek();
-
-                function setDailyUpdate() {
-                    const now = new Date();
-                    const midnight = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1, 0, 0, 0);
-                    const timeUntilMidnight = midnight.getTime() - now.getTime();
-
-                    setTimeout(() => {
-                        renderHorizontalWeek();
-                        setDailyUpdate();
-                    }, timeUntilMidnight);
-                }
-                setDailyUpdate();
             }
-            
-            function initializeSystemStatus() {
-                const lines = [
-                    document.getElementById('statusLine1'),
-                    document.getElementById('statusLine2'),
-                    document.getElementById('statusLine3'),
-                    document.getElementById('statusLine4')
-                ];
-                const promptLine = document.getElementById('statusPromptLine');
 
-                let currentLineIndex = 0;
-                const typingSpeed = 30;
-
-                function typeWriter(element, text, callback) {
-                    let charIndex = 0;
-                    const textSpan = element.querySelector('.glitch-text');
-                    textSpan.textContent = '';
-                    textSpan.classList.add('typewriter-text');
-
-                    function type() {
-                        if (charIndex < text.length) {
-                            textSpan.textContent += text.charAt(charIndex);
-                            charIndex++;
-                            setTimeout(type, typingSpeed);
-                        } else {
-                            textSpan.classList.add('finished');
-                            if (callback) callback();
-                        }
-                    }
-                    type();
-                }
-
-                function showNextLine() {
-                    if (currentLineIndex < lines.length) {
-                        const lineElement = lines[currentLineIndex];
-                        const textToType = lineElement.querySelector('.glitch-text').getAttribute('data-text');
-
-                        lineElement.classList.add('show');
-                        
-                        typeWriter(lineElement, textToType, () => {
-                            lineElement.querySelector('.glitch-text').style.animationPlayState = 'running'; 
-                            currentLineIndex++;
-                            setTimeout(showNextLine, 1000);
-                        });
-
-                    } else {
-                        const promptText = promptLine.querySelector('.glitch-text').getAttribute('data-text');
-                        promptLine.classList.add('show');
-                        typeWriter(promptLine, promptText, () => {
-                            promptLine.querySelector('.glitch-text').style.animationPlayState = 'running';
-                        });
-                    }
-                }
-
-                document.querySelectorAll('#systemStatus .glitch-text').forEach(el => {
-                    el.style.animationPlayState = 'paused';
-                });
-                showNextLine();
-            }
-            
             function initializePowerMeter() {
                 const powerFill = document.getElementById('powerFill');
                 const powerPercentage = document.getElementById('powerPercentage');
-                const meterLabel = document.getElementById('meterLabel');
-
-                let currentPower = 100;
-                const minPower = 72;
-                const maxPower = 100;
-
-                function updatePowerDisplay(value) {
-                    value = Math.max(0, Math.min(100, value));
-                    currentPower = value;
-
-                    powerFill.style.height = `${value}%`;
-                    powerPercentage.textContent = `${value}%`;
-
-                    if (value <= 20) {
-                        powerFill.classList.add('low-power');
-                        powerPercentage.classList.add('low-power-text');
-                    } else {
-                        powerFill.classList.remove('low-power');
-                        powerPercentage.classList.remove('low-power-text');
-                    }
-                }
-
-                function generateRandomPower() {
-                    const fluctuation = (Math.random() - 0.5) * 3;
-                    let newPower = currentPower + fluctuation;
-                    newPower = Math.max(minPower, Math.min(maxPower, newPower));
-                    return Math.round(newPower);
-                }
-
-                function applyGlitchEffect() {
-                    powerFill.classList.add('glitch-active');
-                    powerPercentage.classList.add('glitch-active');
-                    meterLabel.classList.add('glitch-active');
-
-                    setTimeout(() => {
-                        powerFill.classList.remove('glitch-active');
-                        powerPercentage.classList.remove('glitch-active');
-                        meterLabel.classList.remove('glitch-active');
-                    }, 100);
-                }
-
-                function startDynamicPowerFluctuation() {
-                    updatePowerDisplay(95);
-
-                    setInterval(() => {
-                        const newRandomPower = generateRandomPower();
-                        updatePowerDisplay(newRandomPower);
-
-                        if (Math.random() < 0.04) {
-                            applyGlitchEffect();
-                        }
-                    }, 1800);
-                }
-
-                startDynamicPowerFluctuation();
+                if (!powerFill || !powerPercentage) return;
+                setInterval(() => {
+                    const percentage = Math.floor(80 + Math.random() * 20);
+                    powerFill.style.height = `${percentage}%`;
+                    powerPercentage.textContent = `${percentage}%`;
+                }, 2000);
             }
-            
+
             function initializeEKG() {
                 const canvas = document.getElementById('ekgCanvas');
+                if (!canvas) return;
                 const ctx = canvas.getContext('2d');
+                canvas.width = canvas.offsetWidth;
+                canvas.height = canvas.offsetHeight;
 
-                function resizeCanvas() {
-                    canvas.width = canvas.offsetWidth;
-                    canvas.height = canvas.offsetHeight;
-                }
-                resizeCanvas();
-                window.addEventListener('resize', resizeCanvas);
+                const speed = 2;
+                const centerY = canvas.height / 2;
+                const beatPattern = [0, -1, -3, 2, 15, -25, 8, 0, 0];
+                const beatLength = 30; 
+                let beatCooldown = 0;
+                let patternStep = 0;
 
-                let ekgLineColor = '#00e0ff';
-                const lineWidth = 2;
-                const historyLength = 100;
-                const linePoints = [];
+                const points = Array(Math.floor(canvas.width / speed)).fill(centerY);
 
-                for (let i = 0; i < historyLength; i++) {
-                    linePoints.push(canvas.height / 2);
-                }
+                function draw() {
+                    requestAnimationFrame(draw);
+                    points.shift();
 
-                let animationFrameId;
-                let glitchingEKG = false;
+                    let currentY;
+                    if (beatCooldown <= 0 && Math.random() < 0.012) {
+                        beatCooldown = beatLength;
+                        patternStep = 0;
+                    }
 
-                function drawEKG() {
+                    if (beatCooldown > 0) {
+                        const index = Math.floor(patternStep / (beatLength / beatPattern.length));
+                        currentY = centerY + beatPattern[index] * (canvas.height / 80);
+                        patternStep++;
+                        beatCooldown--;
+                    } else {
+                        const jitter = (Math.random() - 0.5) * 3;
+                        currentY = centerY + jitter;
+                    }
+                    points.push(currentY);
+
                     ctx.clearRect(0, 0, canvas.width, canvas.height);
-                    ctx.strokeStyle = ekgLineColor;
-                    ctx.lineWidth = lineWidth;
-
                     ctx.beginPath();
-                    ctx.moveTo(0, linePoints[0]);
-
-                    for (let i = 1; i < linePoints.length; i++) {
-                        const x = (i / historyLength) * canvas.width;
-                        ctx.lineTo(x, linePoints[i]);
+                    ctx.strokeStyle = '#00e0ff';
+                    ctx.lineWidth = 1.5;
+                    ctx.moveTo(0, points[0]);
+                    for (let i = 1; i < points.length; i++) {
+                        ctx.lineTo(i * speed, points[i]);
                     }
                     ctx.stroke();
                 }
-
-                function generateEKGPoint() {
-                    let newPoint = canvas.height / 2 + (Math.random() - 0.5) * 5;
-
-                    // Häufigere Spikes bei Glitch
-                    if (glitchingEKG || Math.random() < 0.05) {
-                        newPoint += (Math.random() > 0.5 ? 1 : -1) * (canvas.height * 0.3 + Math.random() * canvas.height * 0.2);
-                    }
-
-                    newPoint = Math.max(lineWidth, Math.min(canvas.height - lineWidth, newPoint));
-                    return newPoint;
-                }
-
-                function animateEKG() {
-                    linePoints.shift();
-                    linePoints.push(generateEKGPoint());
-                    
-                    drawEKG();
-                    animationFrameId = requestAnimationFrame(animateEKG);
-                }
-
-                function applyEKGGlitch() {
-                    glitchingEKG = true;
-                    ekgLineColor = '#ff00ff';
-
-                    setTimeout(() => {
-                        glitchingEKG = false;
-                        ekgLineColor = '#00e0ff';
-                    }, 150);
-                }
-
-                // Starte EKG-Animation
-                animateEKG();
-
-                // Zufällige Glitch-Effekte
-                setInterval(() => {
-                    if (Math.random() < 0.03) {
-                        applyEKGGlitch();
-                    }
-                }, 1500);
+                draw();
             }
             
-            function initializeGlobeConnectors() {
-                const container = document.querySelector('.cyberpunk-globe');
-                const containerRect = container.getBoundingClientRect();
-
-                const globeContainer = document.getElementById('globeContainer');
-                const germanySourceDot = document.getElementById('germanySourceDot');
-                const coordsSourceDot = document.getElementById('coordsSourceDot');
-                
-                const labelGermanyContainer = document.getElementById('labelGermanyContainer');
-                const labelCoordsContainer = document.getElementById('labelCoordsContainer');
-                
-                const connectorGermany = document.getElementById('connectorGermany');
-                const connectorCoords = document.getElementById('connectorCoords');
-
-                function getRelativeCenter(element, parentRect) {
-                    const rect = element.getBoundingClientRect();
-                    return {
-                        x: rect.left + rect.width / 2 - parentRect.left,
-                        y: rect.top + rect.height / 2 - parentRect.top
-                    };
-                }
-
-                function getConnectorStartPoint(containerElement, parentRect) {
-                    const rect = containerElement.getBoundingClientRect();
-                    return {
-                        x: rect.left - parentRect.left,
-                        y: rect.top + rect.height / 2 - parentRect.top
-                    };
-                }
-
-                // Positioniere die Label-Container basierend auf den Punkten
-                function positionLabelContainer(container, dot, offsetX) {
-                    const dotPos = getRelativeCenter(dot, containerRect);
-                    container.style.left = `${dotPos.x + offsetX * 0.8}px`;
-                    container.style.top = `${dotPos.y}px`;
-                    container.style.transform = 'translateY(-50%)';
-                }
-
-                // Positioniere die Container mit festem Abstand zu den Punkten
-                positionLabelContainer(labelGermanyContainer, germanySourceDot, 30);
-                positionLabelContainer(labelCoordsContainer, coordsSourceDot, 30);
-            }
-
             function initializeSystemStats() {
-                function updateCircleFill(circleId, percentage) {
-                    const circle = document.getElementById(circleId);
-                    const radius = circle.r.baseVal.value;
-                    const circumference = 2 * Math.PI * radius;
+                const dwnSpeed = document.getElementById('dwn-speed');
+                const ramUsed = document.getElementById('ram-used');
+                const upSpeed = document.getElementById('up-speed');
+                const dwnFill = document.getElementById('dwn-fill');
+                const ramFill = document.getElementById('ram-fill');
+                const upFill = document.getElementById('up-fill');
+                const ramFree = document.getElementById('ram-free');
+                
+                if(!dwnSpeed || !ramUsed || !upSpeed || !ramFree) return;
 
-                    circle.style.strokeDasharray = `${circumference} ${circumference}`;
-                    const offset = circumference - (percentage / 100) * circumference;
-                    circle.style.strokeDashoffset = offset;
+                const maxRam = 16.0;
+
+                function updateCircle(circle, percentage) {
+                    if (!circle) return;
+                    const r = circle.r.baseVal.value;
+                    const circ = 2 * Math.PI * r;
+                    circle.style.strokeDasharray = `${circ} ${circ}`;
+                    circle.style.strokeDashoffset = circ - (percentage/100) * circ;
                 }
 
-                const maxDownloadSpeed = 1200;
-                const maxUploadSpeed = 600;
-                const totalRamGb = 8.0;
+                setInterval(() => {
+                    const dwn = (Math.random() * 100).toFixed(1);
+                    dwnSpeed.textContent = `${dwn} MB/s`;
+                    updateCircle(dwnFill, (dwn / 100) * 100);
 
-                function updateStats() {
-                    // Download Stats
-                    const dwnCurrentSpeed = parseFloat(document.getElementById('dwn-speed').textContent);
-                    const dwnSpeedChange = (Math.random() * 50 - 25);
-                    const newDwnSpeed = Math.max(10, Math.min(maxDownloadSpeed * 0.9, dwnCurrentSpeed + dwnSpeedChange)).toFixed(1);
-                    document.getElementById('dwn-speed').textContent = newDwnSpeed;
-                    const dwnTotal = (parseFloat(document.getElementById('dwn-total').textContent) + Math.random() * 0.01).toFixed(1);
-                    document.getElementById('dwn-total').textContent = dwnTotal;
-                    const dwnPercentage = (parseFloat(newDwnSpeed) / maxDownloadSpeed) * 100;
-                    updateCircleFill('dwn-fill', dwnPercentage);
+                    const ram = (8 + Math.random() * 2).toFixed(1);
+                    ramUsed.textContent = `${ram} GB`;
+                    ramFree.textContent = `${(maxRam - ram).toFixed(1)} GB`;
+                    updateCircle(ramFill, (ram / maxRam) * 100);
 
-                    // RAM Stats
-                    let ramUsed = parseFloat(document.getElementById('ram-used').textContent);
-                    const ramChange = (Math.random() * 0.1 - 0.05);
-                    ramUsed = Math.max(0.5, Math.min(totalRamGb - 0.5, ramUsed + ramChange)).toFixed(1);
-                    const ramFree = (totalRamGb - parseFloat(ramUsed)).toFixed(1);
-
-                    document.getElementById('ram-used').textContent = ramUsed;
-                    document.getElementById('ram-free').textContent = ramFree;
-                    const ramPercentage = (parseFloat(ramUsed) / totalRamGb) * 100;
-                    updateCircleFill('ram-fill', ramPercentage);
-
-                    // Upload Stats
-                    const upCurrentSpeed = parseFloat(document.getElementById('up-speed').textContent);
-                    const upSpeedChange = (Math.random() * 30 - 15);
-                    const newUpSpeed = Math.max(5, Math.min(maxUploadSpeed * 0.9, upCurrentSpeed + upSpeedChange)).toFixed(1);
-                    document.getElementById('up-speed').textContent = newUpSpeed;
-                    const upTotal = (parseFloat(document.getElementById('up-total').textContent) + Math.random() * 0.005).toFixed(1);
-                    document.getElementById('up-total').textContent = upTotal;
-                    const upPercentage = (parseFloat(newUpSpeed) / maxUploadSpeed) * 100;
-                    updateCircleFill('up-fill', upPercentage);
-                }
-
-                // Initialisiere die Kreise
-                updateCircleFill('dwn-fill', 30);
-                updateCircleFill('ram-fill', 50);
-                updateCircleFill('up-fill', 20);
-
-                setInterval(updateStats, 800);
-                updateStats();
+                    const up = (Math.random() * 20).toFixed(1);
+                    upSpeed.textContent = `${up} MB/s`;
+                    updateCircle(upFill, (up / 20) * 100);
+                }, 2000);
             }
 
-            function initializeHexagonAnimation() {
+            function initializeHexagonAnimation() { 
                 const hexagons = document.querySelectorAll('.hexagon-outline');
-                const colors = ['#00e0ff', '#39ff14', '#ff00ff', '#ffff00', '#ff4500'];
-                
-                function animateHexagon(hexagon) {
-                    const duration = 3000 + Math.random() * 3000;
-                    const delay = Math.random() * 2000;
-                    const color = colors[Math.floor(Math.random() * colors.length)];
-                    
-                    hexagon.animate([
-                        { stroke: '#ffffff', strokeWidth: '1.5' },
-                        { stroke: color, strokeWidth: '2.5' },
-                        { stroke: '#ffffff', strokeWidth: '1.5' }
-                    ], {
-                        duration: duration,
-                        delay: delay,
-                        iterations: Infinity
-                    });
-                }
-                
-                hexagons.forEach(hexagon => {
-                    animateHexagon(hexagon);
+                hexagons.forEach(hex => {
+                     const duration = 2 + Math.random() * 3;
+                     const color = ['#00e0ff', '#39ff14', '#ffdd00'][Math.floor(Math.random() * 3)];
+                     const keyframes = `
+                        @keyframes hex-glow-${hex.parentElement.classList[1]} {
+                            50% { stroke: ${color}; stroke-width: 2.5px; }
+                        }
+                    `;
+                    if (!document.getElementById(`hex-styles-${hex.parentElement.classList[1]}`)) {
+                        const styleNode = document.createElement('style');
+                        styleNode.id = `hex-styles-${hex.parentElement.classList[1]}`;
+                        styleNode.innerHTML = keyframes;
+                        document.head.appendChild(styleNode);
+                    }
+                    hex.style.animation = `hex-glow-${hex.parentElement.classList[1]} ${duration}s infinite alternate`;
                 });
             }
 
-            function initializeCompactSystemPanel() {
-                // Betriebszeit-Zähler
-                let seconds = 0, minutes = 0, hours = 0;
+            function initializeCompactSystemPanel() { 
+                const uptimeEl = document.getElementById('compact-uptime');
+                const processorEl = document.getElementById('compact-processor-load');
+                const ramEl = document.getElementById('compact-ram-usage');
+
+                if (!uptimeEl || !processorEl || !ramEl) return;
+
+                let seconds = 0;
                 setInterval(() => {
                     seconds++;
-                    if (seconds >= 60) { seconds = 0; minutes++; }
-                    if (minutes >= 60) { minutes = 0; hours++; }
-                    document.getElementById('compact-uptime').textContent = 
-                        `${String(hours).padStart(2,'0')}:${String(minutes).padStart(2,'0')}:${String(seconds).padStart(2,'0')}`;
+                    const h = Math.floor(seconds / 3600).toString().padStart(2,'0');
+                    const m = Math.floor((seconds % 3600) / 60).toString().padStart(2,'0');
+                    const s = (seconds % 60).toString().padStart(2,'0');
+                    uptimeEl.textContent = `${h}:${m}:${s}`;
                 }, 1000);
 
-                // Prozessorlast-Animation
-                function updateCompactProcessor() {
-                    const baseLoad = 30;
-                    const fluctuation = (Math.random() * 10) - 5;
-                    const newLoad = Math.max(5, Math.min(100, baseLoad + fluctuation));
-                    document.getElementById('compact-processor-load').textContent = `${Math.round(newLoad)}%`;
-                    setTimeout(updateCompactProcessor, 1500 + Math.random() * 2000);
-                }
-                updateCompactProcessor();
-
-                // RAM-Usage Animation
-                function updateRamUsage() {
-                    const baseRam = 54;
-                    const fluctuation = (Math.random() * 8) - 4;
-                    const newRam = Math.max(20, Math.min(90, baseRam + fluctuation));
-                    document.getElementById('compact-ram-usage').textContent = `${Math.round(newRam)}%`;
-                    setTimeout(updateRamUsage, 2000 + Math.random() * 3000);
-                }
-                updateRamUsage();
-
-                // Netzwerk-Animation
-                function updateNetworkSpeed() {
-                    const speeds = ["5.7 Gb/s", "5.5 Gb/s", "5.9 Gb/s", "5.3 Gb/s", "6.1 Gb/s"];
-                    document.getElementById('compact-network').textContent = speeds[Math.floor(Math.random() * speeds.length)];
-                    setTimeout(updateNetworkSpeed, 3000);
-                }
-                updateNetworkSpeed();
-
-                // Energie-Animation
-                function updateEnergy() {
-                    const baseEnergy = 100;
-                    const fluctuation = (Math.random() * 3) - 1.5;
-                    const newEnergy = Math.max(85, Math.min(100, baseEnergy + fluctuation));
-                    document.getElementById('compact-energy').textContent = `${Math.round(newEnergy)}%`;
-                    setTimeout(updateEnergy, 4000);
-                }
-                updateEnergy();
+                setInterval(() => {
+                    processorEl.textContent = `${Math.floor(25 + Math.random() * 10)}%`;
+                    ramEl.textContent = `${Math.floor(50 + Math.random() * 5)}%`;
+                }, 2500);
             }
-
-            // Initialisiere die Verbindungslinien beim Laden und bei Größenänderungen
-            window.addEventListener('load', initializeGlobeConnectors);
-            window.addEventListener('resize', initializeGlobeConnectors);
         });
     </script>
 </body>
