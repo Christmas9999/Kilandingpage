@@ -502,6 +502,60 @@
             display: none;
         }
 
+        /* Compact System Panel */
+        .compact-system-panel {
+            position: fixed;
+            bottom: 280px;
+            left: 20px;
+            width: 380px;
+            background: rgba(0, 20, 30, 0.7);
+            border: 1px solid rgba(0, 224, 255, 0.3);
+            border-radius: 8px;
+            padding: 10px;
+            box-shadow: 0 0 10px rgba(0, 224, 255, 0.4);
+            z-index: 900;
+            font-family: 'Roboto Mono', monospace;
+            font-size: 0.8em;
+            animation: panel-glow 3s infinite alternate;
+        }
+
+        .compact-system-panel strong {
+            color: #00e0ff;
+            font-weight: normal;
+        }
+
+        .compact-system-panel span {
+            color: #fff;
+            text-shadow: 0 0 3px rgba(255, 255, 255, 0.3);
+        }
+
+        .panel-content {
+            padding: 0;
+            border-left: 2px solid rgba(0, 224, 255, 0.5);
+        }
+
+        .panel-grid {
+            display: flex;
+            gap: 20px;
+            padding-left: 10px;
+        }
+
+        .panel-section {
+            flex: 1;
+        }
+
+        .panel-section p {
+            margin: 4px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+        }
+
+        @keyframes panel-glow {
+            from { box-shadow: 0 0 10px rgba(0, 224, 255, 0.4); }
+            to { box-shadow: 0 0 15px rgba(0, 224, 255, 0.6); }
+        }
+
         /* Power Meter Container */
         .power-meter-container {
             position: fixed;
@@ -1333,6 +1387,27 @@
             </div>
         </div>
 
+        <!-- Compact System Panel -->
+        <div class="compact-system-panel">
+            <div class="panel-content">
+                <div class="panel-grid">
+                    <div class="panel-section">
+                        <p><strong>System:</strong> <span>JVS-MK4-ALPHA</span></p>
+                        <p><strong>Core OS:</strong> <span>NeuralNet 7.1</span></p>
+                        <p><strong>Prozessorlast:</strong> <span id="compact-processor-load">30%</span></p>
+                        <p><strong>RAM:</strong> <span id="compact-ram-usage">54%</span></p>
+                    </div>
+                    
+                    <div class="panel-section">
+                        <p><strong>Betriebszeit:</strong> <span id="compact-uptime">00:00:00</span></p>
+                        <p><strong>Energie:</strong> <span id="compact-energy">100%</span></p>
+                        <p><strong>Netzwerk:</strong> <span id="compact-network">5.7 Gb/s</span></p>
+                        <p><strong>Speicher:</strong> <span>636 TB</span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!-- Power Meter -->
         <div class="power-meter-container">
             <div class="meter-label" id="meterLabel">PWR</div>
@@ -1453,6 +1528,7 @@
             const weekOverview = document.querySelector('.week-overview');
             const weatherWidget = document.querySelector('.weather-widget');
             const hexagonGroup = document.querySelector('.hexagon-group-container');
+            const compactSystemPanel = document.querySelector('.compact-system-panel');
             
             // Korrekte Anmeldedaten
             const CORRECT_USERNAME = "Tony Stark";
@@ -1487,6 +1563,7 @@
                         weekOverview.style.display = 'block';
                         weatherWidget.style.display = 'block';
                         hexagonGroup.style.display = 'block';
+                        compactSystemPanel.style.display = 'block';
                         
                         initializeBinaryCode();
                         initializeMinimalStatus();
@@ -1497,6 +1574,7 @@
                         initializeGlobeConnectors();
                         initializeSystemStats();
                         initializeHexagonAnimation();
+                        initializeCompactSystemPanel();
                     }, 500);
                 } else {
                     console.log("Login failed!");
@@ -2001,6 +2079,56 @@
                 hexagons.forEach(hexagon => {
                     animateHexagon(hexagon);
                 });
+            }
+
+            function initializeCompactSystemPanel() {
+                // Betriebszeit-Zähler
+                let seconds = 0, minutes = 0, hours = 0;
+                setInterval(() => {
+                    seconds++;
+                    if (seconds >= 60) { seconds = 0; minutes++; }
+                    if (minutes >= 60) { minutes = 0; hours++; }
+                    document.getElementById('compact-uptime').textContent = 
+                        `${String(hours).padStart(2,'0')}:${String(minutes).padStart(2,'0')}:${String(seconds).padStart(2,'0')}`;
+                }, 1000);
+
+                // Prozessorlast-Animation
+                function updateCompactProcessor() {
+                    const baseLoad = 30;
+                    const fluctuation = (Math.random() * 10) - 5;
+                    const newLoad = Math.max(5, Math.min(100, baseLoad + fluctuation));
+                    document.getElementById('compact-processor-load').textContent = `${Math.round(newLoad)}%`;
+                    setTimeout(updateCompactProcessor, 1500 + Math.random() * 2000);
+                }
+                updateCompactProcessor();
+
+                // RAM-Usage Animation
+                function updateRamUsage() {
+                    const baseRam = 54;
+                    const fluctuation = (Math.random() * 8) - 4;
+                    const newRam = Math.max(20, Math.min(90, baseRam + fluctuation));
+                    document.getElementById('compact-ram-usage').textContent = `${Math.round(newRam)}%`;
+                    setTimeout(updateRamUsage, 2000 + Math.random() * 3000);
+                }
+                updateRamUsage();
+
+                // Netzwerk-Animation
+                function updateNetworkSpeed() {
+                    const speeds = ["5.7 Gb/s", "5.5 Gb/s", "5.9 Gb/s", "5.3 Gb/s", "6.1 Gb/s"];
+                    document.getElementById('compact-network').textContent = speeds[Math.floor(Math.random() * speeds.length)];
+                    setTimeout(updateNetworkSpeed, 3000);
+                }
+                updateNetworkSpeed();
+
+                // Energie-Animation
+                function updateEnergy() {
+                    const baseEnergy = 100;
+                    const fluctuation = (Math.random() * 3) - 1.5;
+                    const newEnergy = Math.max(85, Math.min(100, baseEnergy + fluctuation));
+                    document.getElementById('compact-energy').textContent = `${Math.round(newEnergy)}%`;
+                    setTimeout(updateEnergy, 4000);
+                }
+                updateEnergy();
             }
 
             // Initialisiere die Verbindungslinien beim Laden und bei Größenänderungen
