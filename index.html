@@ -6,6 +6,7 @@
     <title>J.A.R.V.I.S. - Login</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -1118,6 +1119,29 @@
             animation: glowPulseGreen 2s infinite alternate;
         }
 
+        /* Datums-Widget - VERGRÖSSERT & NEU POSITIONIERT */
+        #current-date {
+            position: fixed;
+            right: 170px;  /* Horizontaler Mittelpunkt der Wochenansicht (20px + 300px/2) */
+            bottom: 218px; /* Vertikaler Mittelpunkt der Wochenansicht */
+            transform: translate(50%, 50%); /* Zentriert das Element an diesem Punkt */
+            z-index: 1001; /* Stellt sicher, dass es über der Wochenansicht liegt */
+            display: none;
+            
+            /* Verdoppelte Größen-Stile */
+            font-family: 'Share Tech Mono', monospace;
+            color: #00FFFF;
+            text-shadow: 0 0 16px rgba(0, 255, 255, 0.6);
+            font-size: 2.028em;
+            letter-spacing: 0.0676em;
+            padding: 13.52px;
+            border: 1.352px solid #00FFFF;
+            box-shadow: 0 0 10.14px rgba(0, 255, 255, 0.8);
+            border-radius: 3.38px;
+            background-color: rgba(0, 50, 50, 0.2);
+        }
+
+
         /* Animationen */
         @keyframes rotate {
             from { transform: rotate(0deg); }
@@ -1474,6 +1498,8 @@
             </div>
         </div>
 
+        <div id="current-date"></div>
+
         <div class="week-overview">
             <div class="jarvis-horizontal-week" id="jarvis-horizontal-week">
                 <div class="day-separator-horizontal" id="full-width-separator"></div>
@@ -1497,6 +1523,16 @@
     </script>
 
     <script>
+        // Funktion zur Datumsaktualisierung
+        function updateDate() {
+            const now = new Date();
+            const day = String(now.getDate()).padStart(2, '0');
+            const month = String(now.getMonth() + 1).padStart(2, '0');
+            const year = now.getFullYear();
+            document.getElementById('current-date').textContent = `${day}.${month}.${year}`;
+        }
+
+
         document.addEventListener('DOMContentLoaded', function() {
             const loginOverlay = document.getElementById('loginOverlay');
             const loginButton = document.getElementById('loginButton');
@@ -1515,6 +1551,7 @@
             const weatherWidget = document.querySelector('.weather-widget');
             const hexagonGroup = document.querySelector('.hexagon-group-container');
             const compactSystemPanel = document.querySelector('.compact-system-panel');
+            const currentDate = document.getElementById('current-date');
             
             // Korrekte Anmeldedaten
             const CORRECT_USERNAME = "Tony Stark";
@@ -1550,6 +1587,7 @@
                         weatherWidget.style.display = 'block';
                         hexagonGroup.style.display = 'block';
                         compactSystemPanel.style.display = 'block';
+                        currentDate.style.display = 'block';
                         
                         initializeBinaryCode();
                         initializeMinimalStatus();
@@ -1561,6 +1599,10 @@
                         initializeSystemStats();
                         initializeHexagonAnimation();
                         initializeCompactSystemPanel();
+
+                        // Datum initialisieren und Intervall starten
+                        updateDate();
+                        setInterval(updateDate, 1000);
                     }, 500);
                 } else {
                     console.log("Login failed!");
