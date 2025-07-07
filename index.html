@@ -391,13 +391,13 @@
             height: 100%;
         }
 
-        /* System Stats Container */
+        /* System Stats Container - VERKLEINERT */
         .system-stats-container {
             position: fixed;
             top: 140px;
             left: 20px;
             z-index: 900;
-            transform: scale(0.8);
+            transform: scale(0.7); /* Geändert */
             transform-origin: left top;
             background-color: rgba(0, 20, 30, 0.6);
             border: 1px solid rgba(0, 224, 255, 0.3);
@@ -485,15 +485,15 @@
             text-shadow: 0 0 5px rgba(0, 224, 255, 0.5);
         }
 
-        /* Linke Statusleiste - jetzt links über der Powerleiste */
+        /* Linke Statusleiste - VERKLEINERT & VERSCHOBEN */
         .left-status-bar {
             position: fixed;
-            bottom: 250px;
+            bottom: 230px; /* Geändert */
             left: 20px;
             display: flex;
             flex-direction: row;
-            gap: 30px;
-            padding: 15px 25px;
+            gap: 20px; /* Geändert */
+            padding: 10px 15px; /* Geändert */
             background-color: rgba(0, 188, 212, 0.08);
             border: 1px solid rgba(0, 188, 212, 0.3);
             border-radius: 8px;
@@ -502,10 +502,11 @@
             display: none;
         }
 
-        /* Compact System Panel */
+        /* Compact System Panel - ZENTRIERT */
         .compact-system-panel {
             position: fixed;
-            bottom: 280px;
+            top: 50%;
+            transform: translateY(-50%);
             left: 20px;
             width: 380px;
             background: rgba(0, 20, 30, 0.7);
@@ -556,13 +557,13 @@
             to { box-shadow: 0 0 15px rgba(0, 224, 255, 0.6); }
         }
 
-        /* Power Meter Container */
+        /* Power Meter Container - VERKLEINERT */
         .power-meter-container {
             position: fixed;
             bottom: 20px;
             left: 20px;
             width: 70px;
-            height: 220px;
+            height: 190px; /* Geändert */
             background-color: rgba(0, 0, 0, 0.6);
             border: 2px solid #00e0ff;
             border-radius: 10px;
@@ -1238,7 +1239,6 @@
     </style>
 </head>
 <body>
-    <!-- Login Overlay -->
     <div class="login-overlay" id="loginOverlay">
         <div class="login-container">
             <div class="login-title">Login</div>
@@ -1256,15 +1256,12 @@
         </div>
     </div>
     
-    <!-- Hauptinterface -->
     <div class="main-interface" id="mainInterface">
-        <!-- Online Status -->
         <div class="online-status">
             <div class="online-dot"></div>
             Online
         </div>
 
-        <!-- Schwebende Balken (DNA-ähnlich) - Position angepasst -->
         <div class="dna-container" id="floatingBars">
             <div class="dna-rung rung-1"></div>
             <div class="dna-rung rung-2"></div>
@@ -1287,7 +1284,6 @@
             <div class="dna-rung rung-19"></div>
         </div>
 
-        <!-- Hexagon-Gruppe -->
         <div class="hexagon-group-container">
             <div class="hexagon-item hex-1">
                 <svg viewBox="0 0 100 100" class="hexagon-outline">
@@ -1321,12 +1317,10 @@
             </div>
         </div>
 
-        <!-- EKG Display -->
         <div class="ekg-display" id="ekgDisplay">
             <canvas class="ekg-canvas" id="ekgCanvas"></canvas>
         </div>
 
-        <!-- System Stats Container -->
         <div class="system-stats-container" id="systemStatsContainer">
             <div class="stats-boxes">
                 <div class="stat-box">
@@ -1367,7 +1361,6 @@
             </div>
         </div>
 
-        <!-- Linke Statusleiste - jetzt links über der Powerleiste -->
         <div class="left-status-bar">
             <div class="status-item-minimal">
                 <span class="status-label-minimal">LOGIC:</span>
@@ -1387,7 +1380,6 @@
             </div>
         </div>
 
-        <!-- Compact System Panel -->
         <div class="compact-system-panel">
             <div class="panel-content">
                 <div class="panel-grid">
@@ -1408,7 +1400,6 @@
             </div>
         </div>
 
-        <!-- Power Meter -->
         <div class="power-meter-container">
             <div class="meter-label" id="meterLabel">PWR</div>
             <div class="meter-body">
@@ -1421,7 +1412,6 @@
             <div class="meter-percentage" id="powerPercentage">0%</div>
         </div>
 
-        <!-- Cyberpunk Globe Widget -->
         <div class="cyberpunk-globe">
             <div class="globe-container" id="globeContainer">
                 <div class="sphere">
@@ -1466,7 +1456,6 @@
             </div>
         </div>
 
-        <!-- Systemstatus-Anzeige -->
         <div class="system-status" id="systemStatus">
             <div class="status-line" id="statusLine1">
                 <span class="glitch-text" data-text="> Initializing systems..."></span>
@@ -1485,14 +1474,12 @@
             </div>
         </div>
 
-        <!-- Wochenübersicht -->
         <div class="week-overview">
             <div class="jarvis-horizontal-week" id="jarvis-horizontal-week">
                 <div class="day-separator-horizontal" id="full-width-separator"></div>
             </div>
         </div>
 
-        <!-- Wetter Widget -->
         <div class="weather-widget">
             <a class="weatherwidget-io" href="https://forecast7.com/de/53d9910d78/timmendorfer-strand/" data-label_1="Timmendorfer Strand" data-label_2="WEATHER" data-font="Roboto" data-mode="Current" data-days="3" data-textcolor="#0a9e96">Timmendorfer Strand WEATHER</a>
         </div>
@@ -1500,7 +1487,6 @@
         <elevenlabs-convai agent-id="agent_01jz428zryea58mbj66rbv8hg7"></elevenlabs-convai>
     </div>
 
-    <!-- Binärcode-Footer -->
     <div class="binary-footer">
         <div id="binary-code-display" class="binary-line"></div>
     </div>
