@@ -345,7 +345,8 @@
     
         /* --- Mobile Ansicht (Smartphones) --- */
         @media (max-width: 767px) {
-            .widget-overlay {
+            /* Blendet alle direkten Kinder des Widget-Overlays aus, AUSSER dem ElevenLabs-Widget */
+            .widget-overlay > :not(elevenlabs-convai) {
                 display: none !important; 
             }
             .container {
