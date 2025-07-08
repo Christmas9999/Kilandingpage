@@ -120,13 +120,14 @@
         }
 
         .widget-overlay { 
-            display: none; padding-top: 70px;
+            display: none;
         }
         
         /* Zentrales J.A.R.V.I.S. Element */
         .container {
             position: relative; width: 400px; height: 400px;
             display: flex; justify-content: center; align-items: center;
+            transition: transform 0.3s ease;
         }
 
         #jarvis-visual {
@@ -155,7 +156,7 @@
             display: flex; justify-content: space-between; align-items: center;
             padding: 10px 0; background: rgba(10, 20, 30, 0.7);
             border-bottom: 1px solid rgba(0, 188, 212, 0.2);
-            z-index: 1100; margin-bottom: 30px; 
+            z-index: 1100;
         }
 
         .day-marker {
@@ -270,7 +271,6 @@
         .meter-label { font-size: 0.9em; color: #00e0ff; text-shadow: 0 0 10px #00e0ff; margin-bottom: 8px; letter-spacing: 1px; text-transform: uppercase; font-family: 'Orbitron', sans-serif; }
         .meter-body { width: 30px; height: 100%; background-color: #1a1a2e; border: 1px solid rgba(0, 224, 255, 0.5); border-radius: 8px; position: relative; overflow: hidden; }
         .meter-fill { width: 100%; background: linear-gradient(to top, #39ff14, #00e0ff); position: absolute; bottom: 0; left: 0; transition: height 0.5s ease-in-out; box-shadow: 0 0 10px rgba(57, 255, 20, 0.8), 0 0 20px rgba(0, 224, 255, 0.6); }
-        /* MODIFICATION: Fehlendes CSS für Power-Anzeige hinzugefügt */
         .meter-percentage {
             color: #fff; font-family: 'Share Tech Mono', monospace;
             font-size: 0.9em; margin-top: 8px;
@@ -294,12 +294,11 @@
         .connector { width: 20px; height: 1px; background: linear-gradient(to right, rgba(255, 80, 80, 0.7), rgba(255, 80, 80, 0)); }
         .label { color: rgba(255, 255, 255, 0.9); font-family: 'Roboto Mono', monospace; font-size: 11px; text-shadow: 0 0 5px rgba(255, 255, 255, 0.5); background-color: rgba(0, 0, 0, 0.4); padding: 2px 5px; border-radius: 3px; white-space: nowrap; margin-left: -1px; }
 
-        /* MODIFICATION: Wochenansicht neu positioniert */
         .week-overview {
             position: fixed;
             top: 60px;
             right: 20px;
-            z-index: 1101; /* Erhöht, um über der Monatsleiste zu sein */
+            z-index: 1101;
             width: 300px;
         }
         .jarvis-horizontal-week { 
@@ -331,7 +330,6 @@
             z-index: 1000;
         }
 
-        /* MODIFICATION: ElevenLabs Widget nach unten verschoben */
         elevenlabs-convai {
             position: fixed; bottom: 30px; left: 50%;
             transform: translateX(-50%); z-index: 1001;
@@ -344,6 +342,17 @@
         @keyframes binary-pulse { 0% { opacity: 0.8; } 100% { opacity: 1; } }
         @keyframes glowPulseWhite { 0% { text-shadow: 0 0 5px rgba(230, 237, 243, 0.6); opacity: 0.9; } 100% { text-shadow: 0 0 12px rgba(230, 237, 243, 1); opacity: 1; } }
         @keyframes subtleHighlightPulse { 0% { box-shadow: 0 0 8px rgba(0, 188, 212, 0.6); } 100% { box-shadow: 0 0 15px rgba(0, 188, 212, 0.8); } }
+    
+        /* --- Mobile Ansicht (Smartphones) --- */
+        @media (max-width: 767px) {
+            .widget-overlay {
+                display: none !important; 
+            }
+            .container {
+                transform: scale(0.8);
+            }
+        }
+
     </style>
 </head>
 <body>
@@ -391,12 +400,12 @@
         </div>
         
         <div class="hexagon-group-container">
-            <div class="hexagon-item hex-1"><svg viewBox="0 0 100 100" class="hexagon-outline"><polygon points="50,0 93.3,25 93.3,75 50,100 6.7,75 6.7,25" /></svg></div>
-            <div class="hexagon-item hex-2"><svg viewBox="0 0 100 100" class="hexagon-outline"><polygon points="50,0 93.3,25 93.3,75 50,100 6.7,75 6.7,25" /></svg></div>
-            <div class="hexagon-item hex-3"><svg viewBox="0 0 100 100" class="hexagon-outline"><polygon points="50,0 93.3,25 93.3,75 50,100 6.7,75 6.7,25" /></svg></div>
-            <div class="hexagon-item hex-4"><svg viewBox="0 0 100 100" class="hexagon-outline"><polygon points="50,0 93.3,25 93.3,75 50,100 6.7,75 6.7,25" /></svg></div>
-            <div class="hexagon-item hex-5"><svg viewBox="0 0 100 100" class="hexagon-outline"><polygon points="50,0 93.3,25 93.3,75 50,100 6.7,75 6.7,25" /></svg></div>
-            <div class="hexagon-item hex-6"><svg viewBox="0 0 100 100" class="hexagon-outline"><polygon points="50,0 93.3,25 93.3,75 50,100 6.7,75 6.7,25" /></svg></div>
+            <div class="hexagon-item hex-1"><svg viewBox="0 0 100 100" class="hexagon-outline"><polygon points="50,0 93.3,25 93.3,75 50,100 6.7,75 6.7,25"></polygon></svg></div>
+            <div class="hexagon-item hex-2"><svg viewBox="0 0 100 100" class="hexagon-outline"><polygon points="50,0 93.3,25 93.3,75 50,100 6.7,75 6.7,25"></polygon></svg></div>
+            <div class="hexagon-item hex-3"><svg viewBox="0 0 100 100" class="hexagon-outline"><polygon points="50,0 93.3,25 93.3,75 50,100 6.7,75 6.7,25"></polygon></svg></div>
+            <div class="hexagon-item hex-4"><svg viewBox="0 0 100 100" class="hexagon-outline"><polygon points="50,0 93.3,25 93.3,75 50,100 6.7,75 6.7,25"></polygon></svg></div>
+            <div class="hexagon-item hex-5"><svg viewBox="0 0 100 100" class="hexagon-outline"><polygon points="50,0 93.3,25 93.3,75 50,100 6.7,75 6.7,25"></polygon></svg></div>
+            <div class="hexagon-item hex-6"><svg viewBox="0 0 100 100" class="hexagon-outline"><polygon points="50,0 93.3,25 93.3,75 50,100 6.7,75 6.7,25"></polygon></svg></div>
         </div>
 
         <div class="ekg-display"><canvas class="ekg-canvas" id="ekgCanvas"></canvas></div>
@@ -404,17 +413,17 @@
         <div class="system-stats-container">
              <div class="stats-boxes">
                  <div class="stat-box">
-                     <div class="circle-container"><svg viewBox="0 0 100 100"><circle class="circle-bg" cx="50" cy="50" r="45"></circle><circle class="circle-fill" id="dwn-fill" cx="50" cy="50" r="45"></circle></svg><div class="circle-text">DWN</div></div>
+                     <div class="circle-container"><svg viewbox="0 0 100 100"><circle class="circle-bg" cx="50" cy="50" r="45"></circle><circle class="circle-fill" id="dwn-fill" cx="50" cy="50" r="45"></circle></svg><div class="circle-text">DWN</div></div>
                      <div class="stats-text">Speed: <span class="stats-value" id="dwn-speed">3.9 kB/s</span></div>
                      <div class="stats-text">Total: <span class="stats-value" id="dwn-total">653.6 GB</span></div>
                  </div>
                  <div class="stat-box">
-                     <div class="circle-container"><svg viewBox="0 0 100 100"><circle class="circle-bg" cx="50" cy="50" r="45"></circle><circle class="circle-fill" id="ram-fill" cx="50" cy="50" r="45"></circle></svg><div class="circle-text">RAM</div></div>
+                     <div class="circle-container"><svg viewbox="0 0 100 100"><circle class="circle-bg" cx="50" cy="50" r="45"></circle><circle class="circle-fill" id="ram-fill" cx="50" cy="50" r="45"></circle></svg><div class="circle-text">RAM</div></div>
                      <div class="stats-text">Used: <span class="stats-value" id="ram-used">2.0 GB</span></div>
                      <div class="stats-text">Free: <span class="stats-value" id="ram-free">2.0 GB</span></div>
                  </div>
                  <div class="stat-box">
-                     <div class="circle-container"><svg viewBox="0 0 100 100"><circle class="circle-bg" cx="50" cy="50" r="45"></circle><circle class="circle-fill" id="up-fill" cx="50" cy="50" r="45"></circle></svg><div class="circle-text">UP</div></div>
+                     <div class="circle-container"><svg viewbox="0 0 100 100"><circle class="circle-bg" cx="50" cy="50" r="45"></circle><circle class="circle-fill" id="up-fill" cx="50" cy="50" r="45"></circle></svg><div class="circle-text">UP</div></div>
                      <div class="stats-text">Speed: <span class="stats-value" id="up-speed">126.7 kB/s</span></div>
                      <div class="stats-text">Total: <span class="stats-value" id="up-total">149.7 GB</span></div>
                  </div>
@@ -449,10 +458,11 @@
         <div class="week-overview"><div class="jarvis-horizontal-week" id="jarvis-horizontal-week"></div></div>
 
         <div class="new-weather-widget-container">
-            <a class="weatherwidget-io" href="https://forecast7.com/de/53d9910d78/timmendorfer-strand/" data-label_1="Timmendorfer Strand" data-label_2="Germany" data-font="Roboto Slab" data-days="3" data-theme="dark" >Timmendorfer Strand Germany</a>
+            <a class="weatherwidget-io" href="https://forecast7.com/de/53d9910d78/timmendorfer-strand/" data-label_1="Timmendorfer Strand" data-label_2="Germany" data-font="Roboto Slab" data-days="3" data-theme="dark">Timmendorfer Strand Germany</a>
         </div>
 
         <elevenlabs-convai agent-id="agent_01jz428zryea58mbj66rbv8hg7"></elevenlabs-convai>
+
     </div>
     
     <script>
@@ -540,7 +550,6 @@
                 const canvas = document.getElementById('ekgCanvas');
                 if (!canvas) return;
                 const ctx = canvas.getContext('2d');
-                // MODIFICATION: Canvas-Größe wird jetzt korrekt gesetzt
                 canvas.width = canvas.offsetWidth;
                 canvas.height = canvas.offsetHeight;
                 const speed = 1.2, centerY = canvas.height / 2;
@@ -549,7 +558,7 @@
                 let beatCooldown = 0, patternStep = 0;
                 const points = Array(Math.floor(canvas.width / speed)).fill(centerY);
                 function draw() {
-                    if(points.length === 0) return; // Sicherheits-Check
+                    if(points.length === 0) return;
                     requestAnimationFrame(draw);
                     points.shift();
                     let currentY;
