@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>J.A.R.V.I.S. - Login</title>
+    <title>J.A.R.V.I.S. - Interface</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&family=Orbitron:wght@400;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&family=Orbitron:wght@400;700&family=Share+Tech+Mono&family=Roboto+Slab&display=swap" rel="stylesheet">
 
     <style>
         * {
@@ -27,28 +27,18 @@
 
         /* Login Overlay Styles */
         .login-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            position: fixed; top: 0; left: 0;
+            width: 100%; height: 100%;
             background-color: rgba(0, 0, 0, 0.9);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 2000;
-            backdrop-filter: blur(5px);
+            display: flex; justify-content: center; align-items: center;
+            z-index: 2000; backdrop-filter: blur(5px);
         }
 
         .login-container {
-            width: 320px;
-            background: rgba(0, 20, 30, 0.8);
-            border: 1px solid rgba(0, 224, 255, 0.4);
-            border-radius: 10px;
-            padding: 25px;
-            box-shadow: 0 0 30px rgba(0, 224, 255, 0.5);
-            text-align: center;
-            animation: login-glow 3s infinite alternate;
+            width: 320px; background: rgba(0, 20, 30, 0.8);
+            border: 1px solid rgba(0, 224, 255, 0.4); border-radius: 10px;
+            padding: 25px; box-shadow: 0 0 30px rgba(0, 224, 255, 0.5);
+            text-align: center; animation: login-glow 3s infinite alternate;
         }
 
         @keyframes login-glow {
@@ -57,122 +47,99 @@
         }
 
         .login-title {
-            color: #00e0ff;
-            font-size: 1.5em;
-            margin-bottom: 25px;
-            text-shadow: 0 0 10px #00e0ff;
-            letter-spacing: 1px;
+            color: #00e0ff; font-size: 1.5em; margin-bottom: 25px;
+            text-shadow: 0 0 10px #00e0ff; letter-spacing: 1px;
         }
 
         .login-input-group { margin-bottom: 15px; text-align: left; }
 
         .login-label {
-            display: block;
-            color: #00e0ff;
-            margin-bottom: 6px;
-            font-size: 0.85em;
-            text-shadow: 0 0 5px #00e0ff;
+            display: block; color: #00e0ff; margin-bottom: 6px;
+            font-size: 0.85em; text-shadow: 0 0 5px #00e0ff;
         }
 
         .login-input {
-            width: 100%;
-            padding: 10px;
-            background: rgba(0, 0, 0, 0.5);
-            border: 1px solid rgba(0, 224, 255, 0.3);
-            border-radius: 5px;
-            color: #00e0ff;
-            font-family: 'Consolas', monospace;
-            font-size: 0.95em;
-            box-shadow: inset 0 0 10px rgba(0, 224, 255, 0.2);
-            transition: all 0.3s ease;
+            width: 100%; padding: 10px; background: rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(0, 224, 255, 0.3); border-radius: 5px;
+            color: #00e0ff; font-family: 'Consolas', monospace; font-size: 0.95em;
+            box-shadow: inset 0 0 10px rgba(0, 224, 255, 0.2); transition: all 0.3s ease;
         }
 
         .login-input:focus {
-            outline: none;
-            border-color: #00e0ff;
+            outline: none; border-color: #00e0ff;
             box-shadow: inset 0 0 15px rgba(0, 224, 255, 0.4), 0 0 10px rgba(0, 224, 255, 0.3);
         }
 
         .login-button {
-            width: 100%;
-            padding: 10px;
-            background: linear-gradient(to right, rgba(0, 150, 200, 0.7), rgba(0, 100, 150, 0.7));
-            border: none;
-            border-radius: 5px;
-            color: #fff;
-            font-size: 0.95em;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-top: 15px;
-            box-shadow: 0 0 10px rgba(0, 224, 255, 0.5);
+            width: 100%; padding: 10px; background: linear-gradient(to right, rgba(0, 150, 200, 0.7), rgba(0, 100, 150, 0.7));
+            border: none; border-radius: 5px; color: #fff;
+            font-size: 0.95em; font-weight: bold; cursor: pointer;
+            transition: all 0.3s ease; text-transform: uppercase;
+            letter-spacing: 1px; margin-top: 15px; box-shadow: 0 0 10px rgba(0, 224, 255, 0.5);
         }
 
         .login-button:hover {
             background: linear-gradient(to right, rgba(0, 180, 230, 0.8), rgba(0, 130, 180, 0.8));
-            box-shadow: 0 0 15px rgba(0, 224, 255, 0.8);
-            transform: translateY(-2px);
+            box-shadow: 0 0 15px rgba(0, 224, 255, 0.8); transform: translateY(-2px);
         }
 
         .login-error {
-            color: #ff5555;
-            margin-top: 12px;
-            font-size: 0.8em;
-            text-shadow: 0 0 5px #ff5555;
-            height: 18px;
-            opacity: 0;
-            transition: opacity 0.3s ease;
+            color: #ff5555; margin-top: 12px; font-size: 0.8em;
+            text-shadow: 0 0 5px #ff5555; height: 18px;
+            opacity: 0; transition: opacity 0.3s ease;
         }
 
         .login-error.show { opacity: 1; }
-        .login-footer { margin-top: 20px; color: rgba(255, 255, 255, 0.5); font-size: 0.7em; letter-spacing: 0.5px; }
+        
+        .privacy-notice {
+            margin-top: 20px; padding: 10px;
+            background: rgba(0, 30, 50, 0.6);
+            border: 1px solid rgba(0, 224, 255, 0.3);
+            border-radius: 5px; font-size: 0.75em;
+            line-height: 1.4; color: rgba(255, 255, 255, 0.7);
+        }
+        .privacy-notice a {
+            color: #00e0ff;
+            cursor: pointer;
+            text-decoration: underline;
+        }
+        
+        .security-footer {
+            margin-top: 10px; color: rgba(255, 255, 255, 0.3);
+            font-size: 0.7em; letter-spacing: 0.5px;
+            text-align: center; animation: fadeIn 2s ease-in 3s forwards;
+            opacity: 0;
+        }
+
+        @keyframes fadeIn { to { opacity: 1; } }
 
         /* Main Interface & Widget Overlay Styles */
         .main-interface {
-            display: none;
-            width: 100%;
-            height: 100%;
-            justify-content: center;
-            align-items: center;
-            color: #00e0ff;
+            display: none; width: 100%; height: 100%;
+            justify-content: center; align-items: center; color: #00e0ff;
         }
 
-        .widget-overlay { display: none; }
+        .widget-overlay { 
+            display: none; padding-top: 70px;
+        }
         
         /* Zentrales J.A.R.V.I.S. Element */
         .container {
-            position: relative;
-            width: 400px;
-            height: 400px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            position: relative; width: 400px; height: 400px;
+            display: flex; justify-content: center; align-items: center;
         }
 
         #jarvis-visual {
-            width: 100%;
-            height: 100%;
-            border-radius: 50%;
-            object-fit: cover;
+            width: 100%; height: 100%; border-radius: 50%; object-fit: cover;
             box-shadow: 0 0 25px rgba(0, 224, 255, 0.6), 0 0 40px rgba(0, 224, 255, 0.4), inset 0 0 30px rgba(0, 224, 255, 0.3);
         }
 
         .jarvis-text-overlay {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            color: #ffffff;
-            font-family: 'Orbitron', sans-serif;
-            font-size: 2.5em;
-            font-weight: bold;
-            letter-spacing: 3px;
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            color: #ffffff; font-family: 'Orbitron', sans-serif; font-size: 2.5em;
+            font-weight: bold; letter-spacing: 3px;
             text-shadow: 0 0 8px #00e0ff, 0 0 15px #00e0ff, 0 0 25px rgba(0, 224, 255, 0.7);
-            pointer-events: none;
-            z-index: 10;
-            animation: text-pulse 3s infinite alternate;
+            pointer-events: none; z-index: 10; animation: text-pulse 3s infinite alternate;
         }
 
         @keyframes text-pulse {
@@ -180,85 +147,83 @@
             to { text-shadow: 0 0 12px #55faff, 0 0 25px #55faff, 0 0 40px rgba(85, 250, 255, 0.8); }
         }
 
-        /* --- Alle fest positionierten Widgets --- */
+        /* --- Monats-Timeline --- */
+        .timeline-container {
+            position: fixed; top: 0;
+            left: 50%; transform: translateX(-50%);
+            width: 90vw; max-width: 1400px;
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 10px 0; background: rgba(10, 20, 30, 0.7);
+            border-bottom: 1px solid rgba(0, 188, 212, 0.2);
+            z-index: 1100; margin-bottom: 30px; 
+        }
 
+        .day-marker {
+            flex: 1; text-align: center; font-family: 'Share Tech Mono', monospace;
+            font-size: 16px; color: #00bcd4;
+            text-shadow: 0 0 5px rgba(0, 188, 212, 0.7);
+            position: relative; transition: all 0.3s ease;
+            padding: 8px 0; border-radius: 4px;
+        }
+        .day-marker.current {
+            color: #ffffff; font-weight: bold; transform: scale(1.1);
+            background-color: rgba(0, 188, 212, 0.3);
+            box-shadow: 0 0 12px rgba(85, 250, 255, 0.6);
+            border: 1px solid rgba(85, 250, 255, 0.3);
+        }
+        .month-statusbar {
+            position: absolute; bottom: -30px; height: 22px;
+            background-color: rgba(0, 188, 212, 0.3); border: 1px solid rgba(85, 250, 255, 0.3);
+            border-radius: 4px; color: #e6edf3; font-family: 'Share Tech Mono', monospace;
+            font-size: 12px; letter-spacing: 2px; text-transform: uppercase;
+            text-align: center; line-height: 20px; transition: all 0.5s ease-in-out;
+        }
+        .year-marker {
+            flex: 0.5; text-align: center;
+            font-family: 'Share Tech Mono', monospace; font-size: 24px;
+            font-weight: bold; color: #fff;
+            text-shadow: 0 0 8px rgba(255, 255, 255, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            border-radius: 4px;
+            padding: 0 8px;
+            line-height: 38px;
+        }
+
+        /* --- Alle fest positionierten Widgets --- */
         .online-status {
-            position: fixed;
-            top: 20px; left: 40px;
-            display: flex;
-            align-items: center;
-            color: #00e0ff;
-            font-size: 1.1em;
-            text-shadow: 0 0 8px #00e0ff;
-            z-index: 1001;
+            position: fixed; top: 75px; left: 215px;
+            display: flex; align-items: center; color: #00e0ff;
+            font-size: 1.1em; text-shadow: 0 0 8px #00e0ff; z-index: 1001;
         }
 
         .online-dot {
-            width: 12px; height: 12px;
-            background-color: #00e0ff;
-            border-radius: 50%;
-            margin-right: 8px;
+            width: 12px; height: 12px; background-color: #00e0ff;
+            border-radius: 50%; margin-right: 8px;
             box-shadow: 0 0 8px #00e0ff, 0 0 15px rgba(0, 224, 255, 0.5);
             animation: dot-pulse 1.5s infinite alternate;
         }
 
-        .radar-container {
-            position: fixed;
-            bottom: 20px;
-            right: 320px;
-            width: 150px; 
-            height: 130px;
-            z-index: 900;
-            overflow: hidden;
-        }
-        .radar-container img {
-            width: 100%; 
-            height: 100%;
-            object-fit: cover;
-            filter: drop-shadow(0 0 8px rgba(0, 224, 255, 0.5));
-        }
-
         .hexagon-group-container {
-            position: fixed;
-            top: 40px; right: 20px;
+            position: fixed; bottom: 40px; left: 320px;
             width: 180px; height: 150px;
-            transform: scale(0.8);
-            z-index: 1001;
+            transform: scale(0.6); z-index: 1001;
         }
-
         .hexagon-item { position: absolute; width: 50px; height: 57.74px; overflow: visible; }
         .hexagon-outline { fill: none; stroke: #fff; stroke-width: 1.5; }
-        :root { --min-spacing: 3px; }
-        .hex-1 { top: calc(43.3px + var(--min-spacing)); left: calc(25px + var(--min-spacing)); }
-        .hex-2 { top: calc(43.3px + var(--min-spacing)); left: calc(25px + 50px + var(--min-spacing) * 2); }
-        .hex-3 { top: calc(43.3px + var(--min-spacing)); left: calc(25px + 100px + var(--min-spacing) * 4); }
-        .hex-4 { top: calc(43.3px + 57.74px + var(--min-spacing) * 2); left: calc(25px + 100px + var(--min-spacing) * 4); }
-        .hex-6 { top: calc(43.3px + 57.74px + var(--min-spacing) * 2); left: calc(25px + 100px + 50px + var(--min-spacing) * 5); }
-        .hex-5 { top: var(--min-spacing); left: var(--min-spacing); }
 
         .ekg-display {
-            position: fixed;
-            top: 60px; left: 20px;
-            width: 180px; height: 60px;
-            background-color: rgba(0, 0, 0, 0.4);
-            border: 1px solid rgba(0, 224, 255, 0.3);
-            border-radius: 5px;
-            overflow: hidden;
-            z-index: 900;
+            position: fixed; top: 60px; left: 20px;
+            width: 180px; height: 60px; background-color: rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(0, 224, 255, 0.3); border-radius: 5px;
+            overflow: hidden; z-index: 900;
         }
         .ekg-canvas { width: 100%; height: 100%; }
 
         .system-stats-container {
-            position: fixed;
-            top: 140px; left: 20px;
-            z-index: 900;
-            transform: scale(0.7);
-            transform-origin: left top;
-            background-color: rgba(0, 20, 30, 0.6);
-            border: 1px solid rgba(0, 224, 255, 0.3);
-            border-radius: 10px;
-            padding: 15px;
-            box-shadow: 0 0 15px rgba(0, 224, 255, 0.4);
+            position: fixed; top: 140px; left: 20px;
+            z-index: 900; transform: scale(0.7); transform-origin: left top;
+            background-color: rgba(0, 20, 30, 0.6); border: 1px solid rgba(0, 224, 255, 0.3);
+            border-radius: 10px; padding: 15px; box-shadow: 0 0 15px rgba(0, 224, 255, 0.4);
         }
 
         .stats-boxes { display: flex; gap: 30px; }
@@ -271,35 +236,20 @@
         .stat-box:hover .circle-fill { stroke: #39ff14; filter: drop-shadow(0 0 10px rgba(57, 255, 20, 0.9)); }
         .circle-text { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 1.8em; font-weight: bold; color: #fff; font-family: 'Orbitron', sans-serif; }
         .stats-text { font-family: 'Roboto Mono', monospace; font-size: 0.9em; line-height: 1.6; color: rgba(255, 255, 255, 0.9); }
-        .stats-value { color: #00e0ff; font-weight: bold; text-shadow: 0 0 5px rgba(0, 224, 255, 0.5); }
         
-        .left-status-bar {
-            position: fixed;
-            bottom: 230px; left: 20px;
-            display: flex;
-            flex-direction: row; gap: 20px;
-            padding: 10px 15px;
-            background-color: rgba(0, 188, 212, 0.08);
-            border: 1px solid rgba(0, 188, 212, 0.3);
-            border-radius: 8px;
-            box-shadow: 0 0 20px rgba(0, 188, 212, 0.4);
-            z-index: 900;
+        .stats-value {
+            color: #00e0ff; font-weight: bold;
+            text-shadow: 0 0 5px rgba(0, 224, 255, 0.5);
+            display: inline-block; width: 100px; text-align: left;
         }
-
+        
         .compact-system-panel {
-            position: fixed;
-            top: 50%; left: 20px;
-            transform: translateY(-50%);
-            width: 380px;
-            background: rgba(0, 20, 30, 0.7);
-            border: 1px solid rgba(0, 224, 255, 0.3);
-            border-radius: 8px;
-            padding: 10px;
-            box-shadow: 0 0 10px rgba(0, 224, 255, 0.4);
-            z-index: 900;
-            font-family: 'Roboto Mono', monospace;
-            font-size: 0.8em;
-            animation: panel-glow 3s infinite alternate;
+            position: fixed; top: 320px; left: 20px; 
+            width: 380px; background: rgba(0, 20, 30, 0.7);
+            border: 1px solid rgba(0, 224, 255, 0.3); border-radius: 8px;
+            padding: 10px; box-shadow: 0 0 10px rgba(0, 224, 255, 0.4);
+            z-index: 900; font-family: 'Roboto Mono', monospace;
+            font-size: 0.8em; animation: panel-glow 3s infinite alternate;
         }
         .compact-system-panel strong { color: #00e0ff; font-weight: normal; }
         .compact-system-panel span { color: #fff; text-shadow: 0 0 3px rgba(255, 255, 255, 0.3); }
@@ -310,28 +260,25 @@
         @keyframes panel-glow { from { box-shadow: 0 0 10px rgba(0, 224, 255, 0.4); } to { box-shadow: 0 0 15px rgba(0, 224, 255, 0.6); } }
 
         .power-meter-container {
-            position: fixed;
-            bottom: 20px; left: 20px;
-            width: 70px; height: 190px;
-            background-color: rgba(0, 0, 0, 0.6);
-            border: 2px solid #00e0ff;
-            border-radius: 10px;
-            box-shadow: 0 0 15px rgba(0, 224, 255, 0.7);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 12px 5px;
-            z-index: 900;
+            position: fixed; bottom: 20px; left: 20px;
+            width: 70px; height: 190px; background-color: rgba(0, 0, 0, 0.6);
+            border: 2px solid #00e0ff; border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 224, 255, 0.7); display: flex;
+            flex-direction: column; align-items: center;
+            padding: 12px 5px; z-index: 900;
         }
         .meter-label { font-size: 0.9em; color: #00e0ff; text-shadow: 0 0 10px #00e0ff; margin-bottom: 8px; letter-spacing: 1px; text-transform: uppercase; font-family: 'Orbitron', sans-serif; }
         .meter-body { width: 30px; height: 100%; background-color: #1a1a2e; border: 1px solid rgba(0, 224, 255, 0.5); border-radius: 8px; position: relative; overflow: hidden; }
         .meter-fill { width: 100%; background: linear-gradient(to top, #39ff14, #00e0ff); position: absolute; bottom: 0; left: 0; transition: height 0.5s ease-in-out; box-shadow: 0 0 10px rgba(57, 255, 20, 0.8), 0 0 20px rgba(0, 224, 255, 0.6); }
+        /* MODIFICATION: Fehlendes CSS für Power-Anzeige hinzugefügt */
+        .meter-percentage {
+            color: #fff; font-family: 'Share Tech Mono', monospace;
+            font-size: 0.9em; margin-top: 8px;
+        }
 
         .globe-gif-container {
-            position: fixed;
-            bottom: 20px; left: 110px; 
-            z-index: 900;
-            width: 192px; height: 192px;
+            position: fixed; bottom: 20px; left: 110px; 
+            z-index: 900; width: 192px; height: 192px;
         }
         .globe-gif-container img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
         .globe-dot { position: absolute; width: 6px; height: 6px; background-color: rgba(255, 50, 50, 0.9); border-radius: 50%; box-shadow: 0 0 6px 2px rgba(255, 50, 50, 0.6); transform: translate(-50%, -50%); animation: dot-pulse-red 1.5s infinite; z-index: 10; }
@@ -339,106 +286,55 @@
         #germany-dot { top: 43%; left: 55%; }
         
         .label-container { 
-            position: absolute; 
-            display: flex; 
-            align-items: center; 
-            left: 95%;
-            transform: translateY(-50%); 
+            position: absolute; display: flex; align-items: center; 
+            left: 95%; transform: translateY(-50%); 
         }
         #label-coords-container { top: 35%; }
         #label-germany-container { top: 43%; }
         .connector { width: 20px; height: 1px; background: linear-gradient(to right, rgba(255, 80, 80, 0.7), rgba(255, 80, 80, 0)); }
         .label { color: rgba(255, 255, 255, 0.9); font-family: 'Roboto Mono', monospace; font-size: 11px; text-shadow: 0 0 5px rgba(255, 255, 255, 0.5); background-color: rgba(0, 0, 0, 0.4); padding: 2px 5px; border-radius: 3px; white-space: nowrap; margin-left: -1px; }
 
-        .weather-widget {
-            position: fixed;
-            bottom: 20px; right: 20px;
-            z-index: 1000;
-            width: 280px;
-            background: rgba(0, 20, 30, 0.7);
-            border: 1px solid rgba(0, 224, 255, 0.3);
-            border-radius: 8px;
-            padding: 15px;
-            font-family: 'Roboto Mono', monospace;
-            color: #fff;
-        }
-        .weather-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(0, 224, 255, 0.3); padding-bottom: 10px; margin-bottom: 10px; }
-        .weather-location { font-size: 1.2em; color: #00e0ff; text-shadow: 0 0 5px #00e0ff; }
-        .weather-status { font-size: 1.1em; }
-        .weather-body { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 10px; }
-        .weather-temp { font-size: 2.5em; font-weight: bold; font-family: 'Orbitron', sans-serif; }
-        .weather-icon { text-align: right; }
-        .weather-icon svg { width: 60px; height: 60px; fill: #fff; filter: drop-shadow(0 0 5px rgba(255,255,255,0.5)); }
-
+        /* MODIFICATION: Wochenansicht neu positioniert */
         .week-overview {
             position: fixed;
-            bottom: 180px; right: 20px;
-            z-index: 1000;
+            top: 60px;
+            right: 20px;
+            z-index: 1101; /* Erhöht, um über der Monatsleiste zu sein */
             width: 300px;
         }
-        .jarvis-horizontal-week { width: 100%; padding: 15px 0; position: relative; display: flex; justify-content: center; align-items: flex-end; gap: 0px; }
-        .day-block { display: flex; flex-direction: column; align-items: center; padding: 5px 0; width: calc(100% / 7); position: relative; z-index: 1; opacity: 0.7; transition: opacity 0.3s ease, transform 0.3s ease; }
+        .jarvis-horizontal-week { 
+            width: 100%; padding: 15px 0; position: relative; 
+            display: flex; justify-content: center; align-items: flex-start;
+        }
+        .day-block { 
+            display: flex; flex-direction: column; align-items: center; 
+            padding: 5px 0; width: calc(100% / 7); 
+            position: relative; z-index: 1; opacity: 0.7; 
+            transition: opacity 0.3s ease, transform 0.3s ease; 
+        }
         .day-block.today { opacity: 1; transform: scale(1.05); }
         .day-block::before { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background-color: transparent; border-radius: 4px; transition: background-color 0.3s ease, box-shadow 0.3s ease; z-index: -1; }
         .day-block.today::before { background-color: rgba(0, 188, 212, 0.6); box-shadow: 0 0 10px rgba(0, 188, 212, 0.7); animation: subtleHighlightPulse 1.8s infinite alternate; }
         .day-name { font-family: 'Roboto Mono', monospace; font-size: 0.9em; color: #00bcd4; text-transform: uppercase; }
-        
         .day-name::after {
-            content: '';
-            display: block;
-            width: 60%;
-            height: 1px;
-            background-color: #00bcd4;
-            margin: 4px auto;
-            opacity: 0.4;
+            content: ''; display: block; width: 80%; height: 1px;
+            background-color: #00bcd4; margin: 4px auto; opacity: 0.4;
         }
-
+        
         .day-date { font-family: 'Roboto Mono', monospace; font-size: 1.6em; font-weight: bold; color: #00bcd4; }
         .day-block.today .day-name, .day-block.today .day-date { color: #e6edf3; text-shadow: 0 0 5px rgba(230, 237, 243, 0.5); }
 
-        .binary-footer {
-            width: 100%;
-            padding: 10px 0;
-            background-color: #0d1117;
-            border-top: 1px solid #00bcd4;
-            text-align: center;
+        .new-weather-widget-container {
             position: fixed;
-            bottom: 0; left: 0;
+            bottom: 20px;
+            right: 20px;
             z-index: 1000;
-            box-shadow: 0 -2px 15px rgba(0, 188, 212, 0.3);
-            overflow: hidden;
-            transition: all 0.2s ease-in-out;
-        }
-        .binary-footer.glitch-active .binary-line { color: #55faff; text-shadow: 0 0 8px #55faff; }
-        .binary-line { white-space: nowrap; overflow: hidden; font-family: 'Consolas', 'Monaco', monospace; font-size: 0.8em; color: #00bcd4; opacity: 0.6; }
-        .binary-line .highlight { color: #ff9800; font-weight: bold; text-shadow: 0 0 5px rgba(255, 152, 0, 0.7); animation: binary-pulse 1.5s infinite alternate; }
-
-        .status-item-minimal { display: flex; flex-direction: column; align-items: flex-start; }
-        .status-label-minimal { font-family: 'Consolas', 'Monaco', monospace; font-size: 0.85em; color: #00bcd4; opacity: 0.7; margin-bottom: 3px; }
-        .status-value-minimal { font-family: 'Consolas', 'Monaco', monospace; font-size: 1.1em; font-weight: bold; color: #e6edf3; text-shadow: 0 0 8px rgba(230, 237, 243, 0.6); animation: glowPulseWhite 2s infinite alternate; transition: color 0.5s ease-in-out, text-shadow 0.5s ease-in-out; }
-
-        #current-date {
-            position: fixed;
-            right: 20px; bottom: 260px;
-            z-index: 1000;
-            font-family: 'Share Tech Mono', monospace;
-            color: #00FFFF;
-            text-shadow: 0 0 8px rgba(0, 255, 255, 0.6);
-            font-size: 1.014em;
-            letter-spacing: 0.0338em;
-            padding: 6.76px;
-            border: 0.676px solid #00FFFF;
-            box-shadow: 0 0 5.07px rgba(0, 255, 255, 0.8);
-            border-radius: 1.69px;
-            background-color: rgba(0, 50, 50, 0.2);
         }
 
+        /* MODIFICATION: ElevenLabs Widget nach unten verschoben */
         elevenlabs-convai {
-            position: fixed;
-            bottom: 45px;
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 1001;
+            position: fixed; bottom: 30px; left: 50%;
+            transform: translateX(-50%); z-index: 1001;
         }
 
         /* Animationen */
@@ -456,15 +352,23 @@
             <div class="login-title">Login</div>
             <div class="login-input-group">
                 <label for="username" class="login-label">Name</label>
-                <input type="text" id="username" class="login-input" placeholder="Tony Stark">
+                <input type="text" id="username" class="login-input" placeholder="Benutzername">
             </div>
             <div class="login-input-group">
                 <label for="password" class="login-label">Passwort</label>
                 <input type="password" id="password" class="login-input" placeholder="••••••••">
             </div>
             <div class="login-error" id="loginError"></div>
-            <button class="login-button" id="loginButton">Authentifizieren</button>
-            <div class="login-footer">Stark-Industrie-Security System</div>
+            <button class="login-button" id="loginButton">Anmelden</button>
+            
+            <div class="security-footer">
+                Stark-Security-System
+            </div>
+            
+            <div class="privacy-notice">
+                <strong>Hinweis:</strong> Diese Seite nutzt externe Dienste. 
+                <a onclick="alert('Durch den Login akzeptierst du, dass:\n\n- Google Fonts deine IP temporär erfasst\n- Netlify Zugriffsdaten protokolliert\n- weatherwidget.io und unpkg.com Daten für die Widget-Funktionalität laden\n\nEs werden keine Daten dauerhaft gespeichert.');">Mehr Informationen</a>
+            </div>
         </div>
     </div>
 
@@ -476,15 +380,16 @@
     </div>
 
     <div class="widget-overlay" id="widgetOverlay">
+        
+        <div class="timeline-container" id="timeline-container">
+            <div class="month-statusbar" id="month-statusbar"></div>
+        </div>
+
         <div class="online-status">
             <div class="online-dot"></div>
             Online
         </div>
         
-        <div class="radar-container">
-            <img src="https://raw.githubusercontent.com/Christmas9999/Kilandingpage/c5e940ab157fca87ac794f56e5492defddadb3c8/Radar.gif" alt="Radar Animation">
-        </div>
-
         <div class="hexagon-group-container">
             <div class="hexagon-item hex-1"><svg viewBox="0 0 100 100" class="hexagon-outline"><polygon points="50,0 93.3,25 93.3,75 50,100 6.7,75 6.7,25" /></svg></div>
             <div class="hexagon-item hex-2"><svg viewBox="0 0 100 100" class="hexagon-outline"><polygon points="50,0 93.3,25 93.3,75 50,100 6.7,75 6.7,25" /></svg></div>
@@ -500,26 +405,22 @@
              <div class="stats-boxes">
                  <div class="stat-box">
                      <div class="circle-container"><svg viewBox="0 0 100 100"><circle class="circle-bg" cx="50" cy="50" r="45"></circle><circle class="circle-fill" id="dwn-fill" cx="50" cy="50" r="45"></circle></svg><div class="circle-text">DWN</div></div>
-                     <div class="stats-text">Speed: <span class="stats-value" id="dwn-speed">3.9</span> kB/s</div><div class="stats-text">Total: <span class="stats-value" id="dwn-total">653.6</span> GB</div>
+                     <div class="stats-text">Speed: <span class="stats-value" id="dwn-speed">3.9 kB/s</span></div>
+                     <div class="stats-text">Total: <span class="stats-value" id="dwn-total">653.6 GB</span></div>
                  </div>
                  <div class="stat-box">
                      <div class="circle-container"><svg viewBox="0 0 100 100"><circle class="circle-bg" cx="50" cy="50" r="45"></circle><circle class="circle-fill" id="ram-fill" cx="50" cy="50" r="45"></circle></svg><div class="circle-text">RAM</div></div>
-                     <div class="stats-text">Used: <span class="stats-value" id="ram-used">2.0</span> GB</div><div class="stats-text">Free: <span class="stats-value" id="ram-free">2.0</span> GB</div>
+                     <div class="stats-text">Used: <span class="stats-value" id="ram-used">2.0 GB</span></div>
+                     <div class="stats-text">Free: <span class="stats-value" id="ram-free">2.0 GB</span></div>
                  </div>
                  <div class="stat-box">
                      <div class="circle-container"><svg viewBox="0 0 100 100"><circle class="circle-bg" cx="50" cy="50" r="45"></circle><circle class="circle-fill" id="up-fill" cx="50" cy="50" r="45"></circle></svg><div class="circle-text">UP</div></div>
-                     <div class="stats-text">Speed: <span class="stats-value" id="up-speed">126.7</span> kB/s</div><div class="stats-text">Total: <span class="stats-value" id="up-total">149.7</span> GB</div>
+                     <div class="stats-text">Speed: <span class="stats-value" id="up-speed">126.7 kB/s</span></div>
+                     <div class="stats-text">Total: <span class="stats-value" id="up-total">149.7 GB</span></div>
                  </div>
              </div>
         </div>
-
-        <div class="left-status-bar">
-            <div class="status-item-minimal"><span class="status-label-minimal">LOGIC:</span><span class="status-value-minimal" id="logic-status">ONLINE</span></div>
-            <div class="status-item-minimal"><span class="status-label-minimal">NET:</span><span class="status-value-minimal" id="net-status">STABLE</span></div>
-            <div class="status-item-minimal"><span class="status-label-minimal">CACHE:</span><span class="status-value-minimal" id="cache-status">OPTIMAL</span></div>
-            <div class="status-item-minimal"><span class="status-label-minimal">PWR:</span><span class="status-value-minimal" id="pwr-status">ACTIVE</span></div>
-        </div>
-
+        
         <div class="compact-system-panel">
              <div class="panel-content">
                  <div class="panel-grid">
@@ -534,7 +435,9 @@
         </div>
 
         <div class="power-meter-container">
-            <div class="meter-label" id="meterLabel">PWR</div><div class="meter-body"><div class="meter-fill" id="powerFill"></div><div class="glow-dot" style="bottom: 15%;"></div><div class="glow-dot" style="bottom: 40%;"></div><div class="glow-dot" style="bottom: 65%;"></div><div class="glow-dot" style="bottom: 90%;"></div></div><div class="meter-percentage" id="powerPercentage">0%</div>
+            <div class="meter-label" id="meterLabel">PWR</div>
+            <div class="meter-body"><div class="meter-fill" id="powerFill"></div></div>
+            <div class="meter-percentage" id="powerPercentage">0%</div>
         </div>
 
         <div class="globe-gif-container">
@@ -543,27 +446,21 @@
             <div class="label-container" id="label-germany-container"><div class="connector"></div><div class="label">Germany</div></div>
         </div>
 
-        <div id="current-date"></div>
-
         <div class="week-overview"><div class="jarvis-horizontal-week" id="jarvis-horizontal-week"></div></div>
 
-        <div class="weather-widget">
-            <div class="weather-header"><div class="weather-location">LÜBECK</div><div class="weather-status">Klar</div></div>
-            <div class="weather-body" style="display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 10px;">
-                <div class="weather-temp">18°C</div>
-                <div class="weather-icon"><svg viewBox="0 0 24 24"><path d="M12,7c-2.76,0-5,2.24-5,5s2.24,5,5,5s5-2.24,5-5S14.76,7,12,7M12,15c-1.66,0-3-1.34-3-3s1.34-3,3-3s3,1.34,3,3S13.66,15,12,15M20,11h-2.07c-0.34-1.2-0.89-2.29-1.6-3.23l1.47-1.47L16.39,4.9l-1.47,1.47C14.02,5.58,13.04,5.18,12,5.08V3h-2v2.08c-1.04,0.1-2.02,0.5-2.92,1.29L5.61,4.9L4.2,6.31l1.47,1.47c-0.71,0.94-1.26,2.03-1.6,3.23H2v2h2.07c0.34,1.2,0.89,2.29,1.6,3.23l-1.47,1.47L5.61,19.1l1.47-1.47c0.9,0.79,1.88,1.19,2.92,1.29V21h2v-2.08c1.04-0.1,2.02-0.5,2.92-1.29l1.47,1.47l1.41-1.41l-1.47-1.47c0.71-0.94,1.26,2.03-1.6,3.23H20V11z"/></svg></div>
-            </div>
+        <div class="new-weather-widget-container">
+            <a class="weatherwidget-io" href="https://forecast7.com/de/53d9910d78/timmendorfer-strand/" data-label_1="Timmendorfer Strand" data-label_2="Germany" data-font="Roboto Slab" data-days="3" data-theme="dark" >Timmendorfer Strand Germany</a>
         </div>
 
         <elevenlabs-convai agent-id="agent_01jz428zryea58mbj66rbv8hg7"></elevenlabs-convai>
-
-        <div class="binary-footer"><div id="binary-code-display" class="binary-line"></div></div>
     </div>
-
+    
+    <script>
+    !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src='https://weatherwidget.io/js/widget.min.js';fjs.parentNode.insertBefore(js,fjs);}}(document,'script','weatherwidget-io-js');
+    </script>
     <script src="https://unpkg.com/@elevenlabs/convai-widget-embed" async type="text/javascript"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // --- Element-Selektoren ---
             const elements = {
                 loginOverlay: document.getElementById('loginOverlay'),
                 loginButton: document.getElementById('loginButton'),
@@ -581,14 +478,11 @@
                 if (elements.usernameInput.value.trim() === CORRECT_USERNAME && elements.passwordInput.value.trim() === CORRECT_PASSWORD) {
                     elements.loginError.textContent = "";
                     elements.loginError.classList.remove('show');
-
                     elements.loginOverlay.style.animation = 'fadeOut 0.5s forwards';
                     setTimeout(() => {
                         elements.loginOverlay.style.display = 'none';
                         elements.mainInterface.style.display = 'flex';
                         elements.widgetOverlay.style.display = 'block';
-
-                        // Alle Animationen und Updates starten
                         initializeWidgets();
                     }, 500);
                 } else {
@@ -606,64 +500,14 @@
             elements.passwordInput.addEventListener('keypress', (e) => e.key === 'Enter' && handleLogin());
             
             function initializeWidgets() {
-                // Initialisierungsfunktionen hier zusammenfassen
-                updateDate();
-                setInterval(updateDate, 1000 * 60);
-                initializeBinaryCode();
-                initializeMinimalStatus();
                 initializeWeekOverview();
                 initializePowerMeter();
                 initializeEKG();
                 initializeSystemStats();
                 initializeHexagonAnimation();
                 initializeCompactSystemPanel();
-            }
-
-            function updateDate() {
-                const el = document.getElementById('current-date');
-                const now = new Date();
-                const day = String(now.getDate()).padStart(2, '0');
-                const month = String(now.getMonth() + 1).padStart(2, '0');
-                const year = now.getFullYear();
-                if(el) el.textContent = `${day}.${month}.${year}`;
-            }
-
-            function initializeBinaryCode() {
-                const display = document.getElementById('binary-code-display');
-                if (!display) return;
-                const totalChars = 200;
-                const updateInterval = 508; 
-                const highlightCount = 5;
-                const gapProbability = 0.08;
-
-                function update() {
-                    let htmlString = '';
-                    for (let i = 0; i < totalChars; i++) {
-                        if (Math.random() < gapProbability) {
-                            htmlString += '&nbsp;&nbsp;';
-                        } else {
-                            htmlString += `<span class="${Math.random() < (highlightCount / totalChars) ? 'highlight' : ''}">${Math.round(Math.random())}</span>`;
-                        }
-                    }
-                    display.innerHTML = htmlString;
-                }
-                setInterval(update, updateInterval);
-                update();
-            }
-
-            function initializeMinimalStatus() {
-                const statuses = {
-                    logic: { el: document.getElementById('logic-status'), values: ['ONLINE', 'ACTIVE', 'NOMINAL'] },
-                    net: { el: document.getElementById('net-status'), values: ['STABLE', 'OPTIMAL', 'SECURE'] },
-                    cache: { el: document.getElementById('cache-status'), values: ['OPTIMAL', 'READY', 'CLEAN'] },
-                    pwr: { el: document.getElementById('pwr-status'), values: ['ACTIVE', 'STABLE', 'CHARGED'] }
-                };
-                setInterval(() => {
-                    for (let key in statuses) {
-                        const item = statuses[key];
-                        if (item.el) item.el.textContent = item.values[Math.floor(Math.random() * item.values.length)];
-                    }
-                }, 3500);
+                dailyCheck();
+                setInterval(dailyCheck, 1000 * 60 * 60);
             }
 
             function initializeWeekOverview() {
@@ -671,16 +515,14 @@
                 if (!container) return;
                 const today = new Date();
                 const dayNames = ["SO", "MO", "DI", "MI", "DO", "FR", "SA"];
-                container.innerHTML = '';
+                let weekHtml = '';
                 for (let i = -3; i <= 3; i++) {
                     const day = new Date();
                     day.setDate(today.getDate() + i);
-                    const dayBlock = document.createElement('div');
-                    dayBlock.className = 'day-block';
-                    if (i === 0) dayBlock.classList.add('today');
-                    dayBlock.innerHTML = `<span class="day-name">${dayNames[day.getDay()]}</span><span class="day-date">${day.getDate()}</span>`;
-                    container.appendChild(dayBlock);
+                    const isToday = (i === 0) ? 'today' : '';
+                    weekHtml += `<div class="day-block ${isToday}"><span class="day-name">${dayNames[day.getDay()]}</span><span class="day-date">${day.getDate()}</span></div>`;
                 }
+                container.innerHTML = weekHtml;
             }
 
             function initializePowerMeter() {
@@ -698,17 +540,16 @@
                 const canvas = document.getElementById('ekgCanvas');
                 if (!canvas) return;
                 const ctx = canvas.getContext('2d');
+                // MODIFICATION: Canvas-Größe wird jetzt korrekt gesetzt
                 canvas.width = canvas.offsetWidth;
                 canvas.height = canvas.offsetHeight;
-                const speed = 1.2;
-                const centerY = canvas.height / 2;
+                const speed = 1.2, centerY = canvas.height / 2;
                 const beatPattern = [0, -1, -3, 2, 15, -25, 8, 0, 0];
                 const beatLength = 30;
-                let beatCooldown = 0;
-                let patternStep = 0;
+                let beatCooldown = 0, patternStep = 0;
                 const points = Array(Math.floor(canvas.width / speed)).fill(centerY);
-
                 function draw() {
+                    if(points.length === 0) return; // Sicherheits-Check
                     requestAnimationFrame(draw);
                     points.shift();
                     let currentY;
@@ -740,16 +581,15 @@
 
             function initializeSystemStats() {
                 const ids = {
-                    dwnSpeed: 'dwn-speed', ramUsed: 'ram-used', upSpeed: 'up-speed',
-                    dwnFill: 'dwn-fill', ramFill: 'ram-fill', upFill: 'up-fill',
-                    ramFree: 'ram-free'
+                    dwnSpeed: 'dwn-speed', ramUsed: 'ram-used', upSpeed: 'up-speed', dwnTotal: 'dwn-total',
+                    ramFree: 'ram-free', upTotal: 'up-total', dwnFill: 'dwn-fill', ramFill: 'ram-fill', upFill: 'up-fill'
                 };
                 const elements = Object.keys(ids).reduce((acc, key) => {
                     acc[key] = document.getElementById(ids[key]);
                     return acc;
                 }, {});
 
-                const maxRam = 16.0;
+                const maxRam = 4.0; 
                 function updateCircle(circle, percentage) {
                     if (!circle) return;
                     const r = circle.r.baseVal.value;
@@ -758,23 +598,21 @@
                     circle.style.strokeDashoffset = circ - (percentage / 100) * circ;
                 }
                 setInterval(() => {
-                    const dwn = (Math.random() * 100).toFixed(1);
-                    if (elements.dwnSpeed) elements.dwnSpeed.textContent = `${dwn} MB/s`;
-                    updateCircle(elements.dwnFill, dwn);
+                    if (elements.dwnSpeed) elements.dwnSpeed.textContent = (Math.random() * 200).toFixed(1) + ' kB/s';
+                    if (elements.upSpeed) elements.upSpeed.textContent = (Math.random() * 50).toFixed(1) + ' kB/s';
+                    
+                    const ram = (1.5 + Math.random() * 1).toFixed(1);
+                    if (elements.ramUsed) elements.ramUsed.textContent = ram + ' GB';
+                    if (elements.ramFree) elements.ramFree.textContent = (maxRam - ram).toFixed(1) + ' GB';
 
-                    const ram = (8 + Math.random() * 2).toFixed(1);
-                    if (elements.ramUsed) elements.ramUsed.textContent = `${ram} GB`;
-                    if (elements.ramFree) elements.ramFree.textContent = `${(maxRam - ram).toFixed(1)} GB`;
+                    updateCircle(elements.dwnFill, Math.random() * 100);
                     updateCircle(elements.ramFill, (ram / maxRam) * 100);
-
-                    const up = (Math.random() * 20).toFixed(1);
-                    if (elements.upSpeed) elements.upSpeed.textContent = `${up} MB/s`;
-                    updateCircle(elements.upFill, (up / 20) * 100);
+                    updateCircle(elements.upFill, Math.random() * 100);
                 }, 2000);
             }
 
             function initializeHexagonAnimation() {
-                document.querySelectorAll('.hexagon-outline').forEach(hex => {
+                 document.querySelectorAll('.hexagon-outline').forEach(hex => {
                     const duration = 2 + Math.random() * 3;
                     const color = ['#00e0ff', '#39ff14', '#ffdd00'][Math.floor(Math.random() * 3)];
                     hex.style.animation = `hex-glow ${duration}s infinite alternate`;
@@ -799,6 +637,62 @@
                     processorEl.textContent = `${Math.floor(25 + Math.random() * 10)}%`;
                     ramEl.textContent = `${Math.floor(50 + Math.random() * 5)}%`;
                 }, 2500);
+            }
+
+            const timelineContainer = document.getElementById('timeline-container');
+            const statusBar = document.getElementById('month-statusbar'); 
+            let lastGeneratedMonth = -1;
+            function getDaysInMonth(year, month) {
+                return new Date(year, month + 1, 0).getDate();
+            }
+            function generateTimeline() {
+                if(!timelineContainer) return;
+                const now = new Date();
+                const year = now.getFullYear();
+                const month = now.getMonth(); 
+                if (month === lastGeneratedMonth) return;
+                lastGeneratedMonth = month;
+                
+                let timelineHTML = '';
+                const yearString = year.toString();
+                
+                timelineHTML += `<div class="year-marker">${yearString.substring(0, 2)}</div>`;
+                
+                const numDays = getDaysInMonth(year, month);
+                for (let i = 1; i <= numDays; i++) {
+                    timelineHTML += `<div class="day-marker">${String(i).padStart(2, '0')}</div>`;
+                }
+                
+                timelineHTML += `<div class="year-marker">${yearString.substring(2, 4)}</div>`;
+                
+                timelineContainer.innerHTML = timelineHTML;
+                timelineContainer.appendChild(statusBar);
+                updateStatusBar(now, numDays);
+            }
+            function updateStatusBar(date, numDays) {
+                if(!statusBar) return;
+                const monthName = date.toLocaleString('de-DE', { month: 'long' });
+                statusBar.textContent = monthName;
+                const startDay = 13, endDay = 17;
+                const barWidthInDays = endDay - startDay + 1;
+                const totalFlexItems = numDays + 1;
+                const leftPosition = ((startDay - 1 + 0.5) / totalFlexItems) * 100;
+                const barWidth = (barWidthInDays / totalFlexItems) * 100;
+                statusBar.style.left = `${leftPosition}%`;
+                statusBar.style.width = `${barWidth}%`;
+            }
+            function updateHighlight() {
+                const currentDate = new Date().getDate();
+                const allMarkers = timelineContainer.querySelectorAll('.day-marker');
+                const currentMarker = timelineContainer.querySelector('.day-marker.current');
+                if (currentMarker) currentMarker.classList.remove('current');
+                if (allMarkers[currentDate - 1]) {
+                    allMarkers[currentDate - 1].classList.add('current');
+                }
+            }
+            function dailyCheck() {
+                generateTimeline();
+                updateHighlight();
             }
         });
     </script>
