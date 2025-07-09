@@ -330,6 +330,23 @@
             z-index: 1000;
         }
 
+        /* Radar GIF Container - Modifiziert */
+        .radar-gif-container {
+            position: fixed;
+            top: 60px;      /* NEU: Vertikal ausgerichtet mit der Wochenansicht */
+            right: 340px;   /* NEU: Positioniert links neben der Wochenansicht */
+            z-index: 1000;
+            width: 150px;
+            height: 150px;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        .radar-gif-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
         elevenlabs-convai {
             position: fixed; bottom: 30px; left: 50%;
             transform: translateX(-50%); z-index: 1001;
@@ -351,6 +368,13 @@
             }
             .container {
                 transform: scale(0.8);
+            }
+            /* Anpassungen für Radar-GIF auf Mobilgeräten (wird durch die obere Regel ausgeblendet) */
+            .radar-gif-container {
+                right: 20px;
+                bottom: 200px;
+                width: 120px;
+                height: 120px;
             }
         }
 
@@ -454,6 +478,10 @@
             <img src="https://raw.githubusercontent.com/Christmas9999/Kilandingpage/c5e940ab157fca87ac794f56e5492defddadb3c8/world.gif" alt="Animierte Weltkugel"><div class="globe-dot" id="coords-dot"></div><div class="globe-dot" id="germany-dot"></div>
             <div class="label-container" id="label-coords-container"><div class="connector"></div><div class="label">53° 52' N, 10° 41' O</div></div>
             <div class="label-container" id="label-germany-container"><div class="connector"></div><div class="label">Germany</div></div>
+        </div>
+
+        <div class="radar-gif-container">
+            <img src="https://github.com/Christmas9999/Kilandingpage/blob/72b02cacc6940398491ebbaee540827b71b8162f/Radar.gif?raw=true" alt="Radar Animation">
         </div>
 
         <div class="week-overview"><div class="jarvis-horizontal-week" id="jarvis-horizontal-week"></div></div>
