@@ -25,18 +25,6 @@
             height: 100vh;
         }
 
-        /* --- Animations-Helferklassen --- */
-        .hidden {
-            opacity: 0;
-            transform: scale(0.95);
-            pointer-events: none;
-        }
-        .visible {
-            opacity: 1;
-            transform: scale(1);
-            pointer-events: auto;
-        }
-
         /* Login Overlay Styles */
         .login-overlay {
             position: fixed; top: 0; left: 0;
@@ -44,7 +32,6 @@
             background-color: rgba(0, 0, 0, 0.9);
             display: flex; justify-content: center; align-items: center;
             z-index: 2000; backdrop-filter: blur(5px);
-            transition: opacity 0.5s ease-out;
         }
 
         .login-container {
@@ -53,29 +40,36 @@
             padding: 25px; box-shadow: 0 0 30px rgba(0, 224, 255, 0.5);
             text-align: center; animation: login-glow 3s infinite alternate;
         }
+
         @keyframes login-glow {
             from { box-shadow: 0 0 20px rgba(0, 224, 255, 0.5); }
             to { box-shadow: 0 0 40px rgba(0, 224, 255, 0.8); }
         }
+
         .login-title {
             color: #00e0ff; font-size: 1.5em; margin-bottom: 25px;
             text-shadow: 0 0 10px #00e0ff; letter-spacing: 1px;
         }
+
         .login-input-group { margin-bottom: 15px; text-align: left; }
+
         .login-label {
             display: block; color: #00e0ff; margin-bottom: 6px;
             font-size: 0.85em; text-shadow: 0 0 5px #00e0ff;
         }
+
         .login-input {
             width: 100%; padding: 10px; background: rgba(0, 0, 0, 0.5);
             border: 1px solid rgba(0, 224, 255, 0.3); border-radius: 5px;
             color: #00e0ff; font-family: 'Consolas', monospace; font-size: 0.95em;
             box-shadow: inset 0 0 10px rgba(0, 224, 255, 0.2); transition: all 0.3s ease;
         }
+
         .login-input:focus {
             outline: none; border-color: #00e0ff;
             box-shadow: inset 0 0 15px rgba(0, 224, 255, 0.4), 0 0 10px rgba(0, 224, 255, 0.3);
         }
+
         .login-button {
             width: 100%; padding: 10px; background: linear-gradient(to right, rgba(0, 150, 200, 0.7), rgba(0, 100, 150, 0.7));
             border: none; border-radius: 5px; color: #fff;
@@ -83,16 +77,20 @@
             transition: all 0.3s ease; text-transform: uppercase;
             letter-spacing: 1px; margin-top: 15px; box-shadow: 0 0 10px rgba(0, 224, 255, 0.5);
         }
+
         .login-button:hover {
             background: linear-gradient(to right, rgba(0, 180, 230, 0.8), rgba(0, 130, 180, 0.8));
             box-shadow: 0 0 15px rgba(0, 224, 255, 0.8); transform: translateY(-2px);
         }
+
         .login-error {
             color: #ff5555; margin-top: 12px; font-size: 0.8em;
             text-shadow: 0 0 5px #ff5555; height: 18px;
             opacity: 0; transition: opacity 0.3s ease;
         }
+
         .login-error.show { opacity: 1; }
+        
         .privacy-notice {
             margin-top: 20px; padding: 10px;
             background: rgba(0, 30, 50, 0.6);
@@ -100,45 +98,36 @@
             border-radius: 5px; font-size: 0.75em;
             line-height: 1.4; color: rgba(255, 255, 255, 0.7);
         }
-        .privacy-notice a { color: #00e0ff; cursor: pointer; text-decoration: underline; }
+        .privacy-notice a {
+            color: #00e0ff;
+            cursor: pointer;
+            text-decoration: underline;
+        }
+        
         .security-footer {
             margin-top: 10px; color: rgba(255, 255, 255, 0.3);
             font-size: 0.7em; letter-spacing: 0.5px;
-            text-align: center;
+            text-align: center; animation: fadeIn 2s ease-in 3s forwards;
+            opacity: 0;
         }
 
-        /* --- Intro Video --- */
-        #intro-video {
-            position: fixed; top: 50%; left: 50%;
-            min-width: 100%; min-height: 100%;
-            width: auto; height: auto;
-            transform: translateX(-50%) translateY(-50%);
-            z-index: 1500;
-            display: none; /* Wird per JS gesteuert */
-        }
-        
-        /* --- Main Interface & Widgets --- */
+        @keyframes fadeIn { to { opacity: 1; } }
+
+        /* Main Interface & Widget Overlay Styles */
         .main-interface {
-            display: none; /* Wird per JS gesteuert */
-            width: 100%; height: 100%;
-            justify-content: center; align-items: center;
-            color: #00e0ff;
+            display: none; width: 100%; height: 100%;
+            justify-content: center; align-items: center; color: #00e0ff;
         }
 
         .widget-overlay { 
-            display: block; /* Immer sichtbar, Kinder werden animiert */
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            top: 0; left: 0;
+            display: none;
         }
         
         /* Zentrales J.A.R.V.I.S. Element */
         .container {
             position: relative; width: 400px; height: 400px;
             display: flex; justify-content: center; align-items: center;
-            transition: opacity 1s ease-in-out, transform 1s ease-in-out;
-            z-index: 1600; /* Über dem Video */
+            transition: transform 0.3s ease;
         }
 
         #jarvis-visual {
@@ -153,6 +142,7 @@
             text-shadow: 0 0 8px #00e0ff, 0 0 15px #00e0ff, 0 0 25px rgba(0, 224, 255, 0.7);
             pointer-events: none; z-index: 10; animation: text-pulse 3s infinite alternate;
         }
+
         @keyframes text-pulse {
             from { text-shadow: 0 0 8px #00e0ff, 0 0 15px #00e0ff, 0 0 25px rgba(0, 224, 255, 0.7); }
             to { text-shadow: 0 0 12px #55faff, 0 0 25px #55faff, 0 0 40px rgba(85, 250, 255, 0.8); }
@@ -167,69 +157,201 @@
             padding: 10px 0; background: rgba(10, 20, 30, 0.7);
             border-bottom: 1px solid rgba(0, 188, 212, 0.2);
             z-index: 1100;
-            transition: opacity 0.5s ease, transform 0.5s ease;
         }
 
-        .day-marker, .year-marker, .month-statusbar {
-            transition: opacity 0.5s ease;
+        .day-marker {
+            flex: 1; text-align: center; font-family: 'Share Tech Mono', monospace;
+            font-size: 16px; color: #00bcd4;
+            text-shadow: 0 0 5px rgba(0, 188, 212, 0.7);
+            position: relative; transition: all 0.3s ease;
+            padding: 8px 0; border-radius: 4px;
         }
-        
-        /* Styling für die einzelnen Widget-Container */
-        .online-status, .hexagon-group-container, .ekg-display, .system-stats-container, .compact-system-panel, .power-meter-container, .globe-gif-container, .week-overview, .new-weather-widget-container, elevenlabs-convai {
-            transition: opacity 0.5s ease, transform 0.5s ease;
+        .day-marker.current {
+            color: #ffffff; font-weight: bold; transform: scale(1.1);
+            background-color: rgba(0, 188, 212, 0.3);
+            box-shadow: 0 0 12px rgba(85, 250, 255, 0.6);
+            border: 1px solid rgba(85, 250, 255, 0.3);
+        }
+        .month-statusbar {
+            position: absolute; bottom: -30px; height: 22px;
+            background-color: rgba(0, 188, 212, 0.3); border: 1px solid rgba(85, 250, 255, 0.3);
+            border-radius: 4px; color: #e6edf3; font-family: 'Share Tech Mono', monospace;
+            font-size: 12px; letter-spacing: 2px; text-transform: uppercase;
+            text-align: center; line-height: 20px; transition: all 0.5s ease-in-out;
+        }
+        .year-marker {
+            flex: 0.5; text-align: center;
+            font-family: 'Share Tech Mono', monospace; font-size: 24px;
+            font-weight: bold; color: #fff;
+            text-shadow: 0 0 8px rgba(255, 255, 255, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            border-radius: 4px;
+            padding: 0 8px;
+            line-height: 38px;
         }
 
-        /* Weitere CSS-Regeln hier... (gekürzt für Übersicht) */
-        
-        .day-marker { flex: 1; text-align: center; font-family: 'Share Tech Mono', monospace; font-size: 16px; color: #00bcd4; text-shadow: 0 0 5px rgba(0, 188, 212, 0.7); position: relative; padding: 8px 0; border-radius: 4px; }
-        .day-marker.current { color: #ffffff; font-weight: bold; transform: scale(1.1); background-color: rgba(0, 188, 212, 0.3); box-shadow: 0 0 12px rgba(85, 250, 255, 0.6); border: 1px solid rgba(85, 250, 255, 0.3); }
-        .month-statusbar { position: absolute; bottom: -30px; height: 22px; background-color: rgba(0, 188, 212, 0.3); border: 1px solid rgba(85, 250, 255, 0.3); border-radius: 4px; color: #e6edf3; font-family: 'Share Tech Mono', monospace; font-size: 12px; letter-spacing: 2px; text-transform: uppercase; text-align: center; line-height: 20px; }
-        .year-marker { flex: 0.5; text-align: center; font-family: 'Share Tech Mono', monospace; font-size: 24px; font-weight: bold; color: #fff; text-shadow: 0 0 8px rgba(255, 255, 255, 0.7); border: 1px solid rgba(255, 255, 255, 0.4); border-radius: 4px; padding: 0 8px; line-height: 38px; }
-        .online-status { position: fixed; top: 75px; left: 215px; display: flex; align-items: center; color: #00e0ff; font-size: 1.1em; text-shadow: 0 0 8px #00e0ff; z-index: 1001; }
-        .online-dot { width: 12px; height: 12px; background-color: #00e0ff; border-radius: 50%; margin-right: 8px; box-shadow: 0 0 8px #00e0ff, 0 0 15px rgba(0, 224, 255, 0.5); animation: dot-pulse 1.s infinite alternate; }
-        .hexagon-group-container { position: fixed; bottom: 40px; left: 320px; width: 180px; height: 150px; transform: scale(0.6); z-index: 1001; }
+        /* --- Alle fest positionierten Widgets --- */
+        .online-status {
+            position: fixed; top: 75px; left: 215px;
+            display: flex; align-items: center; color: #00e0ff;
+            font-size: 1.1em; text-shadow: 0 0 8px #00e0ff; z-index: 1001;
+        }
+
+        .online-dot {
+            width: 12px; height: 12px; background-color: #00e0ff;
+            border-radius: 50%; margin-right: 8px;
+            box-shadow: 0 0 8px #00e0ff, 0 0 15px rgba(0, 224, 255, 0.5);
+            animation: dot-pulse 1.5s infinite alternate;
+        }
+
+        .hexagon-group-container {
+            position: fixed; bottom: 40px; left: 320px;
+            width: 180px; height: 150px;
+            transform: scale(0.6); z-index: 1001;
+        }
         .hexagon-item { position: absolute; width: 50px; height: 57.74px; overflow: visible; }
         .hexagon-outline { fill: none; stroke: #fff; stroke-width: 1.5; }
-        .ekg-display { position: fixed; top: 60px; left: 20px; width: 180px; height: 60px; background-color: rgba(0, 0, 0, 0.4); border: 1px solid rgba(0, 224, 255, 0.3); border-radius: 5px; overflow: hidden; z-index: 900; }
+
+        .ekg-display {
+            position: fixed; top: 60px; left: 20px;
+            width: 180px; height: 60px; background-color: rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(0, 224, 255, 0.3); border-radius: 5px;
+            overflow: hidden; z-index: 900;
+        }
         .ekg-canvas { width: 100%; height: 100%; }
-        .system-stats-container { position: fixed; top: 140px; left: 20px; z-index: 900; transform: scale(0.7); transform-origin: left top; background-color: rgba(0, 20, 30, 0.6); border: 1px solid rgba(0, 224, 255, 0.3); border-radius: 10px; padding: 15px; box-shadow: 0 0 15px rgba(0, 224, 255, 0.4); }
+
+        .system-stats-container {
+            position: fixed; top: 140px; left: 20px;
+            z-index: 900; transform: scale(0.7); transform-origin: left top;
+            background-color: rgba(0, 20, 30, 0.6); border: 1px solid rgba(0, 224, 255, 0.3);
+            border-radius: 10px; padding: 15px; box-shadow: 0 0 15px rgba(0, 224, 255, 0.4);
+        }
+
         .stats-boxes { display: flex; gap: 30px; }
         .stat-box { display: flex; flex-direction: column; align-items: center; text-align: center; position: relative; padding: 15px 0; transition: all 0.3s ease; }
+        .stat-box:hover { transform: translateY(-5px); cursor: pointer; }
         .circle-container { position: relative; width: 120px; height: 120px; margin-bottom: 10px; }
         .circle-container svg { position: absolute; top: 0; left: 0; transform: rotate(-90deg); }
         .circle-bg { stroke: rgba(255, 255, 255, 0.1); stroke-width: 8; fill: transparent; }
         .circle-fill { stroke: #00e0ff; stroke-width: 8; fill: transparent; transition: all 0.5s ease; filter: drop-shadow(0 0 5px rgba(0, 224, 255, 0.7)); }
+        .stat-box:hover .circle-fill { stroke: #39ff14; filter: drop-shadow(0 0 10px rgba(57, 255, 20, 0.9)); }
         .circle-text { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 1.8em; font-weight: bold; color: #fff; font-family: 'Orbitron', sans-serif; }
         .stats-text { font-family: 'Roboto Mono', monospace; font-size: 0.9em; line-height: 1.6; color: rgba(255, 255, 255, 0.9); }
-        .stats-value { color: #00e0ff; font-weight: bold; text-shadow: 0 0 5px rgba(0, 224, 255, 0.5); display: inline-block; width: 100px; text-align: left; }
-        .compact-system-panel { position: fixed; top: 320px; left: 20px; width: 380px; background: rgba(0, 20, 30, 0.7); border: 1px solid rgba(0, 224, 255, 0.3); border-radius: 8px; padding: 10px; box-shadow: 0 0 10px rgba(0, 224, 255, 0.4); z-index: 900; font-family: 'Roboto Mono', monospace; font-size: 0.8em; animation: panel-glow 3s infinite alternate; }
+        
+        .stats-value {
+            color: #00e0ff; font-weight: bold;
+            text-shadow: 0 0 5px rgba(0, 224, 255, 0.5);
+            display: inline-block; width: 100px; text-align: left;
+        }
+        
+        .compact-system-panel {
+            position: fixed; top: 320px; left: 20px; 
+            width: 380px; background: rgba(0, 20, 30, 0.7);
+            border: 1px solid rgba(0, 224, 255, 0.3); border-radius: 8px;
+            padding: 10px; box-shadow: 0 0 10px rgba(0, 224, 255, 0.4);
+            z-index: 900; font-family: 'Roboto Mono', monospace;
+            font-size: 0.8em; animation: panel-glow 3s infinite alternate;
+        }
         .compact-system-panel strong { color: #00e0ff; font-weight: normal; }
+        .compact-system-panel span { color: #fff; text-shadow: 0 0 3px rgba(255, 255, 255, 0.3); }
         .panel-content { padding: 0; border-left: 2px solid rgba(0, 224, 255, 0.5); }
         .panel-grid { display: flex; gap: 20px; padding-left: 10px; }
+        .panel-section { flex: 1; }
         .panel-section p { margin: 4px 0; display: flex; justify-content: space-between; align-items: baseline; }
-        .power-meter-container { position: fixed; bottom: 20px; left: 20px; width: 70px; height: 190px; background-color: rgba(0, 0, 0, 0.6); border: 2px solid #00e0ff; border-radius: 10px; box-shadow: 0 0 15px rgba(0, 224, 255, 0.7); display: flex; flex-direction: column; align-items: center; padding: 12px 5px; z-index: 900; }
+        @keyframes panel-glow { from { box-shadow: 0 0 10px rgba(0, 224, 255, 0.4); } to { box-shadow: 0 0 15px rgba(0, 224, 255, 0.6); } }
+
+        .power-meter-container {
+            position: fixed; bottom: 20px; left: 20px;
+            width: 70px; height: 190px; background-color: rgba(0, 0, 0, 0.6);
+            border: 2px solid #00e0ff; border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 224, 255, 0.7); display: flex;
+            flex-direction: column; align-items: center;
+            padding: 12px 5px; z-index: 900;
+        }
         .meter-label { font-size: 0.9em; color: #00e0ff; text-shadow: 0 0 10px #00e0ff; margin-bottom: 8px; letter-spacing: 1px; text-transform: uppercase; font-family: 'Orbitron', sans-serif; }
         .meter-body { width: 30px; height: 100%; background-color: #1a1a2e; border: 1px solid rgba(0, 224, 255, 0.5); border-radius: 8px; position: relative; overflow: hidden; }
         .meter-fill { width: 100%; background: linear-gradient(to top, #39ff14, #00e0ff); position: absolute; bottom: 0; left: 0; transition: height 0.5s ease-in-out; box-shadow: 0 0 10px rgba(57, 255, 20, 0.8), 0 0 20px rgba(0, 224, 255, 0.6); }
-        .meter-percentage { color: #fff; font-family: 'Share Tech Mono', monospace; font-size: 0.9em; margin-top: 8px; }
-        .globe-gif-container { position: fixed; bottom: 20px; left: 110px; z-index: 900; width: 192px; height: 192px; }
+        .meter-percentage {
+            color: #fff; font-family: 'Share Tech Mono', monospace;
+            font-size: 0.9em; margin-top: 8px;
+        }
+
+        .globe-gif-container {
+            position: fixed; bottom: 20px; left: 110px; 
+            z-index: 900; width: 192px; height: 192px;
+        }
         .globe-gif-container img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
-        .week-overview { position: fixed; top: 60px; right: 20px; z-index: 1101; width: 300px; }
-        .jarvis-horizontal-week { width: 100%; padding: 15px 0; position: relative; display: flex; justify-content: center; align-items: flex-start; }
-        .day-block { display: flex; flex-direction: column; align-items: center; padding: 5px 0; width: calc(100% / 7); position: relative; z-index: 1; opacity: 0.7; transition: opacity 0.3s ease, transform 0.3s ease; }
-        .day-block.today { opacity: 1; transform: scale(1.05); }
-        .day-name { font-family: 'Roboto Mono', monospace; font-size: 0.9em; color: #00bcd4; text-transform: uppercase; }
-        .day-name::after { content: ''; display: block; width: 80%; height: 1px; background-color: #00bcd4; margin: 4px auto; opacity: 0.4; }
-        .day-date { font-family: 'Roboto Mono', monospace; font-size: 1.6em; font-weight: bold; color: #00bcd4; }
-        .new-weather-widget-container { position: fixed; bottom: 20px; right: 20px; z-index: 1000; position: relative; overflow: hidden; }
-        .watermark-cover { position: absolute; bottom: 0; left: 0; width: 100%; height: 15px; background-color: #000; z-index: 1001; }
-        elevenlabs-convai { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); z-index: 1001; }
-        @keyframes fadeOut { from { opacity: 1; } to { opacity: 0; visibility: hidden; } }
+        .globe-dot { position: absolute; width: 6px; height: 6px; background-color: rgba(255, 50, 50, 0.9); border-radius: 50%; box-shadow: 0 0 6px 2px rgba(255, 50, 50, 0.6); transform: translate(-50%, -50%); animation: dot-pulse-red 1.5s infinite; z-index: 10; }
+        #coords-dot { top: 35%; left: 58%; }
+        #germany-dot { top: 43%; left: 55%; }
         
-        /* Mobile Ansicht */
+        .label-container { 
+            position: absolute; display: flex; align-items: center; 
+            left: 95%; transform: translateY(-50%); 
+        }
+        #label-coords-container { top: 35%; }
+        #label-germany-container { top: 43%; }
+        .connector { width: 20px; height: 1px; background: linear-gradient(to right, rgba(255, 80, 80, 0.7), rgba(255, 80, 80, 0)); }
+        .label { color: rgba(255, 255, 255, 0.9); font-family: 'Roboto Mono', monospace; font-size: 11px; text-shadow: 0 0 5px rgba(255, 255, 255, 0.5); background-color: rgba(0, 0, 0, 0.4); padding: 2px 5px; border-radius: 3px; white-space: nowrap; margin-left: -1px; }
+
+        .week-overview {
+            position: fixed;
+            top: 60px;
+            right: 20px;
+            z-index: 1101;
+            width: 300px;
+        }
+        .jarvis-horizontal-week { 
+            width: 100%; padding: 15px 0; position: relative; 
+            display: flex; justify-content: center; align-items: flex-start;
+        }
+        .day-block { 
+            display: flex; flex-direction: column; align-items: center; 
+            padding: 5px 0; width: calc(100% / 7); 
+            position: relative; z-index: 1; opacity: 0.7; 
+            transition: opacity 0.3s ease, transform 0.3s ease; 
+        }
+        .day-block.today { opacity: 1; transform: scale(1.05); }
+        .day-block::before { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background-color: transparent; border-radius: 4px; transition: background-color 0.3s ease, box-shadow 0.3s ease; z-index: -1; }
+        .day-block.today::before { background-color: rgba(0, 188, 212, 0.6); box-shadow: 0 0 10px rgba(0, 188, 212, 0.7); animation: subtleHighlightPulse 1.8s infinite alternate; }
+        .day-name { font-family: 'Roboto Mono', monospace; font-size: 0.9em; color: #00bcd4; text-transform: uppercase; }
+        .day-name::after {
+            content: ''; display: block; width: 80%; height: 1px;
+            background-color: #00bcd4; margin: 4px auto; opacity: 0.4;
+        }
+        
+        .day-date { font-family: 'Roboto Mono', monospace; font-size: 1.6em; font-weight: bold; color: #00bcd4; }
+        .day-block.today .day-name, .day-block.today .day-date { color: #e6edf3; text-shadow: 0 0 5px rgba(230, 237, 243, 0.5); }
+
+        .new-weather-widget-container {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+
+        elevenlabs-convai {
+            position: fixed; bottom: 30px; left: 50%;
+            transform: translateX(-50%); z-index: 1001;
+        }
+
+        /* Animationen */
+        @keyframes dot-pulse { from { transform: scale(1); opacity: 1; } to { transform: scale(1.1); opacity: 0.7; } }
+        @keyframes dot-pulse-red { 0% { opacity: 0.6; transform: scale(0.9) translate(-50%, -50%); } 50% { opacity: 1; transform: scale(1.2) translate(-50%, -50%); } 100% { opacity: 0.6; transform: scale(0.9) translate(-50%, -50%); } }
+        @keyframes fadeOut { from { opacity: 1; } to { opacity: 0; visibility: hidden; } }
+        @keyframes binary-pulse { 0% { opacity: 0.8; } 100% { opacity: 1; } }
+        @keyframes glowPulseWhite { 0% { text-shadow: 0 0 5px rgba(230, 237, 243, 0.6); opacity: 0.9; } 100% { text-shadow: 0 0 12px rgba(230, 237, 243, 1); opacity: 1; } }
+        @keyframes subtleHighlightPulse { 0% { box-shadow: 0 0 8px rgba(0, 188, 212, 0.6); } 100% { box-shadow: 0 0 15px rgba(0, 188, 212, 0.8); } }
+    
+        /* --- Mobile Ansicht (Smartphones) --- */
         @media (max-width: 767px) {
-            .widget-overlay > :not(elevenlabs-convai) { display: none !important; }
-            .container { transform: scale(0.8); }
+            /* Blendet alle direkten Kinder des Widget-Overlays aus, AUSSER dem ElevenLabs-Widget */
+            .widget-overlay > :not(elevenlabs-convai) {
+                display: none !important; 
+            }
+            .container {
+                transform: scale(0.8);
+            }
         }
 
     </style>
@@ -248,39 +370,100 @@
             </div>
             <div class="login-error" id="loginError"></div>
             <button class="login-button" id="loginButton">Anmelden</button>
-            <div class="security-footer">Stark-Security-System</div>
+            
+            <div class="security-footer">
+                Stark-Security-System
+            </div>
+            
             <div class="privacy-notice">
                 <strong>Hinweis:</strong> Diese Seite nutzt externe Dienste. 
-                <a onclick="alert('Durch den Login akzeptierst du, dass:\n\n- Daten für die Widget-Funktionalität geladen werden (Google Fonts, unpkg.com, weatherwidget.io)\n- Netlify Zugriffsdaten protokolliert\n\nEs werden keine Daten dauerhaft gespeichert.');">Mehr Informationen</a>
+                <a onclick="alert('Durch den Login akzeptierst du, dass:\n\n- Google Fonts deine IP temporär erfasst\n- Netlify Zugriffsdaten protokolliert\n- weatherwidget.io und unpkg.com Daten für die Widget-Funktionalität laden\n\nEs werden keine Daten dauerhaft gespeichert.');">Mehr Informationen</a>
             </div>
         </div>
     </div>
-    
-    <video playsinline muted id="intro-video">
-        <source src="https://raw.githubusercontent.com/Christmas9999/Kilandingpage/637f695db238bbcfca942d612de0b62a75d93642/Intro_V1.mp4" type="video/mp4">
-    </video>
 
     <div class="main-interface" id="mainInterface">
-        <div class="container hidden" id="jarvis-container">
+        <div class="container">
             <img id="jarvis-visual" src="https://raw.githubusercontent.com/Christmas9999/Kilandingpage/c5e940ab157fca87ac794f56e5492defddadb3c8/jarvis-core.gif" alt="J.A.R.V.I.S. Core Animation">
             <div class="jarvis-text-overlay">J.A.R.V.I.S.</div>
         </div>
     </div>
-    
+
     <div class="widget-overlay" id="widgetOverlay">
-        <div class="timeline-container hidden" id="timeline-container">
+        
+        <div class="timeline-container" id="timeline-container">
             <div class="month-statusbar" id="month-statusbar"></div>
         </div>
-        <div class="online-status hidden">...</div>
-        <div class="hexagon-group-container hidden">...</div>
-        <div class="ekg-display hidden">...</div>
-        <div class="system-stats-container hidden">...</div>
-        <div class="compact-system-panel hidden">...</div>
-        <div class="power-meter-container hidden">...</div>
-        <div class="globe-gif-container hidden">...</div>
-        <div class="week-overview hidden">...</div>
-        <div class="new-weather-widget-container hidden">...</div>
-        <elevenlabs-convai class="hidden">...</elevenlabs-convai>
+
+        <div class="online-status">
+            <div class="online-dot"></div>
+            Online
+        </div>
+        
+        <div class="hexagon-group-container">
+            <div class="hexagon-item hex-1"><svg viewBox="0 0 100 100" class="hexagon-outline"><polygon points="50,0 93.3,25 93.3,75 50,100 6.7,75 6.7,25"></polygon></svg></div>
+            <div class="hexagon-item hex-2"><svg viewBox="0 0 100 100" class="hexagon-outline"><polygon points="50,0 93.3,25 93.3,75 50,100 6.7,75 6.7,25"></polygon></svg></div>
+            <div class="hexagon-item hex-3"><svg viewBox="0 0 100 100" class="hexagon-outline"><polygon points="50,0 93.3,25 93.3,75 50,100 6.7,75 6.7,25"></polygon></svg></div>
+            <div class="hexagon-item hex-4"><svg viewBox="0 0 100 100" class="hexagon-outline"><polygon points="50,0 93.3,25 93.3,75 50,100 6.7,75 6.7,25"></polygon></svg></div>
+            <div class="hexagon-item hex-5"><svg viewBox="0 0 100 100" class="hexagon-outline"><polygon points="50,0 93.3,25 93.3,75 50,100 6.7,75 6.7,25"></polygon></svg></div>
+            <div class="hexagon-item hex-6"><svg viewBox="0 0 100 100" class="hexagon-outline"><polygon points="50,0 93.3,25 93.3,75 50,100 6.7,75 6.7,25"></polygon></svg></div>
+        </div>
+
+        <div class="ekg-display"><canvas class="ekg-canvas" id="ekgCanvas"></canvas></div>
+
+        <div class="system-stats-container">
+             <div class="stats-boxes">
+                 <div class="stat-box">
+                     <div class="circle-container"><svg viewbox="0 0 100 100"><circle class="circle-bg" cx="50" cy="50" r="45"></circle><circle class="circle-fill" id="dwn-fill" cx="50" cy="50" r="45"></circle></svg><div class="circle-text">DWN</div></div>
+                     <div class="stats-text">Speed: <span class="stats-value" id="dwn-speed">3.9 kB/s</span></div>
+                     <div class="stats-text">Total: <span class="stats-value" id="dwn-total">653.6 GB</span></div>
+                 </div>
+                 <div class="stat-box">
+                     <div class="circle-container"><svg viewbox="0 0 100 100"><circle class="circle-bg" cx="50" cy="50" r="45"></circle><circle class="circle-fill" id="ram-fill" cx="50" cy="50" r="45"></circle></svg><div class="circle-text">RAM</div></div>
+                     <div class="stats-text">Used: <span class="stats-value" id="ram-used">2.0 GB</span></div>
+                     <div class="stats-text">Free: <span class="stats-value" id="ram-free">2.0 GB</span></div>
+                 </div>
+                 <div class="stat-box">
+                     <div class="circle-container"><svg viewbox="0 0 100 100"><circle class="circle-bg" cx="50" cy="50" r="45"></circle><circle class="circle-fill" id="up-fill" cx="50" cy="50" r="45"></circle></svg><div class="circle-text">UP</div></div>
+                     <div class="stats-text">Speed: <span class="stats-value" id="up-speed">126.7 kB/s</span></div>
+                     <div class="stats-text">Total: <span class="stats-value" id="up-total">149.7 GB</span></div>
+                 </div>
+             </div>
+        </div>
+        
+        <div class="compact-system-panel">
+             <div class="panel-content">
+                 <div class="panel-grid">
+                     <div class="panel-section">
+                         <p><strong>System:</strong> <span>JVS-MK4-ALPHA</span></p><p><strong>Core OS:</strong> <span>NeuralNet 7.1</span></p><p><strong>Prozessorlast:</strong> <span id="compact-processor-load">30%</span></p><p><strong>RAM:</strong> <span id="compact-ram-usage">54%</span></p>
+                     </div>
+                     <div class="panel-section">
+                         <p><strong>Betriebszeit:</strong> <span id="compact-uptime">00:00:00</span></p><p><strong>Energie:</strong> <span id="compact-energy">100%</span></p><p><strong>Netzwerk:</strong> <span id="compact-network">5.7 Gb/s</span></p><p><strong>Speicher:</strong> <span>636 TB</span></p>
+                     </div>
+                 </div>
+             </div>
+        </div>
+
+        <div class="power-meter-container">
+            <div class="meter-label" id="meterLabel">PWR</div>
+            <div class="meter-body"><div class="meter-fill" id="powerFill"></div></div>
+            <div class="meter-percentage" id="powerPercentage">0%</div>
+        </div>
+
+        <div class="globe-gif-container">
+            <img src="https://raw.githubusercontent.com/Christmas9999/Kilandingpage/c5e940ab157fca87ac794f56e5492defddadb3c8/world.gif" alt="Animierte Weltkugel"><div class="globe-dot" id="coords-dot"></div><div class="globe-dot" id="germany-dot"></div>
+            <div class="label-container" id="label-coords-container"><div class="connector"></div><div class="label">53° 52' N, 10° 41' O</div></div>
+            <div class="label-container" id="label-germany-container"><div class="connector"></div><div class="label">Germany</div></div>
+        </div>
+
+        <div class="week-overview"><div class="jarvis-horizontal-week" id="jarvis-horizontal-week"></div></div>
+
+        <div class="new-weather-widget-container">
+            <a class="weatherwidget-io" href="https://forecast7.com/de/53d9910d78/timmendorfer-strand/" data-label_1="Timmendorfer Strand" data-label_2="Germany" data-font="Roboto Slab" data-days="3" data-theme="dark">Timmendorfer Strand Germany</a>
+        </div>
+
+        <elevenlabs-convai agent-id="agent_01jz428zryea58mbj66rbv8hg7"></elevenlabs-convai>
+
     </div>
     
     <script>
@@ -289,99 +472,238 @@
     <script src="https://unpkg.com/@elevenlabs/convai-widget-embed" async type="text/javascript"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // ... (Login-Code bleibt unverändert) ...
+            const elements = {
+                loginOverlay: document.getElementById('loginOverlay'),
+                loginButton: document.getElementById('loginButton'),
+                usernameInput: document.getElementById('username'),
+                passwordInput: document.getElementById('password'),
+                loginError: document.getElementById('loginError'),
+                mainInterface: document.getElementById('mainInterface'),
+                widgetOverlay: document.getElementById('widgetOverlay')
+            };
 
-            // --- MODIFICATION: Neue Animations-Logik ---
-
-            const introVideo = document.getElementById('intro-video');
-            const jarvisContainer = document.getElementById('jarvis-container');
-            const timelineContainer = document.getElementById('timeline-container');
-            
-            function fadeInJarvis() {
-                jarvisContainer.classList.remove('hidden');
-            }
-
-            function startWidgetAnimation() {
-                introVideo.style.display = 'none'; // Video ausblenden
-
-                const widgets = [
-                    '.ekg-display', '.online-status',
-                    '.week-overview',
-                    '.new-weather-widget-container',
-                    '.power-meter-container',
-                    '.globe-gif-container',
-                    '.hexagon-group-container',
-                    '.system-stats-container',
-                    '.compact-system-panel',
-                    'elevenlabs-convai'
-                ];
-                
-                let delay = 500; // Startverzögerung
-                const interval = 2000; // 2 Sekunden zwischen jedem Widget
-
-                widgets.forEach(selector => {
-                    setTimeout(() => {
-                        document.querySelectorAll(selector).forEach(el => el.classList.remove('hidden'));
-                    }, delay);
-                    delay += interval;
-                });
-
-                // Letzte Animation: Timeline
-                setTimeout(animateTimeline, delay);
-            }
-
-            function animateTimeline() {
-                timelineContainer.classList.remove('hidden');
-                
-                const dayMarkers = timelineContainer.querySelectorAll('.day-marker');
-                const yearMarkers = timelineContainer.querySelectorAll('.year-marker');
-                
-                // Tage nacheinander einblenden
-                dayMarkers.forEach((marker, index) => {
-                    setTimeout(() => {
-                        marker.style.opacity = '1';
-                    }, index * 50); // Sehr kurze Verzögerung für schnellen Effekt
-                });
-                
-                // Jahreszahlen am Ende einblenden
-                setTimeout(() => {
-                    yearMarkers.forEach(marker => marker.style.opacity = '1');
-                }, dayMarkers.length * 50);
-            }
-
-            // Event-Listener für das Video
-            let oneSecondBeforeEndFired = false;
-            introVideo.addEventListener('timeupdate', function() {
-                if ((introVideo.duration - introVideo.currentTime <= 1) && !oneSecondBeforeEndFired) {
-                    fadeInJarvis();
-                    oneSecondBeforeEndFired = true;
-                }
-            });
-            introVideo.addEventListener('ended', startWidgetAnimation);
-
+            const CORRECT_USERNAME = "Tony Stark";
+            const CORRECT_PASSWORD = "Morgan stark";
 
             function handleLogin() {
-                // ... (Login-Prüfung wie bisher)
-                if (username === CORRECT_USERNAME && password === CORRECT_PASSWORD) {
-                    loginOverlay.style.opacity = '0';
+                if (elements.usernameInput.value.trim() === CORRECT_USERNAME && elements.passwordInput.value.trim() === CORRECT_PASSWORD) {
+                    elements.loginError.textContent = "";
+                    elements.loginError.classList.remove('show');
+                    elements.loginOverlay.style.animation = 'fadeOut 0.5s forwards';
                     setTimeout(() => {
-                        loginOverlay.style.display = 'none';
-                        mainInterface.style.display = 'flex';
-                        widgetOverlay.style.display = 'block';
-                        
-                        // Startet das Video und die Sequenz
-                        introVideo.style.display = 'block';
-                        introVideo.play();
-                        
-                        // Initialisiert die Widgets im Hintergrund
+                        elements.loginOverlay.style.display = 'none';
+                        elements.mainInterface.style.display = 'flex';
+                        elements.widgetOverlay.style.display = 'block';
                         initializeWidgets();
                     }, 500);
                 } else {
-                    // ... (Fehlerbehandlung wie bisher)
+                    elements.loginError.textContent = "Zugangsdaten nicht erkannt.";
+                    elements.loginError.classList.add('show');
+                    elements.loginOverlay.animate(
+                        [{ transform: 'translateX(0)' }, { transform: 'translateX(-10px)' }, { transform: 'translateX(10px)' }, { transform: 'translateX(0)' }], 
+                        { duration: 300, iterations: 1 }
+                    );
                 }
             }
 
-            // ... (Restliche Initialisierungs-Funktionen)
+            elements.loginButton.addEventListener('click', handleLogin);
+            elements.usernameInput.addEventListener('keypress', (e) => e.key === 'Enter' && handleLogin());
+            elements.passwordInput.addEventListener('keypress', (e) => e.key === 'Enter' && handleLogin());
+            
+            function initializeWidgets() {
+                initializeWeekOverview();
+                initializePowerMeter();
+                initializeEKG();
+                initializeSystemStats();
+                initializeHexagonAnimation();
+                initializeCompactSystemPanel();
+                dailyCheck();
+                setInterval(dailyCheck, 1000 * 60 * 60);
+            }
+
+            function initializeWeekOverview() {
+                const container = document.getElementById('jarvis-horizontal-week');
+                if (!container) return;
+                const today = new Date();
+                const dayNames = ["SO", "MO", "DI", "MI", "DO", "FR", "SA"];
+                let weekHtml = '';
+                for (let i = -3; i <= 3; i++) {
+                    const day = new Date();
+                    day.setDate(today.getDate() + i);
+                    const isToday = (i === 0) ? 'today' : '';
+                    weekHtml += `<div class="day-block ${isToday}"><span class="day-name">${dayNames[day.getDay()]}</span><span class="day-date">${day.getDate()}</span></div>`;
+                }
+                container.innerHTML = weekHtml;
+            }
+
+            function initializePowerMeter() {
+                const powerFill = document.getElementById('powerFill');
+                const powerPercentage = document.getElementById('powerPercentage');
+                if (!powerFill || !powerPercentage) return;
+                setInterval(() => {
+                    const percentage = Math.floor(80 + Math.random() * 20);
+                    powerFill.style.height = `${percentage}%`;
+                    powerPercentage.textContent = `${percentage}%`;
+                }, 2000);
+            }
+
+            function initializeEKG() {
+                const canvas = document.getElementById('ekgCanvas');
+                if (!canvas) return;
+                const ctx = canvas.getContext('2d');
+                canvas.width = canvas.offsetWidth;
+                canvas.height = canvas.offsetHeight;
+                const speed = 1.2, centerY = canvas.height / 2;
+                const beatPattern = [0, -1, -3, 2, 15, -25, 8, 0, 0];
+                const beatLength = 30;
+                let beatCooldown = 0, patternStep = 0;
+                const points = Array(Math.floor(canvas.width / speed)).fill(centerY);
+                function draw() {
+                    if(points.length === 0) return;
+                    requestAnimationFrame(draw);
+                    points.shift();
+                    let currentY;
+                    if (beatCooldown <= 0 && Math.random() < 0.012) {
+                        beatCooldown = beatLength;
+                        patternStep = 0;
+                    }
+                    if (beatCooldown > 0) {
+                        const index = Math.floor(patternStep / (beatLength / beatPattern.length));
+                        currentY = centerY + beatPattern[index] * (canvas.height / 80);
+                        patternStep++;
+                        beatCooldown--;
+                    } else {
+                        currentY = centerY + (Math.random() - 0.5) * 3;
+                    }
+                    points.push(currentY);
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                    ctx.beginPath();
+                    ctx.strokeStyle = '#00e0ff';
+                    ctx.lineWidth = 1.5;
+                    ctx.moveTo(0, points[0]);
+                    for (let i = 1; i < points.length; i++) {
+                        ctx.lineTo(i * speed, points[i]);
+                    }
+                    ctx.stroke();
+                }
+                draw();
+            }
+
+            function initializeSystemStats() {
+                const ids = {
+                    dwnSpeed: 'dwn-speed', ramUsed: 'ram-used', upSpeed: 'up-speed', dwnTotal: 'dwn-total',
+                    ramFree: 'ram-free', upTotal: 'up-total', dwnFill: 'dwn-fill', ramFill: 'ram-fill', upFill: 'up-fill'
+                };
+                const elements = Object.keys(ids).reduce((acc, key) => {
+                    acc[key] = document.getElementById(ids[key]);
+                    return acc;
+                }, {});
+
+                const maxRam = 4.0; 
+                function updateCircle(circle, percentage) {
+                    if (!circle) return;
+                    const r = circle.r.baseVal.value;
+                    const circ = 2 * Math.PI * r;
+                    circle.style.strokeDasharray = `${circ} ${circ}`;
+                    circle.style.strokeDashoffset = circ - (percentage / 100) * circ;
+                }
+                setInterval(() => {
+                    if (elements.dwnSpeed) elements.dwnSpeed.textContent = (Math.random() * 200).toFixed(1) + ' kB/s';
+                    if (elements.upSpeed) elements.upSpeed.textContent = (Math.random() * 50).toFixed(1) + ' kB/s';
+                    
+                    const ram = (1.5 + Math.random() * 1).toFixed(1);
+                    if (elements.ramUsed) elements.ramUsed.textContent = ram + ' GB';
+                    if (elements.ramFree) elements.ramFree.textContent = (maxRam - ram).toFixed(1) + ' GB';
+
+                    updateCircle(elements.dwnFill, Math.random() * 100);
+                    updateCircle(elements.ramFill, (ram / maxRam) * 100);
+                    updateCircle(elements.upFill, Math.random() * 100);
+                }, 2000);
+            }
+
+            function initializeHexagonAnimation() {
+                 document.querySelectorAll('.hexagon-outline').forEach(hex => {
+                    const duration = 2 + Math.random() * 3;
+                    const color = ['#00e0ff', '#39ff14', '#ffdd00'][Math.floor(Math.random() * 3)];
+                    hex.style.animation = `hex-glow ${duration}s infinite alternate`;
+                    hex.style.setProperty('--glow-color', color);
+                });
+            }
+
+            function initializeCompactSystemPanel() {
+                const uptimeEl = document.getElementById('compact-uptime');
+                const processorEl = document.getElementById('compact-processor-load');
+                const ramEl = document.getElementById('compact-ram-usage');
+                if (!uptimeEl || !processorEl || !ramEl) return;
+                let seconds = 0;
+                setInterval(() => {
+                    seconds++;
+                    const h = Math.floor(seconds / 3600).toString().padStart(2, '0');
+                    const m = Math.floor((seconds % 3600) / 60).toString().padStart(2, '0');
+                    const s = (seconds % 60).toString().padStart(2, '0');
+                    uptimeEl.textContent = `${h}:${m}:${s}`;
+                }, 1000);
+                setInterval(() => {
+                    processorEl.textContent = `${Math.floor(25 + Math.random() * 10)}%`;
+                    ramEl.textContent = `${Math.floor(50 + Math.random() * 5)}%`;
+                }, 2500);
+            }
+
+            const timelineContainer = document.getElementById('timeline-container');
+            const statusBar = document.getElementById('month-statusbar'); 
+            let lastGeneratedMonth = -1;
+            function getDaysInMonth(year, month) {
+                return new Date(year, month + 1, 0).getDate();
+            }
+            function generateTimeline() {
+                if(!timelineContainer) return;
+                const now = new Date();
+                const year = now.getFullYear();
+                const month = now.getMonth(); 
+                if (month === lastGeneratedMonth) return;
+                lastGeneratedMonth = month;
+                
+                let timelineHTML = '';
+                const yearString = year.toString();
+                
+                timelineHTML += `<div class="year-marker">${yearString.substring(0, 2)}</div>`;
+                
+                const numDays = getDaysInMonth(year, month);
+                for (let i = 1; i <= numDays; i++) {
+                    timelineHTML += `<div class="day-marker">${String(i).padStart(2, '0')}</div>`;
+                }
+                
+                timelineHTML += `<div class="year-marker">${yearString.substring(2, 4)}</div>`;
+                
+                timelineContainer.innerHTML = timelineHTML;
+                timelineContainer.appendChild(statusBar);
+                updateStatusBar(now, numDays);
+            }
+            function updateStatusBar(date, numDays) {
+                if(!statusBar) return;
+                const monthName = date.toLocaleString('de-DE', { month: 'long' });
+                statusBar.textContent = monthName;
+                const startDay = 13, endDay = 17;
+                const barWidthInDays = endDay - startDay + 1;
+                const totalFlexItems = numDays + 1;
+                const leftPosition = ((startDay - 1 + 0.5) / totalFlexItems) * 100;
+                const barWidth = (barWidthInDays / totalFlexItems) * 100;
+                statusBar.style.left = `${leftPosition}%`;
+                statusBar.style.width = `${barWidth}%`;
+            }
+            function updateHighlight() {
+                const currentDate = new Date().getDate();
+                const allMarkers = timelineContainer.querySelectorAll('.day-marker');
+                const currentMarker = timelineContainer.querySelector('.day-marker.current');
+                if (currentMarker) currentMarker.classList.remove('current');
+                if (allMarkers[currentDate - 1]) {
+                    allMarkers[currentDate - 1].classList.add('current');
+                }
+            }
+            function dailyCheck() {
+                generateTimeline();
+                updateHighlight();
+            }
         });
     </script>
 </body>
